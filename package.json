@@ -1,0 +1,20 @@
+{
+  "name": "cinemavillage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "css:build": "npx tailwindcss build -i ./FrontEnd/CSS/main.css -o ./wwwroot/css/output.css --watch",
+    "dev": "tailwindcss -i ./FrontEnd/CSS/main.css -o ./wwwroot/css/output.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38"
+  },
+  "dependencies": {
+    "tailwindcss": "^3.4.1"
+  }
+}
