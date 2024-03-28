@@ -18,7 +18,7 @@ namespace CinemaVillage.ViewModels.Home.HomeBuilder
 
             return new HomeViewModel
             {
-                movies = moviesAppModel
+                Movies = moviesAppModel
             };
 
         }

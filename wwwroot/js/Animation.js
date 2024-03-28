@@ -1,11 +1,16 @@
 ﻿let logIn = document.getElementById('logIn');
 let transitionDiv = document.getElementById('transition');
 let active = 0;
-let repeatPasswordInput = document.getElementById('repeatPassword')
+let repeatPasswordInput = document.getElementById('repeatPasswordInput')
 let repeatPasswordTitle = document.getElementById('repeatPasswordTitle')
 let FormTitle = document.getElementById('FormTitle')
-let FullName = document.getElementById('FullName')
-let FullNameInput = document.getElementById('FullNameInput')
+let FirstName = document.getElementById('FirstName')
+let FirstNameInput = document.getElementById('firstNameInput')
+let LastName = document.getElementById('LastName')
+let LastNameInput = document.getElementById('lastNameInput')
+let BtnSubmitFormSignUpLogin = document.getElementById('btnSubmitForm');
+let LogInFormDiv = document.getElementById('LogIn');
+let SignUpFormDiv = document.getElementById('SignUp');
 
 logIn.addEventListener('click', change);
 
@@ -35,23 +40,19 @@ function change() {
 
         }
 
-
         anime({
             targets: '#SignUp',
             translateX: '-170',
             duration: '1000'
         }
         )
+        SignUpFormDiv.classList.add("hidden");
+        LogInFormDiv.classList.remove("hidden");
         logIn.classList.remove('ml-10')
         logIn.classList.add('mr-10')
         transitionDiv.classList.remove('rounded-l-full');
         transitionDiv.classList.add('rounded-r-full');
         logIn.innerHTML = "<- Sign Up"
-        repeatPasswordInput.classList.add("hidden");
-        repeatPasswordTitle.classList.add("hidden");
-        FullName.classList.add("hidden");
-        FullNameInput.classList.add("hidden");
-        FormTitle.innerHTML = "Log In"
 
     } else {
         active = 0;
@@ -64,18 +65,16 @@ function change() {
         )
 
         anime({
-            targets: '#SignUp',
+            targets: '#LogIn',
             translateX: '0',
             duration: '1000'
         })
+        SignUpFormDiv.classList.remove("hidden");
+        LogInFormDiv.classList.add("hidden");
         logIn.classList.add('ml-10')
         logIn.classList.remove('mr-10')
         transitionDiv.classList.remove('rounded-r-full');
         transitionDiv.classList.add('rounded-l-full');
         logIn.innerHTML = "Log In ->"
-        repeatPasswordInput.classList.remove("hidden");
-        repeatPasswordTitle.classList.remove("hidden");
-        FormTitle.innerHTML = "Sign Up"
-
     }
 }

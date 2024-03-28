@@ -1,10 +1,14 @@
 ﻿using CinemaVillage.DatabaseContext;
 using CinemaVillage.Services.MoviesAppService;
 using CinemaVillage.Services.MoviesAppService.Interface;
+using CinemaVillage.Services.UserAppService;
+using CinemaVillage.Services.UserAppService.Interface;
 using CinemaVillage.ViewModels.Home.HomeBuilder.HomeFactory;
 using CinemaVillage.ViewModels.Home.HomeBuilder.HomeFactory.Interface;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using Newtonsoft.Json.Serialization;
 
 namespace CinemaVillage
 {
@@ -19,8 +23,16 @@ namespace CinemaVillage
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie(option =>
+                    {
+                        option.LoginPath = "/Access/Login";
+                        option.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+                    });
+            services.AddHttpContextAccessor();
             services.AddTransient<IHomeFactory, HomeFactory>();
             services.AddTransient<IMoviesAppService, MoviesAppService>();
+            services.AddTransient<IUserAppService, UserAppService>();
             services.AddControllersWithViews();
             services.AddDbContext<CinemaDbContext>(options => options.UseSqlServer(_configRoot.GetConnectionString("DbContext")));
         }
@@ -39,6 +51,8 @@ namespace CinemaVillage
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

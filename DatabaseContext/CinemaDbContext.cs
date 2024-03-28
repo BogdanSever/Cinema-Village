@@ -196,7 +196,6 @@ public partial class CinemaDbContext : DbContext
             entity.HasKey(e => e.IdUser);
 
             entity.Property(e => e.IdUser)
-                .ValueGeneratedNever()
                 .HasColumnName("id_user");
             entity.Property(e => e.Email)
                 .HasMaxLength(50)
