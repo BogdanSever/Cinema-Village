@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Cinema Village</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="~/css/output.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
+          rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+          rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js" integrity="sha512-aNMyYYxdIxIaot0Y1/PLuEu3eipGCmsEUBrUq+7aVyPGMFH8z0eTP0tkqAvv34fzN6z+201d3T8HPb1svWSKHQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://kit.fontawesome.com/7d75bced7a.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="~/img/IuliaLogo.png">
+
+</head>
+
+<body class="bg-zinc-50">
+
+    <div>
+        <nav class="flex items-center justify-between bg-zinc-50 p-5 text-slate-700 font-BarlowSemiCondensed">
+            <a href="./index.html" class="text-4xl font-Fraunces">Cinema Village</a>
+            <ul class="flex items-center gap-5">
+                <li class="text-slate-700 text-xl">First Name Last Name</li>
+                <li><i class="fa-regular fa-user fa-xl" style="color: #ff7575;"></i></li>
+            </ul>
+        </nav>
+
+    </div>
+    <div>
+        <h1 class="text-slate-700 w-screen text-8xl mb-9 font-Fraunces text-center">Profile</h1>
+    </div>
+
+    <div id="OutgoingReservation" class="bg-red-50 pb-10 px-10 w-screen">
+        <h1 class="text-4xl text-red-400 mb-4 font-BarlowSemiCondensed">Outgoing Reservations:</h1>
+        <ul class="text-xl">
+            <li class="flex items-center gap-3">Dune 24/3/24 20:30 <span class="rounded-full w-2 h-2 bg-red-400 block"></span></li>
+            <li class="flex items-center gap-3">Dune 24/3/24 20:30 <span class="rounded-full w-2 h-2 bg-red-400 block"></span></li>
+            <li class="flex items-center gap-3">Dune 24/3/24 20:30 <span class="rounded-full w-2 h-2 bg-red-400 block"></span></li>
+        </ul>
+    </div>
+
+    <div>
+        <h1 class="text-center text-4xl text-slate-700 m-4">Up for Review</h1>
+        <div class="flex gap-4 m-4">
+            <div class="w-52 bg-[#71B48D] p-7 rounded-xl text-center">
+                <h1>Dune</h1>
+                <div>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star "></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </div>
+            </div>
+            <div class="w-52 bg-[#BA3B46] p-7 rounded-xl text-center">
+                <h1 class="font-BarlowSemiCondensed">Dune</h1>
+                <div>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star "></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </div>
+            </div>
+            <div class="w-52 bg-[#8E94F2] p-7 rounded-xl text-center">
+                <h1 class="font-BarlowSemiCondensed">Dune</h1>
+                <div>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star "></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </div>
+            </div>
+            <div class="w-52 bg-[#FF6B35] p-7 rounded-xl text-center">
+                <h1 class="font-BarlowSemiCondensed">Dune</h1>
+                <div>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star "></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </div>
+            </div>
+            <div class="w-52 bg-[#D65780] p-7 rounded-xl text-center">
+                <h1 class="font-BarlowSemiCondensed">Dune</h1>
+                <div>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star "></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <a asp-controller="User" asp-action="DeleteUser" type="submit">Delete User</a>
+
+</body>
+
+</html>

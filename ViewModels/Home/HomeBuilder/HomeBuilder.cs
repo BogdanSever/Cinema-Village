@@ -1,4 +1,5 @@
 ﻿using CinemaVillage.Services.MoviesAppService.Interface;
+using CinemaVillage.Services.UserAppService.Interface;
 
 namespace CinemaVillage.ViewModels.Home.HomeBuilder
 {
@@ -6,19 +7,23 @@ namespace CinemaVillage.ViewModels.Home.HomeBuilder
     {
 
         private readonly IMoviesAppService _moviesAppService;
+        private readonly IUserAppService _userAppService;
 
-        public HomeBuilder(IMoviesAppService moviesAppService)
+        public HomeBuilder(IMoviesAppService moviesAppService, IUserAppService userAppService)
         {
             _moviesAppService = moviesAppService;
+            _userAppService = userAppService;
         }
 
         public HomeViewModel Build()
         {
             var moviesAppModel = _moviesAppService.GetImagesMovies();
+            var userLoggedIn = _userAppService.GetUserStatus();
 
             return new HomeViewModel
             {
-                Movies = moviesAppModel
+                Movies = moviesAppModel,
+                LoggedInUserAppModel = userLoggedIn
             };
 
         }

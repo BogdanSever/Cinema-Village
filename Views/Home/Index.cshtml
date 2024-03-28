@@ -89,8 +89,19 @@
                 <li class="hover:text-red-400"> <a href="./ProgramFilme.html">Program</a></li>
                 <li class="hover:text-red-400"> <a href="./">Contact</a></li>
 
-                @if (HttpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+                @if (Model.LoggedInUserAppModel.IsLoggedIn)
                 {
+                    if (Model.LoggedInUserAppModel.Role.Equals("admin"))
+                    {
+                        <li class="hover:text-red-400">
+                            <a asp-controller="Admin" asp-action="Index">Admin Dashboard</a>
+                        </li>
+                    }
+
+                    <li class="hover:text-red-400">
+                        <a asp-controller="User" asp-action="Index">My Profile</a>
+                    </li>
+
                     <li class="hover:text-red-400">
                         <a asp-controller="Access" asp-action="LogOut">Log Out</a>
                     </li>

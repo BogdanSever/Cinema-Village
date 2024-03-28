@@ -10,5 +10,7 @@ namespace CinemaVillage.ViewModels.Home
         public SignUpAppModel SignUpAppModel { get; set; }
 
         public LogInAppModel LogInAppModel { get; set; }
+
+        public LoggedInUserAppModel LoggedInUserAppModel { get; set; }
     }
 }
