@@ -3,6 +3,8 @@ using CinemaVillage.Services.MoviesAppService;
 using CinemaVillage.Services.MoviesAppService.Interface;
 using CinemaVillage.Services.UserAppService;
 using CinemaVillage.Services.UserAppService.Interface;
+using CinemaVillage.ViewModels.Admin.AdminBuilder.AdminFactory;
+using CinemaVillage.ViewModels.Admin.AdminBuilder.AdminFactory.Interface;
 using CinemaVillage.ViewModels.Home.HomeBuilder.HomeFactory;
 using CinemaVillage.ViewModels.Home.HomeBuilder.HomeFactory.Interface;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -31,6 +33,7 @@ namespace CinemaVillage
                     });
             services.AddHttpContextAccessor();
             services.AddTransient<IHomeFactory, HomeFactory>();
+            services.AddTransient<IAdminFactory, AdminFactory>();
             services.AddTransient<IMoviesAppService, MoviesAppService>();
             services.AddTransient<IUserAppService, UserAppService>();
             services.AddControllersWithViews();

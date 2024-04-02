@@ -1,6 +1,6 @@
 ﻿namespace CinemaVillage.AppModel.Users;
 
-public class LoggedInUserAppModel
+public class UserStatusAppModel
 {
     public bool IsLoggedIn { get; set; }    
 

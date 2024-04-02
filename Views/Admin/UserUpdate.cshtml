@@ -1,0 +1,61 @@
+﻿@{
+    var selectedItem = ViewBag.SelectedItem;
+}
+
+@model CinemaVillage.ViewModels.Admin.AdminDahboardViewModel
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Cinema Village</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="~/css/output.css">
+    <link rel="icon" href="~/img/IuliaLogo.png">
+    <link rel="stylesheet" href="~/css/admin.css" />
+
+    <script src="~/js/admin.js" defer></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js" integrity="sha512-xq+Vm8jC94ynOikewaQXMEkJIOBp7iArs3IhFWSWdRT3Pq8wFz46p+ZDFAR7kHnSFf+zUv52B3prRYnbDRdgog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+</head>
+
+<body>
+    <div>
+        <form method="post" asp-controller="Admin" asp-action="SubmitSearchUpdateUser" id="formUserUpdate">
+            <select name="selectedItem">
+                <option value="@(!string.IsNullOrEmpty(selectedItem) ? selectedItem : "")" selected disabled>
+                    @(!string.IsNullOrEmpty(selectedItem) ? 
+                        Model.Users.Where(u => u.Id.ToString() == selectedItem).FirstOrDefault().FirstName + " " + Model.Users.Where(u => u.Id.ToString() == selectedItem).FirstOrDefault().LastName 
+                        : "Select an user"
+                    )
+                </option>
+                @if (Model.Users.Any())
+                {
+                    foreach (var user in Model.Users)
+                    {
+                        <option value="@user.Id">@(user.FirstName + " " + user.LastName)</option>
+                    }
+                }
+            </select>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Show user data</button>
+        </form>
+    </div>
+
+    @if (!string.IsNullOrEmpty(selectedItem))
+    {
+        <partial name="/Views/Shared/Forms/FormUpdateUser.cshtml" model="@(Model.UpdatedUser, Model.Users, selectedItem)" />
+    }
+
+</body>
+
+</html>

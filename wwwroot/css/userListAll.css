@@ -1,0 +1,21 @@
+﻿.title_table {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: xx-large;
+}
+
+.table_users {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.head_users {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.row_users:nth-child(even) {
+    background-color: #dddddd;
+}

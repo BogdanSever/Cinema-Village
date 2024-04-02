@@ -1,0 +1,28 @@
+﻿.line_divider {
+    border-left: 6px solid green;
+    height: 500px;
+}
+
+.column_update:not(:first-of-type) {
+    margin-left: 150px;
+}
+
+.table_update {
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+.buttons_update {
+    margin-top: 25px;
+    display: block;
+    text-align: center;
+}
+
+.buttons_update:nth-of-type(1) {
+    margin-top: 50px;
+}
+
+.hidden {
+    display: hidden;
+}

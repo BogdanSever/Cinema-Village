@@ -720,6 +720,10 @@ video {
   display: inline-flex !important;
 }
 
+.table {
+  display: table !important;
+}
+
 .hidden {
   display: none !important;
 }
@@ -794,6 +798,10 @@ video {
 
 .flex-grow {
   flex-grow: 1 !important;
+}
+
+.border-collapse {
+  border-collapse: collapse !important;
 }
 
 .-translate-x-56 {
@@ -914,6 +922,10 @@ video {
   border-bottom-right-radius: 9999px !important;
 }
 
+.border {
+  border-width: 1px !important;
+}
+
 .border-2 {
   border-width: 2px !important;
 }
@@ -954,6 +966,11 @@ video {
 .bg-\[\#FF6B35\] {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(255 107 53 / var(--tw-bg-opacity)) !important;
+}
+
+.bg-blue-500 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity)) !important;
 }
 
 .bg-red-400 {
@@ -1021,9 +1038,19 @@ video {
   padding-right: 2.5rem !important;
 }
 
+.px-4 {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+
 .px-5 {
   padding-left: 1.25rem !important;
   padding-right: 1.25rem !important;
+}
+
+.py-2 {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
 }
 
 .py-3 {
@@ -1079,6 +1106,14 @@ video {
   line-height: 1.75rem !important;
 }
 
+.font-bold {
+  font-weight: 700 !important;
+}
+
+.font-extrabold {
+  font-weight: 800 !important;
+}
+
 .text-neutral-400 {
   --tw-text-opacity: 1 !important;
   color: rgb(163 163 163 / var(--tw-text-opacity)) !important;
@@ -1097,6 +1132,11 @@ video {
 .text-slate-800 {
   --tw-text-opacity: 1 !important;
   color: rgb(30 41 59 / var(--tw-text-opacity)) !important;
+}
+
+.text-white {
+  --tw-text-opacity: 1 !important;
+  color: rgb(255 255 255 / var(--tw-text-opacity)) !important;
 }
 
 .text-zinc-50 {
@@ -1170,6 +1210,11 @@ video {
 .hover\:border-red-400:hover {
   --tw-border-opacity: 1 !important;
   border-color: rgb(248 113 113 / var(--tw-border-opacity)) !important;
+}
+
+.hover\:bg-blue-700:hover {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(29 78 216 / var(--tw-bg-opacity)) !important;
 }
 
 .hover\:text-red-400:hover {

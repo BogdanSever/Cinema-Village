@@ -1,0 +1,61 @@
+﻿@model CinemaVillage.ViewModels.Admin.AdminDahboardViewModel;
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Cinema Village</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="~/css/output.css">
+    <link rel="stylesheet" href="~/css/userListAll.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js" integrity="sha512-xq+Vm8jC94ynOikewaQXMEkJIOBp7iArs3IhFWSWdRT3Pq8wFz46p+ZDFAR7kHnSFf+zUv52B3prRYnbDRdgog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+</head>
+
+<body>
+    @if (Model.Users.Any())
+    {
+        <h1 class="title_table">Users</h1>
+
+        <table class="table_users">
+            <tr class="row_users">
+                <th class="head_users">Id User</th>
+                <th class="head_users">First Name</th>
+                <th class="head_users">Last Name</th>
+                <th class="head_users">Email</th>
+                <th class="head_users">Password</th>
+                <th class="head_users">Role</th>
+            </tr>
+
+            @foreach (var user in Model.Users)
+            {
+                <tr class="row_users">
+                    <td class="head_users">@user.Id</td>
+                    <td class="head_users">@user.FirstName</td>
+                    <td class="head_users">@user.LastName</td>
+                    <td class="head_users">@user.Email</td>
+                    <td class="head_users">@user.Password</td>
+                    <td class="head_users">@user.Role</td>
+                </tr>
+            }
+
+        </table>
+    }
+    else
+    {
+        <h2>No users in DB!</h2>
+    }
+
+</body>
+
+</html>

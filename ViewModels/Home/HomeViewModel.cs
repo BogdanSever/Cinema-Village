@@ -11,6 +11,6 @@ namespace CinemaVillage.ViewModels.Home
 
         public LogInAppModel LogInAppModel { get; set; }
 
-        public LoggedInUserAppModel LoggedInUserAppModel { get; set; }
+        public UserStatusAppModel LoggedInUserAppModel { get; set; }
     }
 }

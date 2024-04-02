@@ -8,7 +8,9 @@ namespace CinemaVillage.Services.UserAppService.Interface
         void AddUser(User userModel);
         bool CheckForUserExistance(string email);
         User GetUserByEmail(string email);
-        LoggedInUserAppModel GetUserStatus();
+        UserStatusAppModel GetUserStatus();
         void DeleteUser(string email);
+        List<UserAppModel> GetAllUsers();
+        void UpdateUser(User userModel);
     }
 }

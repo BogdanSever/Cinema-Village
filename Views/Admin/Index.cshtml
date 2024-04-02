@@ -1,1 +1,65 @@
-﻿
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Cinema Village</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="~/css/output.css">
+    <link rel="icon" href="~/img/IuliaLogo.png">
+    <link rel="stylesheet" href="~/css/admin.css" />
+
+    <script src="~/js/admin.js" defer></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js" integrity="sha512-xq+Vm8jC94ynOikewaQXMEkJIOBp7iArs3IhFWSWdRT3Pq8wFz46p+ZDFAR7kHnSFf+zUv52B3prRYnbDRdgog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+</head>
+
+<body>
+    <div class="table_update">
+        <div class="column_update">
+            <h2 class="text-4xl font-extrabold">Users</h2>
+
+            <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+                Add User
+            </a>
+            <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+                Delete User
+            </a>
+            <a asp-controller="Admin" asp-action="UserUpdate" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+                User Update
+            </a>
+            <a asp-controller="Admin" asp-action="UserListAll" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+                See all Users
+            </a>
+        </div>
+        <div class="line_divider column_update"></div>
+        <div class="column_update">
+            <h2 class="text-4xl font-extrabold">Movies</h2>
+
+            <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+                Add Movie
+            </a>
+            <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+                Delete Movie
+            </a>
+            <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+                Update Movie
+            </a>
+            <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+                See all Movies
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>
+
