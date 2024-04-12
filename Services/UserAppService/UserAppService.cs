@@ -71,6 +71,28 @@ namespace CinemaVillage.Services.UserAppService
             };
         }
 
+        public UserAppModel GetConnectedUserData()
+        {
+            var userStatusAppModel = GetUserStatus();
+
+            if (userStatusAppModel != null)
+            {
+                var userConnected = GetUserByEmail(userStatusAppModel.Email);
+
+                return new UserAppModel
+                {
+                    Id = userConnected.IdUser,
+                    FirstName = userConnected.GivenName,
+                    LastName = userConnected.FamilyName,
+                    Email = userConnected.Email,
+                    Password = userConnected.Password,
+                    Role = userConnected.Role,
+                };
+            }
+
+            return null;
+        }
+
         public void DeleteUser(string email)
         {
             if (CheckForUserExistance(email))

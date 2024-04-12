@@ -12,5 +12,6 @@ namespace CinemaVillage.Services.UserAppService.Interface
         void DeleteUser(string email);
         List<UserAppModel> GetAllUsers();
         void UpdateUser(User userModel);
+        UserAppModel GetConnectedUserData();
     }
 }

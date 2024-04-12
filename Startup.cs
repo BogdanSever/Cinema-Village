@@ -1,4 +1,6 @@
 ﻿using CinemaVillage.DatabaseContext;
+using CinemaVillage.Services.BookingAppService;
+using CinemaVillage.Services.BookingAppService.Interface;
 using CinemaVillage.Services.MoviesAppService;
 using CinemaVillage.Services.MoviesAppService.Interface;
 using CinemaVillage.Services.UserAppService;
@@ -7,6 +9,8 @@ using CinemaVillage.ViewModels.Admin.AdminBuilder.AdminFactory;
 using CinemaVillage.ViewModels.Admin.AdminBuilder.AdminFactory.Interface;
 using CinemaVillage.ViewModels.Home.HomeBuilder.HomeFactory;
 using CinemaVillage.ViewModels.Home.HomeBuilder.HomeFactory.Interface;
+using CinemaVillage.ViewModels.User.UserBuilder.UserFactory;
+using CinemaVillage.ViewModels.User.UserBuilder.UserFactory.Interface;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
@@ -36,6 +40,8 @@ namespace CinemaVillage
             services.AddTransient<IAdminFactory, AdminFactory>();
             services.AddTransient<IMoviesAppService, MoviesAppService>();
             services.AddTransient<IUserAppService, UserAppService>();
+            services.AddTransient<IUserFactory, UserFactory>();
+            services.AddTransient<IBookingAppService, BookingAppService>();
             services.AddControllersWithViews();
             services.AddDbContext<CinemaDbContext>(options => options.UseSqlServer(_configRoot.GetConnectionString("DbContext")));
         }

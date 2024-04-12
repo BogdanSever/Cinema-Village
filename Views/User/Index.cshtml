@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model CinemaVillage.ViewModels.User.UserViewModel
+
+<!DOCTYPE html>
 
 <html>
 
@@ -27,9 +29,9 @@
 
     <div>
         <nav class="flex items-center justify-between bg-zinc-50 p-5 text-slate-700 font-BarlowSemiCondensed">
-            <a href="./index.html" class="text-4xl font-Fraunces">Cinema Village</a>
+            <a asp-action="Index" asp-controller="Home" class="text-4xl font-Fraunces">Cinema Village</a>
             <ul class="flex items-center gap-5">
-                <li class="text-slate-700 text-xl">First Name Last Name</li>
+                <li class="text-slate-700 text-xl">@Model.FirstName @Model.LastName</li>
                 <li><i class="fa-regular fa-user fa-xl" style="color: #ff7575;"></i></li>
             </ul>
         </nav>
@@ -42,66 +44,29 @@
     <div id="OutgoingReservation" class="bg-red-50 pb-10 px-10 w-screen">
         <h1 class="text-4xl text-red-400 mb-4 font-BarlowSemiCondensed">Outgoing Reservations:</h1>
         <ul class="text-xl">
-            <li class="flex items-center gap-3">Dune 24/3/24 20:30 <span class="rounded-full w-2 h-2 bg-red-400 block"></span></li>
-            <li class="flex items-center gap-3">Dune 24/3/24 20:30 <span class="rounded-full w-2 h-2 bg-red-400 block"></span></li>
-            <li class="flex items-center gap-3">Dune 24/3/24 20:30 <span class="rounded-full w-2 h-2 bg-red-400 block"></span></li>
+            @foreach (var movie in Model.OnGoingMovies)
+            {
+                <li class="flex items-center gap-3">@movie.Title @movie.BookingTimeMovie <span class="rounded-full w-2 h-2 bg-red-400 block"></span></li>
+            }
         </ul>
     </div>
 
     <div>
         <h1 class="text-center text-4xl text-slate-700 m-4">Up for Review</h1>
         <div class="flex gap-4 m-4">
-            <div class="w-52 bg-[#71B48D] p-7 rounded-xl text-center">
-                <h1>Dune</h1>
-                <div>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star "></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
+            @foreach (var movie in Model.PastMovies)
+            {
+                <div class="w-52 bg-[#BA3B46] p-7 rounded-xl text-center">
+                    <h1>@movie.Title</h1>
+                    <div>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star "></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </div>
                 </div>
-            </div>
-            <div class="w-52 bg-[#BA3B46] p-7 rounded-xl text-center">
-                <h1 class="font-BarlowSemiCondensed">Dune</h1>
-                <div>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star "></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </div>
-            </div>
-            <div class="w-52 bg-[#8E94F2] p-7 rounded-xl text-center">
-                <h1 class="font-BarlowSemiCondensed">Dune</h1>
-                <div>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star "></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </div>
-            </div>
-            <div class="w-52 bg-[#FF6B35] p-7 rounded-xl text-center">
-                <h1 class="font-BarlowSemiCondensed">Dune</h1>
-                <div>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star "></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </div>
-            </div>
-            <div class="w-52 bg-[#D65780] p-7 rounded-xl text-center">
-                <h1 class="font-BarlowSemiCondensed">Dune</h1>
-                <div>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star "></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </div>
-            </div>
-
+            }
         </div>
     </div>
 
