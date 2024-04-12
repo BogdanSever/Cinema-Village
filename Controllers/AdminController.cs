@@ -4,10 +4,11 @@ using CinemaVillage.Services.UserAppService.Interface;
 using CinemaVillage.ViewModels.Admin.AdminBuilder.AdminFactory.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace CinemaVillage.Controllers;
 
-
+[OutputCache(NoStore = true, Duration = 0)]
 [Authorize(Roles = "admin")]
 public class AdminController : Controller
 {

@@ -3,9 +3,11 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using CinemaVillage.Models;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace CinemaVillage.Controllers;
 
+[OutputCache(NoStore = true, Duration = 0)]
 public class AccessController : Controller
 {
     /*public IActionResult Login()

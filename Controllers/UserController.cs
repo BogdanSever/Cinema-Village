@@ -1,46 +1,47 @@
 ﻿using CinemaVillage.Services.UserAppService.Interface;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 
-namespace CinemaVillage.Controllers
+namespace CinemaVillage.Controllers;
+
+[OutputCache(NoStore = true, Duration = 0)]
+public class UserController : Controller
 {
-    public class UserController : Controller
+    private readonly IUserAppService _userAppService;
+    private readonly ILogger<UserController> _logger;   
+
+    public UserController(ILogger<UserController> logger, IUserAppService userAppService)
     {
-        private readonly IUserAppService _userAppService;
-        private readonly ILogger<UserController> _logger;   
+        _logger = logger;
+        _userAppService = userAppService;
+    }
 
-        public UserController(ILogger<UserController> logger, IUserAppService userAppService)
-        {
-            _logger = logger;
-            _userAppService = userAppService;
-        }
+    [HttpGet("MyProfile")]
+    public IActionResult Index()
+    {
+        return View();
+    }
 
-        [HttpGet("MyProfile")]
-        public IActionResult Index()
+    public IActionResult DeleteUser()
+    {
+        try
         {
-            return View();
-        }
-
-        public IActionResult DeleteUser()
-        {
-            try
+            var userStatus = _userAppService.GetUserStatus();
+            if (userStatus != null && userStatus.Email != null)
             {
-                var userStatus = _userAppService.GetUserStatus();
-                if (userStatus != null && userStatus.Email != null)
-                {
-                    _userAppService.DeleteUser(userStatus.Email);
-                }
-                else
-                {
-                    throw new InvalidOperationException("User is null!");
-                }
-
-                return RedirectToAction("LogOut", "Access");
+                _userAppService.DeleteUser(userStatus.Email);
             }
-            catch (Exception ex)
+            else
             {
-                _logger.LogError(ex.Message);
-                return RedirectToAction("Error", "Home");
+                throw new InvalidOperationException("User is null!");
             }
+
+            return RedirectToAction("LogOut", "Access");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            return RedirectToAction("Error", "Home");
         }
     }
 }
