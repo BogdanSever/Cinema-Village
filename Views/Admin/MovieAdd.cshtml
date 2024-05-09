@@ -1,0 +1,79 @@
+﻿@using CinemaVillage.AppModel.Directors
+@using CinemaVillage.AppModel.Theatres
+@model CinemaVillage.ViewModels.Admin.AdminDashboardMovieViewModel
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Cinema Village</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="~/css/output.css">
+    <link rel="icon" href="~/img/IuliaLogo.png">
+    <link rel="stylesheet" href="~/css/admin.css" />
+
+    <script src="~/js/admin.js" defer></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js" integrity="sha512-xq+Vm8jC94ynOikewaQXMEkJIOBp7iArs3IhFWSWdRT3Pq8wFz46p+ZDFAR7kHnSFf+zUv52B3prRYnbDRdgog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+</head>
+
+<body>
+
+    <div>
+        <form method="post" asp-controller="Admin" asp-action="SubmitFormMovieAdd" id="formMovieAdd" enctype="multipart/form-data" style=" display: inline-grid">
+
+            <label id="movieTitleLabel">Title</label>
+            <input asp-for="@Model.Movie.Title" type="text" id="movieTitleInput" />
+            <span asp-validation-for="@Model.Movie.Title" class="text-danger"></span>
+
+            <label id="movieGenreLabel">Genre</label>
+            <input asp-for="@Model.Movie.Genre" type="text" id="movieGenreInput" />
+            <span asp-validation-for="@Model.Movie.Genre" class="text-danger"></span>
+
+            <label id="movieDurationLabel">Duration</label>
+            <input asp-for="@Model.Movie.Duration" type="text" id="movieDurationInput" />
+            <span asp-validation-for="@Model.Movie.Duration" class="text-danger"></span>
+
+            <label id="movieReleaseDateLabel">Release Date</label>
+            <input asp-for="@Model.Movie.ReleaseDate" type="date" id="movieReleaseDateInput" />
+            <span asp-validation-for="@Model.Movie.ReleaseDate" class="text-danger"></span>
+
+            <label id="movieDescriptionLabel">Description</label>
+            <input asp-for="@Model.Movie.Description" type="text" id="movieDescriptionInput" />
+            <span asp-validation-for="@Model.Movie.Description" class="text-danger"></span>
+
+            <label id="movieImageLabel">Image</label>
+            <input name="imageMovie" type="file" accept="image/*" id="movieImageInput" />
+            <span class="text-danger"></span>
+
+            <label id="movieDirectorLabel">Director</label>
+            <select asp-for="@Model.Movie.DirectorName" asp-items="@(new SelectList(Model.Directors, nameof(DirectorsAppModel.FirstName), nameof(DirectorsAppModel.FirstName)))" id="movieDirectorDropdown">
+                <option>Select one director</option>
+            </select>
+            <span asp-validation-for="@Model.Movie.DirectorName" class="text-danger"></span>
+
+            <label id="movieTheatreLabel">Theatre</label>
+            <select asp-for="@Model.Movie.TheatreName" asp-items="@(new SelectList(Model.Theatres, nameof(TheatreAppModel.Id), nameof(TheatreAppModel.Id)))" id="movieTheatreDropdown">
+                <option>Select a theatre</option>
+            </select>
+            <span asp-validation-for="@Model.Movie.TheatreName" class="text-danger"></span>
+
+            <button id="btnSubmitAddMovie" onclick="getFormMovieAdd()">
+                Add Movie
+            </button>
+
+        </form>
+    </div>
+</body>
+
+</html>

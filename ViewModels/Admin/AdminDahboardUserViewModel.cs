@@ -2,7 +2,7 @@
 
 namespace CinemaVillage.ViewModels.Admin;
 
-public class AdminDahboardViewModel
+public class AdminDahboardUserViewModel
 {
     public List<UserAppModel> Users { get; set; }
 

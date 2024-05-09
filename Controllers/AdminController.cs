@@ -1,10 +1,12 @@
-﻿using CinemaVillage.AppModel.Users;
+﻿using CinemaVillage.AppModel.Movies;
+using CinemaVillage.AppModel.Users;
 using CinemaVillage.Models;
 using CinemaVillage.Services.UserAppService.Interface;
 using CinemaVillage.ViewModels.Admin.AdminBuilder.AdminFactory.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
+using Newtonsoft.Json;
 
 namespace CinemaVillage.Controllers;
 
@@ -55,7 +57,7 @@ public class AdminController : Controller
             var builder = _adminFactory.CreateBuilder();
             var model = builder.BuildUpdateUser();
 
-            if(!string.IsNullOrEmpty(userId))
+            if (!string.IsNullOrEmpty(userId))
             {
                 ViewBag.SelectedItem = userId;
             }
@@ -76,7 +78,7 @@ public class AdminController : Controller
     }
 
     [HttpPost]
-    public IActionResult SubmitFormUpdateUser([Bind(Prefix = "Item1")]UpdateUserAppModel model)
+    public IActionResult SubmitFormUpdateUser([Bind(Prefix = "Item1")] UpdateUserAppModel model)
     {
         if (model != null)
         {
@@ -93,7 +95,7 @@ public class AdminController : Controller
 
             try
             {
-                _userAppService.UpdateUser (userModel);
+                _userAppService.UpdateUser(userModel);
             }
             catch (InvalidOperationException ex)
             {
@@ -129,6 +131,72 @@ public class AdminController : Controller
             var model = builder.BuildUpdateUser();
 
             return View(model);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message, ex);
+            return RedirectToAction("Error");
+        }
+    }
+
+    [HttpGet("MyAdminDashBoard/MovieAdd")]
+    public IActionResult MovieAdd()
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidOperationException("Invalid model state");
+            }
+
+            var builder = _adminFactory.CreateBuilder();
+            var model = builder.BuildForMovie();
+
+            return View(model);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message, ex);
+            return RedirectToAction("Error");
+        }
+    }
+
+    [HttpPost("MyAdminDashBoard/SubmitFormMovieAdd")]
+    public IActionResult SubmitFormMovieAdd([Bind(Prefix = "Movie")] MovieAddAppModel model)
+    {
+        var modelToSend = model;
+
+        var movieImg = HttpContext.Request.Form.Files[0];
+
+        /*byte[] bytes;
+        using (var stream = new MemoryStream())
+        {
+            movieImg.CopyTo(stream);
+            bytes = stream.ToArray();
+        }*/
+
+        modelToSend.Image = movieImg;
+
+        //parse and verify form to not have multiple run date suprapuse in same theatre
+        //generate json file of availabilty
+        //add movie to table together with moviexreftheatre
+
+        TempData["modelMovieAdd"] = JsonConvert.SerializeObject(modelToSend);
+
+        return RedirectToAction("SelectDateAndTimeMovieAdd", new { theatre = modelToSend.TheatreName });
+    }
+
+    [HttpGet("MyAdminDashBoard/MovieAdd/DateAndTimeSelect")]
+    public IActionResult SelectDateAndTimeMovieAdd(string theatre)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidOperationException("Invalid model state");
+            }
+
+            return View();
         }
         catch (Exception ex)
         {
