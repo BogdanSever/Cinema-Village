@@ -31,5 +31,10 @@ namespace CinemaVillage.Services.DirectorsAppService
 
             return listDirectorsAppModel;
         }
+
+        public int GetDirectorId(string name)
+        {
+            return _context.Directors.Where(d => d.GivenName == name).Select(d => d.IdDirector).FirstOrDefault();
+        }
     }
 }

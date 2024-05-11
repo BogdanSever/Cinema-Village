@@ -26,3 +26,7 @@
 .hidden {
     display: hidden;
 }
+
+.disabled_btn{
+    opacity: 0.5;
+}

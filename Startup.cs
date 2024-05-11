@@ -3,8 +3,12 @@ using CinemaVillage.Services.BookingAppService;
 using CinemaVillage.Services.BookingAppService.Interface;
 using CinemaVillage.Services.DirectorsAppService;
 using CinemaVillage.Services.DirectorsAppService.Interface;
+using CinemaVillage.Services.HelperService;
+using CinemaVillage.Services.HelperService.Interface;
 using CinemaVillage.Services.MoviesAppService;
 using CinemaVillage.Services.MoviesAppService.Interface;
+using CinemaVillage.Services.MovieXrefTheatreAppService;
+using CinemaVillage.Services.MovieXrefTheatreAppService.Interface;
 using CinemaVillage.Services.TheatreAppService;
 using CinemaVillage.Services.TheatreAppService.Interface;
 using CinemaVillage.Services.UserAppService;
@@ -46,7 +50,9 @@ namespace CinemaVillage
             services.AddTransient<IBookingAppService, BookingAppService>();
             services.AddTransient<IDirectorAppService, DirectorAppService>();
             services.AddTransient<ITheatreAppService, TheatreAppService>();
-            services.AddControllersWithViews();
+            services.AddTransient<IJsonCreatorService, JsonCreatorService>();
+            services.AddTransient<IMovieXrefTheatreAppService, MovieXrefTheatreAppService>();
+            services.AddControllersWithViews().AddNewtonsoftJson();
             services.AddDbContext<CinemaDbContext>(options => options.UseSqlServer(_configRoot.GetConnectionString("DbContext")));
         }
 

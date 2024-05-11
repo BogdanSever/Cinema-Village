@@ -15,7 +15,7 @@ namespace CinemaVillage.AppModel.Movies
         public string Duration { get; set; }
 
         [Required(ErrorMessage = "Please enter the release date")]
-        public DateTime ReleaseDate { get; set; }
+        public DateOnly ReleaseDate { get; set; }
 
         [Required(ErrorMessage = "Please enter the description of the movie")]
         public string Description { get; set; }
@@ -23,7 +23,8 @@ namespace CinemaVillage.AppModel.Movies
         [Required(ErrorMessage = "Please select a director")]
         public string DirectorName { get; set; }
 
-        public IFormFile Image { get; set; }
+        [Required(ErrorMessage = "Please add a image for the movie")]
+        public byte[] Image { get; set; }
 
         [Required(ErrorMessage = "Please select a theatre")]
         public string TheatreName { get; set; }

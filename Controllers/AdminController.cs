@@ -1,6 +1,10 @@
 ﻿using CinemaVillage.AppModel.Movies;
 using CinemaVillage.AppModel.Users;
 using CinemaVillage.Models;
+using CinemaVillage.Services.DirectorsAppService.Interface;
+using CinemaVillage.Services.HelperService.Interface;
+using CinemaVillage.Services.MoviesAppService.Interface;
+using CinemaVillage.Services.MovieXrefTheatreAppService.Interface;
 using CinemaVillage.Services.UserAppService.Interface;
 using CinemaVillage.ViewModels.Admin.AdminBuilder.AdminFactory.Interface;
 using Microsoft.AspNetCore.Authorization;
@@ -17,12 +21,22 @@ public class AdminController : Controller
     private readonly ILogger<AdminController> _logger;
     private readonly IAdminFactory _adminFactory;
     private readonly IUserAppService _userAppService;
+    private readonly IDirectorAppService _directorAppService;
+    private readonly IMoviesAppService _moviesAppService;
+    private readonly IMovieXrefTheatreAppService _movieXrefTheatreAppService;
+    private readonly IJsonCreatorService _jsonCreatorService;
 
-    public AdminController(ILogger<AdminController> logger, IAdminFactory adminFactory, IUserAppService userAppService)
+    public AdminController(ILogger<AdminController> logger, IAdminFactory adminFactory, IUserAppService userAppService, 
+                           IDirectorAppService directorAppService, IMoviesAppService moviesAppService, IMovieXrefTheatreAppService movieXrefTheatreAppService, 
+                           IJsonCreatorService jsonCreatorService)
     {
         _logger = logger;
         _adminFactory = adminFactory;
         _userAppService = userAppService;
+        _directorAppService = directorAppService;
+        _moviesAppService = moviesAppService;
+        _movieXrefTheatreAppService = movieXrefTheatreAppService;
+        _jsonCreatorService = jsonCreatorService;
     }
 
     [HttpGet("MyAdminDashBoard")]
@@ -164,30 +178,56 @@ public class AdminController : Controller
     [HttpPost("MyAdminDashBoard/SubmitFormMovieAdd")]
     public IActionResult SubmitFormMovieAdd([Bind(Prefix = "Movie")] MovieAddAppModel model)
     {
-        var modelToSend = model;
-
-        var movieImg = HttpContext.Request.Form.Files[0];
-
-        /*byte[] bytes;
-        using (var stream = new MemoryStream())
+        if (model != null)
         {
-            movieImg.CopyTo(stream);
-            bytes = stream.ToArray();
-        }*/
+            var movieImg = HttpContext.Request.Form.Files[0];
 
-        modelToSend.Image = movieImg;
+            byte[] bytes;
+            using (var stream = new MemoryStream())
+            {
+                movieImg.CopyTo(stream);
+                bytes = stream.ToArray();
+            }
 
-        //parse and verify form to not have multiple run date suprapuse in same theatre
-        //generate json file of availabilty
-        //add movie to table together with moviexreftheatre
+            var idDirector = _directorAppService.GetDirectorId(model.DirectorName);
+            int movieId;
 
-        TempData["modelMovieAdd"] = JsonConvert.SerializeObject(modelToSend);
+            var movieModel = new Movie
+            {
+                IdDirector = idDirector,
+                Title = model.Title,
+                Genre = model.Genre,
+                Duration = model.Duration,
+                ReleaseDate = model.ReleaseDate,
+                Discription = model.Description,
+                Image = bytes
+            };
 
-        return RedirectToAction("SelectDateAndTimeMovieAdd", new { theatre = modelToSend.TheatreName });
+            try
+            {
+                movieId = _moviesAppService.AddMovie(movieModel);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new InvalidOperationException(ex.Message, ex);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return RedirectToAction("Error");
+            }
+
+            return RedirectToAction("SelectDateAndTimeMovieAdd", new { theatreID = model.TheatreName, movieID = movieId });
+        }
+        else
+        {
+            return RedirectToAction("Error");
+        }
     }
 
     [HttpGet("MyAdminDashBoard/MovieAdd/DateAndTimeSelect")]
-    public IActionResult SelectDateAndTimeMovieAdd(string theatre)
+    public IActionResult SelectDateAndTimeMovieAdd(string theatreID, int movieID)
     {
         try
         {
@@ -196,12 +236,104 @@ public class AdminController : Controller
                 throw new InvalidOperationException("Invalid model state");
             }
 
+            TempData["theatreID"] = theatreID;
+            TempData["movieID"] = movieID;
+
             return View();
         }
         catch (Exception ex)
         {
             _logger.LogError(ex.Message, ex);
             return RedirectToAction("Error");
+        }
+    }
+
+    [HttpPost("MyAdminDashBoard/MovieAdd/CurrentAvailableDates")]
+    public JsonResult CurrentAvailableDates(string theatreID)
+    {
+        try
+        {
+            var dictDatesAndHours = new Dictionary<string, List<string>>();
+            var theatre_id = Int32.Parse(theatreID);
+            var availabilties = _movieXrefTheatreAppService.GetAvailabilty(theatre_id);
+
+            foreach(var availabilty in availabilties)
+            {
+                var model = JsonConvert.DeserializeObject<List<MovieAddJsonAppModel>>(availabilty);
+                foreach(var entry in model)
+                {
+                    var hours = new List<string>();
+                    foreach(var hourRunning in entry.HoursRunning)
+                    {
+                        hours.Add(hourRunning.Hour);
+                    }
+
+                    if (!dictDatesAndHours.ContainsKey(entry.Date))
+                    {
+                        dictDatesAndHours.Add(entry.Date, hours);
+                    }
+                    else
+                    {
+                        dictDatesAndHours[entry.Date].AddRange(hours);
+                    }
+                }
+            }
+
+            return Json(new
+            {
+                Status = "OK",
+                Message = "Response Added",
+                MyDictionary = dictDatesAndHours
+            });
+        }
+        catch (Exception ex)
+        {
+            return Json(new
+            {
+                Status = "ERROR",
+                Message = ex.Message.ToString(),
+                Data = new int[0]
+            });
+        }
+    }
+
+    [HttpPost("MyAdminDashBoard/MovieAdd/SubmitMovieAdd")]
+    public string SubmitMovieAdd(List<MovieAddJsonAppModel> json)
+    {
+        if (json != null)
+        {
+            var availabilityJson = _jsonCreatorService.CreateJson(json);
+            var theatreID = Int32.Parse(TempData["theatreID"].ToString());
+            var movieID = Int32.Parse(TempData["movieID"].ToString());
+
+            var movieXrefTheatreModel = new MovieXrefTheatre
+            {
+                IdMovie = movieID,
+                IdTheatre = theatreID,
+                RunningDatetime = DateTime.Now,
+                Availability = availabilityJson
+            };
+
+            try
+            {
+                _movieXrefTheatreAppService.AddMovieXrefTheatre(movieXrefTheatreModel);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new InvalidOperationException(ex.Message, ex);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return "Error";
+            }
+
+            return "MyAdminDashBoard";
+        }
+        else
+        {
+            return "Error";
         }
     }
 }

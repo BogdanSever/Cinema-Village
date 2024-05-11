@@ -95,5 +95,41 @@ namespace CinemaVillage.Services.MoviesAppService
                 BookingTimeMovie = bookingTimeMovie
             };
         }
+
+        public int AddMovie(Movie movieModel)
+        {
+            if (!CheckForExistanceMovie(movieModel.Title))
+            {
+                try
+                {
+                    _context.Movies.Add(movieModel);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message, ex);
+                }
+
+                _context.SaveChanges();
+
+                return movieModel.IdMovie;
+            }
+            else
+            {
+                throw new InvalidOperationException("Movie already exists!");
+            }
+        }
+
+        private bool CheckForExistanceMovie(string title)
+        {
+            foreach (var movie in _context.Movies)
+            {
+                if (movie.Title.Equals(title))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

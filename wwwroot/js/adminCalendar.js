@@ -3,11 +3,45 @@ import airDatepickerLocaleEn from 'https://cdn.skypack.dev/air-datepicker/locale
 
 var noCalendar = 0;
 var datesDict = {};
+var unavailableDatesDict = {};
 var disabledDates = [];
+
+const queryParams = new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop) => searchParams.get(prop),
+});
+
+$.ajax({
+    type: "POST",
+    url: "CurrentAvailableDates",
+    data: { theatreID: queryParams.theatreID },
+    success: function (response) {
+        if (response.status === "OK") {
+            for (const [key, value] of Object.entries(response.myDictionary)) {
+                for (const val of value) {
+                    addToDictionary(key, val, unavailableDatesDict);
+                }
+            }
+            updateDisabledDates(unavailableDatesDict);
+            console.log(unavailableDatesDict);
+        }
+        else {
+            console.log(response.Status);
+        }
+    },
+    error: function (response) {
+        alert("Error: " + response.Status + " |  " + response.Message);
+    }
+})
+
+var btnAddMovie = document.getElementById("addMovie");
 
 var btnAddNewRunDateTime = document.getElementById("addRunnigDateTimeBtn");
 btnAddNewRunDateTime.addEventListener("click", () => {
-    updateDisabledDates();
+
+    btnAddNewRunDateTime.setAttribute('disabled', '');
+    btnAddNewRunDateTime.style.opacity = 0.5;
+
+    updateDisabledDates(datesDict);
 
     var calendarDivElement = document.getElementById("calendars");
     var newCalendarDiv = document.createElement("div");
@@ -21,6 +55,7 @@ btnAddNewRunDateTime.addEventListener("click", () => {
 
     var btnConfirmDate = createNewButton("confirmDateBtn", "Confirm date");
     newCalendarDiv.appendChild(btnConfirmDate);
+
     btnConfirmDate.addEventListener('click', () => {
         if (calendar.hasSelectedDates) {
             var splitedDate = calendar.selectedDates[0]
@@ -39,26 +74,22 @@ btnAddNewRunDateTime.addEventListener("click", () => {
 
             var hourSelected = selectedRadioBtn.split('_')[1] + ":00:00";
 
-            addToDictionary(dateSelected, hourSelected);
-
-            console.log(calendar);
+            addToDictionary(dateSelected, hourSelected, datesDict);
 
             calendar.destroy();
             newCalendarDiv.removeChild(newCalendarDiv.firstChild);
 
             newCalendarDiv.innerText = dateSelected + ' ' + hourSelected;
 
-
-            console.log(datesDict);
-
-
             btnAddNewRunDateTime.removeAttribute('disabled');
             btnAddNewRunDateTime.style.opacity = 1;
+
+            if (btnAddMovie.hasAttribute('disabled')) {
+                btnAddMovie.removeAttribute('disabled');
+                btnAddMovie.style.opacity = 1;
+            }
         }
     });
-
-    btnAddNewRunDateTime.setAttribute('disabled', '');
-    btnAddNewRunDateTime.style.opacity = 0.5;
 });
 
 function createNewCalendar(calendarId) {
@@ -81,7 +112,7 @@ function createNewCalendar(calendarId) {
         minDate: nextDay,
         maxDate: maxDayToBeSelected,
         toggleSelected: false,
-        onSelect: ({ date, formattedDate, datepicker }) => {
+        onSelect: ({ date }) => {
             var timeSection = document.getElementsByClassName('air-datepicker--time')[0];
             timeSection.textContent = '';
 
@@ -89,8 +120,9 @@ function createNewCalendar(calendarId) {
 
             var dateToKey = date.toLocaleString().split(',')[0];
             var hoursUnavailable = getValuesForKey(dateToKey);
-
-            var availableHours = getAvailableHours(allHours, hoursUnavailable);
+            console.log(hoursUnavailable);
+            var availableHours = allHours.filter(item => !hoursUnavailable.includes(item));
+            console.log(availableHours);
             if (availableHours.length != 0) {
                 for (const hour of availableHours) {
                     var hourBtnId = "hour_" + hour.split(':')[0] + "_btn";
@@ -139,40 +171,114 @@ function createNewRadioButton(buttonId, btnText, parent) {
     parent.appendChild(document.createElement("br"));
 }
 
-function addToDictionary(key, value) {
+function addToDictionary(key, value, dictionary) {
 
-    if (datesDict.hasOwnProperty(key)) {
-        datesDict[key].push(value);
+    if (dictionary.hasOwnProperty(key)) {
+        dictionary[key].push(value);
     } else {
-        datesDict[key] = [value];
+        dictionary[key] = [value];
     }
 }
 
-function getValuesForKey(key) {
-    if (key in datesDict) {
-        return Array.isArray(datesDict[key]) ? datesDict[key] : [datesDict[key]];
-    } else {
-        return [];
-    }
-}
+function getValuesForKey(dateKey) {
+    var hoursUnavailable = [];
 
-function getAvailableHours(arr1, arr2) {
-    return arr1.filter(item => !arr2.includes(item));
-}
-
-function updateDisabledDates() {
     for (const [key, value] of Object.entries(datesDict)) {
+        if (key === dateKey) {
+            for (const val of value) {
+                hoursUnavailable.push(val);
+            }
+        }
+    }
+
+    for (const [key, value] of Object.entries(unavailableDatesDict)) {
+        if (key === dateKey) {
+            for (const val of value) {
+                hoursUnavailable.push(val);
+            }
+        }
+    }
+
+    console.log(hoursUnavailable);
+
+    return hoursUnavailable;
+
+}
+
+function updateDisabledDates(dictionary) {
+    for (const [key, value] of Object.entries(dictionary)) {
         if (!disabledDates.includes(key) && value.length == 4) {
             disabledDates.push(key);
         }
     }
 }
 
-function removeHour(hour, slider) {
-    if (slider.value == hour - 3) { slider.value = slider.value + 3 }
-    else if (slider.value == hour + 3) { slider.value = slider.value - 3 }
+btnAddMovie.addEventListener("click", () => {
+    console.log(datesDict);
+
+    var dataToSend = formatDataToSend();
+    console.log(dataToSend);
+    console.log(JSON.stringify(dataToSend));
+
+    debugger;
+
+    $.ajax({
+        type: "POST",
+        url: "SubmitMovieAdd",
+        data: { json: dataToSend },
+        success: function (response) {
+            window.location.replace("/" + response);
+        },
+        error: function (request, status, error) {
+            console.log(request.responseText);
+        }
+    });
+});
+
+function formatDataToSend() {
+    var jsonToSend = [];
+    var seatsAvailable = getSeatsAvailable();
+
+    for (const [key, value] of Object.entries(datesDict)) {
+        var hoursRunning = getHoursRunning(value, seatsAvailable);
+
+        jsonToSend.push({
+            date: key,
+            hoursRunning: hoursRunning
+        });
+    }
+
+    return jsonToSend;
 }
 
-//no date selected at first
-//add button that can add a new calendar and a button that confirms the selection => after confirmed and saved enable the add calendar button again
-//add disabled dates and read from c# through a post the dates that are already selected see here: https://stackoverflow.com/questions/55203792/how-to-pass-data-from-a-c-sharp-to-javascript-function
+function getSeatsAvailable() {
+    var seats = [];
+    for (var seatId = 1; seatId <= 40; seatId++) {
+        seats.push({
+            seatId: seatId,
+            available: true
+        })
+    }
+
+    return seats;
+}
+
+function getHoursRunning(hours, seatsAvailable) {
+    var hoursToSend = []
+
+    for (const hour of hours) {
+        hoursToSend.push({
+            hour: hour,
+            seats: seatsAvailable
+        });
+    }
+
+    return hoursToSend;
+}
+
+//no date selected at first - done
+//add button that can add a new calendar and a button that confirms the selection => after confirmed and saved enable the add calendar button again - done
+//add disabled dates - done
+//send data through a post to the controller - done
+//and create there the json file and add - done
+//read from c# through a post the dates that are already selected see here: https://stackoverflow.com/questions/55203792/how-to-pass-data-from-a-c-sharp-to-javascript-function - done

@@ -5,5 +5,6 @@ namespace CinemaVillage.Services.DirectorsAppService.Interface
     public interface IDirectorAppService
     {
         List<DirectorsAppModel> GetAllDirectors();
+        int GetDirectorId(string name);
     }
 }
