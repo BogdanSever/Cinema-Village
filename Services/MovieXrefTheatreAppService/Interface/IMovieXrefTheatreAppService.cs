@@ -6,5 +6,6 @@ namespace CinemaVillage.Services.MovieXrefTheatreAppService.Interface
     {
         void AddMovieXrefTheatre(MovieXrefTheatre movieXrefTheatreModel);
         List<string> GetAvailabilty(int theatreID);
+        Dictionary<int, List<string>> GetRunningDatesByIdsAndDate(List<int> moviesIds, string date);
     }
 }

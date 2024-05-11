@@ -17,6 +17,8 @@ using CinemaVillage.ViewModels.Admin.AdminBuilder.AdminFactory;
 using CinemaVillage.ViewModels.Admin.AdminBuilder.AdminFactory.Interface;
 using CinemaVillage.ViewModels.Home.HomeBuilder.HomeFactory;
 using CinemaVillage.ViewModels.Home.HomeBuilder.HomeFactory.Interface;
+using CinemaVillage.ViewModels.Program.ProgramBuilder.ProgramFactory;
+using CinemaVillage.ViewModels.Program.ProgramBuilder.ProgramFactory.Interface;
 using CinemaVillage.ViewModels.User.UserBuilder.UserFactory;
 using CinemaVillage.ViewModels.User.UserBuilder.UserFactory.Interface;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -39,7 +41,7 @@ namespace CinemaVillage
                     .AddCookie(option =>
                     {
                         option.LoginPath = "/Access/Login";
-                        option.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+                        option.ExpireTimeSpan = TimeSpan.FromMinutes(60);
                     });
             services.AddHttpContextAccessor();
             services.AddTransient<IHomeFactory, HomeFactory>();
@@ -52,6 +54,7 @@ namespace CinemaVillage
             services.AddTransient<ITheatreAppService, TheatreAppService>();
             services.AddTransient<IJsonCreatorService, JsonCreatorService>();
             services.AddTransient<IMovieXrefTheatreAppService, MovieXrefTheatreAppService>();
+            services.AddTransient<IProgramFactory, ProgramFactory>();
             services.AddControllersWithViews().AddNewtonsoftJson();
             services.AddDbContext<CinemaDbContext>(options => options.UseSqlServer(_configRoot.GetConnectionString("DbContext")));
         }

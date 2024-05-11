@@ -16,7 +16,7 @@ namespace CinemaVillage.Services.MoviesAppService
             _context = context;
         }
 
-        public List<MovieAppModel> GetImagesMovies()
+        public List<MovieAppModel> GetAllMovies()
         {
             var movieModel = _context.Movies.ToList() ?? throw new Exception();
 
@@ -54,6 +54,11 @@ namespace CinemaVillage.Services.MoviesAppService
                 Description = model.Discription,
                 Image = TransformImage(model.Image)
             };
+        }
+
+        public List<int> GetAllMoviesIds()
+        {
+            return _context.Movies.Select(m => m.IdMovie).ToList();
         }
 
         public (List<MovieUserPageAppModel>, List<MovieUserPageAppModel>) GetMovies(List<BookingAppModel> bookingAppModel)
@@ -130,6 +135,29 @@ namespace CinemaVillage.Services.MoviesAppService
             }
 
             return false;
+        }
+
+        public List<MovieProgramPageAppModel> GetMoviesByIds(Dictionary<int, List<string>> runningHours)
+        {
+            var moviesProgramPageAppModel = new List<MovieProgramPageAppModel>();
+
+            foreach (var kvp in runningHours)
+            {
+                var movieModel = _context.Movies.Where(m => m.IdMovie == kvp.Key).FirstOrDefault();
+                var theatreId = _context.MovieXrefTheatres.Where(mxt => mxt.IdMovie == kvp.Key).Select(mxt => mxt.IdTheatre).FirstOrDefault();
+
+                moviesProgramPageAppModel.Add(new MovieProgramPageAppModel
+                {
+                    Title = movieModel.Title,
+                    Genre = movieModel.Genre,
+                    Id = movieModel.IdMovie,
+                    Image = TransformImage(movieModel.Image),
+                    RunningHours = kvp.Value,
+                    IdTheatre = theatreId
+                });
+            }
+
+            return moviesProgramPageAppModel;
         }
     }
 }

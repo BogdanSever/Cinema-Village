@@ -86,7 +86,7 @@
             <ul id="navItems" class="hidden items-center sm:flex md:flex-row md:gap-6 md:mr-3 md:text-2xl md:visible">
 
                 <li class="hover:text-red-400"> <a href="./">About</a></li>
-                <li class="hover:text-red-400"> <a href="./ProgramFilme.html">Program</a></li>
+                <li class="hover:text-red-400"> <a asp-controller="Program" asp-action="Index">Program</a></li>
                 <li class="hover:text-red-400"> <a href="./">Contact</a></li>
 
                 @if (Model.LoggedInUserAppModel.IsLoggedIn)
@@ -135,7 +135,7 @@
                 <div class="relative m-0 max-w-56 z-20 rounded-md hover:ease-in hover:duration-200 hover:scale-110
                         sm:max-w-96
                         md:max-w-96 md:h-auto md:shadow-lg top-5">
-                    <img id="img1" class="" src="data:image/jpeg;base64, @Model.Movies.First().Image">
+                    <img id="img1" src="https://i.pinimg.com/564x/09/12/ec/0912ec51fe6f3d35180fee06c06954bc.jpg">
 
                 </div>
 

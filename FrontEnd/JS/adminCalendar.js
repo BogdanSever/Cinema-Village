@@ -95,7 +95,7 @@ btnAddNewRunDateTime.addEventListener("click", () => {
 function createNewCalendar(calendarId) {
 
     var nextDay = new Date();
-    nextDay.setDate(nextDay.getDate() + 1);
+    nextDay.setDate(nextDay.getDate());
     nextDay.setHours(12);
 
     var maxDayToBeSelected = new Date();

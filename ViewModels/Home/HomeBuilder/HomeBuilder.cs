@@ -17,7 +17,7 @@ namespace CinemaVillage.ViewModels.Home.HomeBuilder
 
         public HomeViewModel Build()
         {
-            var moviesAppModel = _moviesAppService.GetImagesMovies();
+            var moviesAppModel = _moviesAppService.GetAllMovies();
             var userLoggedIn = _userAppService.GetUserStatus();
 
             return new HomeViewModel
