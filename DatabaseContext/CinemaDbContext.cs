@@ -168,7 +168,7 @@ public partial class CinemaDbContext : DbContext
             entity.Property(e => e.IdMovie).HasColumnName("id_movie");
             entity.Property(e => e.IdUser).HasColumnName("id_user");
             entity.Property(e => e.NoOfStars)
-                .HasColumnType("numeric(1, 1)")
+                .HasColumnType("numeric(2, 1)")
                 .HasColumnName("no_of_stars");
 
             entity.HasOne(d => d.IdMovieNavigation).WithMany(p => p.Reviews)

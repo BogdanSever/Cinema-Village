@@ -46,13 +46,13 @@
         <ul class="text-xl">
             @foreach (var movie in Model.OnGoingMovies)
             {
-                <li class="flex items-center gap-3">@movie.Title @movie.BookingTimeMovie <span class="rounded-full w-2 h-2 bg-red-400 block"></span></li>
+                <li class="flex items-center gap-3">Movie: @movie.Title | Booking Time: @movie.BookingTimeMovie | Seats: @movie.SeatsBooked<span class="rounded-full w-2 h-2 bg-red-400 block"></span></li>
             }
         </ul>
     </div>
 
-    <div>
-        <h1 class="text-center text-4xl text-slate-700 m-4">Up for Review</h1>
+    <div class="bg-red-50 pb-10 px-10 w-screen">
+        <h1 class="text-4xl text-red-400 mb-4 font-BarlowSemiCondensed">Up for Review:</h1>
         <div class="flex gap-4 m-4">
             @foreach (var movie in Model.PastMovies)
             {
@@ -68,6 +68,22 @@
                 </div>
             }
         </div>
+    </div>
+
+    <div class="bg-red-50 pb-10 px-10 w-screen">
+        <h1 class="text-4xl text-red-400 mb-4 font-BarlowSemiCondensed">Reviewed:</h1>
+
+        @foreach (var movie in Model.ReviewedMovies)
+        {
+            <div>
+                <img class="h-auto w-36 m-7 md:w-56" src="data:image/jpeg;base64, @movie.Image" />
+                <p>@movie.Title</p>
+                <p>@movie.NoOfStars</p>
+                <p>@movie.Review</p>
+            </div>
+        }
+
+
     </div>
 
     <a asp-controller="User" asp-action="DeleteUser" type="submit">Delete User</a>

@@ -153,7 +153,7 @@ namespace CinemaVillage.Services.MovieXrefTheatreAppService
             return new List<Seats>();
         }
 
-        public void UpdateAvailability(string date, string hour, int movieId, int theatreId, List<Seats> seats)
+        public int UpdateAvailability(string date, string hour, int movieId, int theatreId, List<Seats> seats)
         {
             var availability = _context.MovieXrefTheatres.Where(mxt => mxt.IdMovie == movieId && mxt.IdTheatre == theatreId).Select(mxt => mxt.Availability).FirstOrDefault();
             var model = JsonConvert.DeserializeObject<List<MovieAddJsonAppModel>>(availability);
@@ -185,6 +185,8 @@ namespace CinemaVillage.Services.MovieXrefTheatreAppService
             {
                 throw new Exception(ex.Message, ex);
             }
+
+            return _context.MovieXrefTheatres.Where(mxt => mxt.IdMovie == movieId && mxt.IdTheatre == theatreId).Select(mxt => mxt.IdScreenXrefMovie).FirstOrDefault();
         }
     }
 }

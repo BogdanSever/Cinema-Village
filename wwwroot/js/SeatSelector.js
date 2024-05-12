@@ -54,10 +54,17 @@ function selectSeat(seat) {
 reserverBtn.addEventListener("click", () => {
     var data = getSeatsAvailable();
 
+    console.log(window.dateOfMovie);
+    console.log(window.hourOfMovie);
+    console.log(window.movieId);
+    console.log(window.theatreId);
+
+    debugger;
+
     $.ajax({
         type: "POST",
         url: "/SeatSelection/UpdateSeatsState",
-        data: { date: window.dateOfMovie, hour: window.hourOfMovie, seats: data, movieId: window.movieId, theatreId: window.theatreId },
+        data: { date: window.dateOfMovie, hour: window.hourOfMovie, seats: data, movieId: window.movieId, theatreId: window.theatreId, seatsBooked: selectedSeatsList },
         success: function (response) {
             console.log(response);
             window.location.replace("/Program");

@@ -1,4 +1,5 @@
 ﻿using CinemaVillage.AppModel.Movies;
+using CinemaVillage.Services.BookingAppService.Interface;
 using CinemaVillage.Services.MovieXrefTheatreAppService.Interface;
 using CinemaVillage.Services.UserAppService;
 using CinemaVillage.Services.UserAppService.Interface;
@@ -17,12 +18,18 @@ namespace CinemaVillage.Controllers
         private readonly ILogger<SeatSelectionController> _logger;
         private readonly ISeatSelectionFactory _seatSelectionFactory;
         private readonly IMovieXrefTheatreAppService _movieXrefTheatreAppService;
+        private readonly IBookingAppService _bookingAppService;
+        private readonly IUserAppService _userAppService;
 
-        public SeatSelectionController(ILogger<SeatSelectionController> logger, ISeatSelectionFactory seatSelectionFactory, IMovieXrefTheatreAppService movieXrefTheatreAppService)
+        public SeatSelectionController(ILogger<SeatSelectionController> logger, ISeatSelectionFactory seatSelectionFactory, 
+                                       IMovieXrefTheatreAppService movieXrefTheatreAppService, IBookingAppService bookingAppService, 
+                                       IUserAppService userAppService)
         {
             _logger = logger;
             _seatSelectionFactory = seatSelectionFactory;
             _movieXrefTheatreAppService = movieXrefTheatreAppService;
+            _bookingAppService = bookingAppService;
+            _userAppService = userAppService;
         }
 
         [HttpGet("SeatSelection/{date:required}/{hour:required}/{movieid:required}/{theatreid:required}")]
@@ -50,13 +57,15 @@ namespace CinemaVillage.Controllers
         }
 
         [HttpPost("SeatSelection/UpdateSeatsState")]
-        public JsonResult UpdateSeatsState(string date, string hour, List<Seats> seats, int movieId, int theatreId)
+        public JsonResult UpdateSeatsState(string date, string hour, List<Seats> seats, int movieId, int theatreId, List<int> seatsBooked)
         {
             if (seats != null)
             {
                 try
                 {
-                    _movieXrefTheatreAppService.UpdateAvailability(date, hour, movieId, theatreId, seats);
+                    var idMovieXrefTheatre = _movieXrefTheatreAppService.UpdateAvailability(date, hour, movieId, theatreId, seats);
+                    var userId = _userAppService.GetConnectedUserData().Id;
+                    _bookingAppService.AddBooking(idMovieXrefTheatre, userId, date, hour, seatsBooked);
                 }
                 catch (InvalidOperationException ex)
                 {

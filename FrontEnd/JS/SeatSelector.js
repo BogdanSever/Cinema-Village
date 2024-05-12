@@ -64,7 +64,7 @@ reserverBtn.addEventListener("click", () => {
     $.ajax({
         type: "POST",
         url: "/SeatSelection/UpdateSeatsState",
-        data: { date: window.dateOfMovie, hour: window.hourOfMovie, seats: data, movieId: window.movieId, theatreId: window.theatreId },
+        data: { date: window.dateOfMovie, hour: window.hourOfMovie, seats: data, movieId: window.movieId, theatreId: window.theatreId, seatsBooked: selectedSeatsList },
         success: function (response) {
             console.log(response);
             window.location.replace("/Program");

@@ -1,5 +1,6 @@
 ﻿using CinemaVillage.AppModel.Bookings;
 using CinemaVillage.AppModel.Movies;
+using CinemaVillage.AppModel.Reviews;
 using CinemaVillage.DatabaseContext;
 using CinemaVillage.Models;
 using CinemaVillage.Services.MoviesAppService.Interface;
@@ -61,10 +62,11 @@ namespace CinemaVillage.Services.MoviesAppService
             return _context.Movies.Select(m => m.IdMovie).ToList();
         }
 
-        public (List<MovieUserPageAppModel>, List<MovieUserPageAppModel>) GetMovies(List<BookingAppModel> bookingAppModel)
+        public (List<MovieUserPageAppModel>, List<MovieUserPageAppModel>, List<ReviewedMovieUserPageAppModel>) GetMovies(List<BookingAppModel> bookingAppModel)
         {
             List<MovieUserPageAppModel> futureMovies = new();
             List<MovieUserPageAppModel> pastMovies = new();
+            List<ReviewedMovieUserPageAppModel> reviewedMovies = new();
 
             var movieXrefTheatresModel = _context.MovieXrefTheatres;
             var movieModel = _context.Movies;
@@ -72,32 +74,71 @@ namespace CinemaVillage.Services.MoviesAppService
             foreach (var booking in bookingAppModel)
             {
                 var movieFromXref = movieXrefTheatresModel.Where(m => m.IdScreenXrefMovie == booking.IdMovieXrefTheatre).FirstOrDefault();
-                var movie = ToAppModel(movieModel.Where(m => m.IdMovie == movieFromXref.IdMovie).FirstOrDefault(), booking.BookingTimeOfMovie);
+                var movie = ToAppModel(movieModel.Where(m => m.IdMovie == movieFromXref.IdMovie).FirstOrDefault(), booking.BookingTimeOfMovie, booking.SeatsBooked);
 
-                if(movieFromXref.RunningDatetime < DateTime.Now)
+                if (_context.Reviews.Any(r => r.IdMovie == movie.Id && r.IdUser == booking.IdUser))
                 {
-                    pastMovies.Add(movie);
+                    var movieAlreadyReviewed = false;
+                    foreach (var reviewedMovie in reviewedMovies)
+                    {
+                        if (reviewedMovie.IdMovie == movie.Id)
+                        {
+                            movieAlreadyReviewed = true;
+                        }
+                    }
+
+                    if (!movieAlreadyReviewed)
+                    {
+                        var review = _context.Reviews.Where(r => r.IdMovie == movie.Id && r.IdUser == booking.IdUser).FirstOrDefault();
+                        reviewedMovies.Add(new ReviewedMovieUserPageAppModel
+                        {
+                            IdMovie = movie.Id,
+                            NoOfStars = review.NoOfStars,
+                            Review = review.Description,
+                            Image = movie.Image,
+                            Title = movie.Title
+                        });
+                    }
                 }
-                else
+                else if (booking.BookingTimeOfMovie < DateTime.Now)
+                {
+                    var movieAlreadyPast = false;
+                    foreach (var pastMovie in pastMovies)
+                    {
+                        if (pastMovie.Id == movie.Id)
+                        {
+                            movieAlreadyPast = true;
+                        }
+                    }
+
+                    if (!movieAlreadyPast)
+                    {
+                        pastMovies.Add(movie);
+                    }
+                }
+                
+                if (booking.BookingTimeOfMovie >= DateTime.Now)
                 {
                     futureMovies.Add(movie);
                 }
             }
 
-            return (futureMovies, pastMovies);
+            return (futureMovies, pastMovies, reviewedMovies);
         }
 
-        private MovieUserPageAppModel ToAppModel(Movie model, DateTime bookingTimeMovie)
+        private MovieUserPageAppModel ToAppModel(Movie model, DateTime bookingTimeMovie, string seatsBooked)
         {
             return new MovieUserPageAppModel
             {
+                Id = model.IdMovie,
                 Title = model.Title,
                 Genre = model.Genre,
                 Duration = model.Duration,
                 ReleaseDate = model.ReleaseDate,
                 Description = model.Discription,
                 Image = TransformImage(model.Image),
-                BookingTimeMovie = bookingTimeMovie
+                BookingTimeMovie = bookingTimeMovie,
+                SeatsBooked = seatsBooked,
             };
         }
 

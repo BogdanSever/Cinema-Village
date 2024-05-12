@@ -2,6 +2,7 @@
 using CinemaVillage.DatabaseContext;
 using CinemaVillage.Models;
 using CinemaVillage.Services.BookingAppService.Interface;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CinemaVillage.Services.BookingAppService
 {
@@ -45,6 +46,28 @@ namespace CinemaVillage.Services.BookingAppService
             }
 
             return null;
+        }
+
+        public void AddBooking(int idMovieXrefTheatre, int userId, string date, string hour, List<int> seatsBooked)
+        {
+            var modelBooking = new Booking
+            {
+                IdMovieXrefTheatre = idMovieXrefTheatre,
+                IdUser = userId,
+                SeatsBooked = string.Join(", ", seatsBooked),
+                BookingTime = new DateTime(DateOnly.Parse(date), TimeOnly.Parse(hour)),
+            };
+
+            try
+            {
+                _context.Bookings.Add(modelBooking);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+
+            _context.SaveChanges();
         }
     }
 }

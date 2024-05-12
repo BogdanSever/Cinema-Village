@@ -21,14 +21,15 @@ namespace CinemaVillage.ViewModels.User.UserBuilder
         {
             var userAppModel = _userAppService.GetConnectedUserData();
             var bookingAppModel = _bookingAppService.GetAllBookingsByUserID(userAppModel.Id);
-            var (futureMovies, pastMovies) = _moviesAppService.GetMovies(bookingAppModel);
+            var (futureMovies, pastMovies, reviewedMovies) = _moviesAppService.GetMovies(bookingAppModel);
 
             return new UserViewModel()
             {
                 FirstName = userAppModel.FirstName,
                 LastName = userAppModel.LastName,
                 OnGoingMovies = futureMovies,
-                PastMovies = pastMovies
+                PastMovies = pastMovies,
+                ReviewedMovies = reviewedMovies
             };
         }
     }
