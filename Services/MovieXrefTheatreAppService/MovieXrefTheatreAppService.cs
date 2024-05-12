@@ -101,5 +101,34 @@ namespace CinemaVillage.Services.MovieXrefTheatreAppService
 
             return dictDatesAndHours;
         }
+
+        public int GetNoOfSeatsAvailable(string date, string hour, int movieID, int theatreID)
+        {
+            int noOfSeatsAvailable = 0;
+
+            var availability = _context.MovieXrefTheatres.Where(mxt => mxt.IdMovie == movieID && mxt.IdTheatre == theatreID).Select(mxt => mxt.Availability).FirstOrDefault();
+            var model = JsonConvert.DeserializeObject<List<MovieAddJsonAppModel>>(availability);
+            foreach (var entry in model)
+            {
+                if(DateOnly.Parse(date) == DateOnly.Parse(entry.Date))
+                {
+                    foreach (var hourRunning in entry.HoursRunning)
+                    {
+                        if (TimeOnly.Parse(hourRunning.Hour) == TimeOnly.Parse(hour))
+                        {
+                            foreach (var seat in hourRunning.Seats)
+                            {
+                                if (seat.Available == true)
+                                {
+                                    noOfSeatsAvailable++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return noOfSeatsAvailable;
+        }
     }
 }

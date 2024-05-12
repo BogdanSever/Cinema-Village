@@ -54,7 +54,7 @@
                     <div class="flex gap-3">
                         @foreach (var hour in movie.RunningHours)
                         {
-                            var btnId = "movie_" + movie.Id + "_hour_" + hour.Split(':')[0];
+                            var btnId = "movie_" + movie.Id;
                             <button id="@btnId" class="btnToCheckOut bg-red-400 border-2 border-slate-700 p-2 border-opacity-70 font-BarlowSemiCondensed font-bold flex-wrap hover:scale-110 hover:ease-in duration-200">
                                 @hour.Split(':')[0]:@hour.Split(':')[1]
                             </button>

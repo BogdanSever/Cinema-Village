@@ -57,11 +57,35 @@ searchBtn.addEventListener("click", () => {
     });
 });
 
+
+//need for checkout => date, hour, movieid, theatreid
+
 var btnToCheckOutElements = document.getElementsByClassName("btnToCheckOut");
 for (const btnToCheckOut of btnToCheckOutElements) {
     btnToCheckOut.addEventListener("click", () => {
-        console.log("To check out!" + btnToCheckOut.id);
+
+        var searchDate = getFormattedDate(datePicker.value);
+        var hour = btnToCheckOut.innerText + ":00";
+        var movieId = btnToCheckOut.id.split("_")[1];
+        var theatreId = document.getElementById("theatreID").innerText.split(" ").pop();
+;
+        $.ajax({
+            type: "GET",
+            url: "CheckOut",
+            data: { date: searchDate, hour: hour, movieID: movieId, theatreID: theatreId },
+            success: function (response) {
+                window.location.replace("/CheckOut?date=" + searchDate + "&hour=" + hour + "&movieID=" + movieId + "&theatreID=" + theatreId);
+            },
+            error: function (response) {
+                console.log("Error: " + response.Status + " |  " + response.Message);
+            }
+        });
     })
+}
+
+function getFormattedDate(date) {
+    var splittedDate = date.split("-");
+    return splittedDate[2] + "/" + splittedDate[1] + "/" + splittedDate[0];
 }
 
 /*function OpenCheckOut() {

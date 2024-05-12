@@ -15,6 +15,8 @@ using CinemaVillage.Services.UserAppService;
 using CinemaVillage.Services.UserAppService.Interface;
 using CinemaVillage.ViewModels.Admin.AdminBuilder.AdminFactory;
 using CinemaVillage.ViewModels.Admin.AdminBuilder.AdminFactory.Interface;
+using CinemaVillage.ViewModels.CheckOut.CheckOutBuilder.CheckOutFactory;
+using CinemaVillage.ViewModels.CheckOut.CheckOutBuilder.CheckOutFactory.Interface;
 using CinemaVillage.ViewModels.Home.HomeBuilder.HomeFactory;
 using CinemaVillage.ViewModels.Home.HomeBuilder.HomeFactory.Interface;
 using CinemaVillage.ViewModels.Program.ProgramBuilder.ProgramFactory;
@@ -55,6 +57,7 @@ namespace CinemaVillage
             services.AddTransient<IJsonCreatorService, JsonCreatorService>();
             services.AddTransient<IMovieXrefTheatreAppService, MovieXrefTheatreAppService>();
             services.AddTransient<IProgramFactory, ProgramFactory>();
+            services.AddTransient<ICheckOutFactory, CheckOutFactory>();
             services.AddControllersWithViews().AddNewtonsoftJson();
             services.AddDbContext<CinemaDbContext>(options => options.UseSqlServer(_configRoot.GetConnectionString("DbContext")));
         }
