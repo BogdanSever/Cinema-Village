@@ -35,7 +35,7 @@
         </div>
         <div class="col-start-2 col-end-3 row-start-2 row-end-3 justify-center text-center grid">
             <h1 class="text-6xl font-Bebas-Neue font-bold text-lavender-bush">@Model.MovieAppModel.Title</h1>
-            <h3 class ="text-2xl font-Bebas-Neue font-bold text-lavender-bush">
+            <h3 class="text-2xl font-Bebas-Neue font-bold text-lavender-bush">
                 Number of seats available to buy:
                 @if (Model.NoOfSeatsAvailable >= 10)
                 {
@@ -99,10 +99,17 @@
         </div>
         <div class="flex justify-end w-3/4 m-4">
             <button id="seatPage">
-                <a asp-controller="SeatSelection" asp-action="Index" class="relative inline-block px-10 py-4 group">
+                <a asp-controller="SeatSelection" asp-action="Index"
+                   asp-route-date="@Model.Date"
+                   asp-route-hour="@Model.Hour"
+                   asp-route-movieid="@Model.MovieId"
+                   asp-route-theatreid="@Model.TheatreId"
+                   class="relative inline-block px-10 py-4 group">
+
                     <span class="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-mustard-100 group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
                     <span class="absolute inset-0 w-full h-full bg-mustard-200 border-2 border-lavender-bush group-hover:bg-lavender-bush"></span>
                     <span class="relative text-black group-hover:text-night">Next</span>
+                
                 </a>
             </button>
         </div>

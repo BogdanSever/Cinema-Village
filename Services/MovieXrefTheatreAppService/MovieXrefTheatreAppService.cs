@@ -2,6 +2,7 @@
 using CinemaVillage.DatabaseContext;
 using CinemaVillage.Models;
 using CinemaVillage.Services.MovieXrefTheatreAppService.Interface;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace CinemaVillage.Services.MovieXrefTheatreAppService
@@ -110,7 +111,7 @@ namespace CinemaVillage.Services.MovieXrefTheatreAppService
             var model = JsonConvert.DeserializeObject<List<MovieAddJsonAppModel>>(availability);
             foreach (var entry in model)
             {
-                if(DateOnly.Parse(date) == DateOnly.Parse(entry.Date))
+                if (DateOnly.Parse(date) == DateOnly.Parse(entry.Date))
                 {
                     foreach (var hourRunning in entry.HoursRunning)
                     {
@@ -129,6 +130,61 @@ namespace CinemaVillage.Services.MovieXrefTheatreAppService
             }
 
             return noOfSeatsAvailable;
+        }
+
+        public List<Seats> GetSeatsAvailability(string date, string hour, int movieId, int theatreId)
+        {
+            var availability = _context.MovieXrefTheatres.Where(mxt => mxt.IdMovie == movieId && mxt.IdTheatre == theatreId).Select(mxt => mxt.Availability).FirstOrDefault();
+            var model = JsonConvert.DeserializeObject<List<MovieAddJsonAppModel>>(availability);
+            foreach (var entry in model)
+            {
+                if (DateOnly.Parse(date) == DateOnly.Parse(entry.Date))
+                {
+                    foreach (var hourRunning in entry.HoursRunning)
+                    {
+                        if (TimeOnly.Parse(hourRunning.Hour) == TimeOnly.Parse(hour))
+                        {
+                            return hourRunning.Seats;
+                        }
+                    }
+                }
+            }
+
+            return new List<Seats>();
+        }
+
+        public void UpdateAvailability(string date, string hour, int movieId, int theatreId, List<Seats> seats)
+        {
+            var availability = _context.MovieXrefTheatres.Where(mxt => mxt.IdMovie == movieId && mxt.IdTheatre == theatreId).Select(mxt => mxt.Availability).FirstOrDefault();
+            var model = JsonConvert.DeserializeObject<List<MovieAddJsonAppModel>>(availability);
+            foreach (var entry in model)
+            {
+                if (DateOnly.Parse(date) == DateOnly.Parse(entry.Date))
+                {
+                    foreach (var hourRunning in entry.HoursRunning)
+                    {
+                        if (TimeOnly.Parse(hourRunning.Hour) == TimeOnly.Parse(hour))
+                        {
+                            hourRunning.Seats = seats;
+                        }
+                    }
+                }
+            }
+
+            var newAvailabilityJson = JsonConvert.SerializeObject(model);
+
+            try
+            {
+                _context.MovieXrefTheatres
+                    .Where(mxt => mxt.IdMovie == movieId && mxt.IdTheatre == theatreId)
+                    .ExecuteUpdate(up => up
+                        .SetProperty(mxt => mxt.Availability, newAvailabilityJson)
+                    );
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
     }
 }

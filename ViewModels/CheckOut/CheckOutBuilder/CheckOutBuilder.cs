@@ -26,6 +26,10 @@ namespace CinemaVillage.ViewModels.CheckOut.CheckOutBuilder
             {
                 MovieAppModel = movieModel,
                 NoOfSeatsAvailable = noOfSeatsAvailable,
+                TheatreId = theatre_id,
+                MovieId = movie_id,
+                Date = date,
+                Hour = hour,
             };
         }
     }

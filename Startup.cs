@@ -21,6 +21,8 @@ using CinemaVillage.ViewModels.Home.HomeBuilder.HomeFactory;
 using CinemaVillage.ViewModels.Home.HomeBuilder.HomeFactory.Interface;
 using CinemaVillage.ViewModels.Program.ProgramBuilder.ProgramFactory;
 using CinemaVillage.ViewModels.Program.ProgramBuilder.ProgramFactory.Interface;
+using CinemaVillage.ViewModels.SeatSelection.SeatSelectionBuilder.SeatSelectionFactory;
+using CinemaVillage.ViewModels.SeatSelection.SeatSelectionBuilder.SeatSelectionFactory.Interface;
 using CinemaVillage.ViewModels.User.UserBuilder.UserFactory;
 using CinemaVillage.ViewModels.User.UserBuilder.UserFactory.Interface;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -58,6 +60,7 @@ namespace CinemaVillage
             services.AddTransient<IMovieXrefTheatreAppService, MovieXrefTheatreAppService>();
             services.AddTransient<IProgramFactory, ProgramFactory>();
             services.AddTransient<ICheckOutFactory, CheckOutFactory>();
+            services.AddTransient<ISeatSelectionFactory, SeatSelectionFactory>();
             services.AddControllersWithViews().AddNewtonsoftJson();
             services.AddDbContext<CinemaDbContext>(options => options.UseSqlServer(_configRoot.GetConnectionString("DbContext")));
         }
