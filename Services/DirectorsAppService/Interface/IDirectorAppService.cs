@@ -6,5 +6,6 @@ namespace CinemaVillage.Services.DirectorsAppService.Interface
     {
         List<DirectorsAppModel> GetAllDirectors();
         int GetDirectorId(string name);
+        string GetDirectorName(int id);
     }
 }

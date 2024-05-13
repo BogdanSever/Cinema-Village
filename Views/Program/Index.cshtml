@@ -42,7 +42,9 @@
             <img src="data:image/jpeg;base64, @movie.Image" class="h-auto w-36 m-7 md:w-56" />
             <ul id="movieDetails">
                 <li id="movieTitle" class="text-3xl font-BarlowSemiCondensed font-bold mb-4 text-slate-700">
-                    @movie.Title
+                    <a asp-controller="Movie" asp-action="Index" asp-route-movieid="@movie.Id">
+                        @movie.Title
+                    </a>
                 </li>
                 <li id="movieGenre" class="text-2xl mb-4 font-BarlowSemiCondensed text-slate-700">
                     @movie.Genre

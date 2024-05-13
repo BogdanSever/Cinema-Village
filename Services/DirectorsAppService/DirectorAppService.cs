@@ -1,6 +1,7 @@
 ﻿using CinemaVillage.AppModel.Directors;
 using CinemaVillage.DatabaseContext;
 using CinemaVillage.Services.DirectorsAppService.Interface;
+using System.Drawing;
 
 
 namespace CinemaVillage.Services.DirectorsAppService
@@ -35,6 +36,11 @@ namespace CinemaVillage.Services.DirectorsAppService
         public int GetDirectorId(string name)
         {
             return _context.Directors.Where(d => d.GivenName == name).Select(d => d.IdDirector).FirstOrDefault();
+        }
+
+        public string GetDirectorName(int idDirector)
+        {
+            return _context.Directors.Where(d => d.IdDirector == idDirector).Select(d => d.GivenName + " " + d.FamilyName).FirstOrDefault();
         }
     }
 }

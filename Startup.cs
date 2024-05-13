@@ -1,10 +1,16 @@
 ﻿using CinemaVillage.DatabaseContext;
+using CinemaVillage.Services.ActorAppService;
+using CinemaVillage.Services.ActorAppService.Interface;
+using CinemaVillage.Services.ActorXrefMovieAppService;
+using CinemaVillage.Services.ActorXrefMovieAppService.Interface;
 using CinemaVillage.Services.BookingAppService;
 using CinemaVillage.Services.BookingAppService.Interface;
 using CinemaVillage.Services.DirectorsAppService;
 using CinemaVillage.Services.DirectorsAppService.Interface;
 using CinemaVillage.Services.HelperService;
 using CinemaVillage.Services.HelperService.Interface;
+using CinemaVillage.Services.ImdbApiService;
+using CinemaVillage.Services.ImdbApiService.Interface;
 using CinemaVillage.Services.MoviesAppService;
 using CinemaVillage.Services.MoviesAppService.Interface;
 using CinemaVillage.Services.MovieXrefTheatreAppService;
@@ -19,6 +25,8 @@ using CinemaVillage.ViewModels.CheckOut.CheckOutBuilder.CheckOutFactory;
 using CinemaVillage.ViewModels.CheckOut.CheckOutBuilder.CheckOutFactory.Interface;
 using CinemaVillage.ViewModels.Home.HomeBuilder.HomeFactory;
 using CinemaVillage.ViewModels.Home.HomeBuilder.HomeFactory.Interface;
+using CinemaVillage.ViewModels.Movie.MovieBuilder.MovieFactory;
+using CinemaVillage.ViewModels.Movie.MovieBuilder.MovieFactory.Interface;
 using CinemaVillage.ViewModels.Program.ProgramBuilder.ProgramFactory;
 using CinemaVillage.ViewModels.Program.ProgramBuilder.ProgramFactory.Interface;
 using CinemaVillage.ViewModels.SeatSelection.SeatSelectionBuilder.SeatSelectionFactory;
@@ -61,6 +69,10 @@ namespace CinemaVillage
             services.AddTransient<IProgramFactory, ProgramFactory>();
             services.AddTransient<ICheckOutFactory, CheckOutFactory>();
             services.AddTransient<ISeatSelectionFactory, SeatSelectionFactory>();
+            services.AddTransient<IMovieFactory, MovieFactory>();
+            services.AddTransient<IActorAppService, ActorAppService>();
+            services.AddTransient<IActorXrefMovieAppService, ActorXrefMovieAppService>();
+            services.AddTransient<IImdbApiService, ImdbApiService>();
             services.AddControllersWithViews().AddNewtonsoftJson();
             services.AddDbContext<CinemaDbContext>(options => options.UseSqlServer(_configRoot.GetConnectionString("DbContext")));
         }

@@ -664,6 +664,10 @@ video {
   grid-column: span 1 / span 1 !important;
 }
 
+.col-span-2 {
+  grid-column: span 2 / span 2 !important;
+}
+
 .col-span-3 {
   grid-column: span 3 / span 3 !important;
 }
@@ -1002,6 +1006,10 @@ video {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
 }
 
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
 .grid-cols-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
 }
@@ -1082,6 +1090,10 @@ video {
   gap: 1.75rem !important;
 }
 
+.self-center {
+  align-self: center !important;
+}
+
 .overflow-hidden {
   overflow: hidden !important;
 }
@@ -1096,6 +1108,10 @@ video {
 
 .rounded-full {
   border-radius: 9999px !important;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem !important;
 }
 
 .rounded-md {
@@ -1338,6 +1354,10 @@ video {
   font-family: Hanken Grotesk, serif !important;
 }
 
+.font-Montserrat {
+  font-family: Montserrat, serif !important;
+}
+
 .text-2xl {
   font-size: 1.5rem !important;
   line-height: 2rem !important;
@@ -1379,6 +1399,10 @@ video {
 
 .font-extrabold {
   font-weight: 800 !important;
+}
+
+.italic {
+  font-style: italic !important;
 }
 
 .text-black {

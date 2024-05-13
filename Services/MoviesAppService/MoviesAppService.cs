@@ -53,7 +53,8 @@ namespace CinemaVillage.Services.MoviesAppService
                 Duration = model.Duration,
                 ReleaseDate = model.ReleaseDate,
                 Description = model.Discription,
-                Image = TransformImage(model.Image)
+                Image = TransformImage(model.Image),
+                IdDirector = model.IdDirector
             };
         }
 
