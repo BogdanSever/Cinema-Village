@@ -56,16 +56,11 @@
         <div class="flex gap-4 m-4">
             @foreach (var movie in Model.PastMovies)
             {
-                <div class="w-52 bg-[#BA3B46] p-7 rounded-xl text-center">
-                    <h1>@movie.Title</h1>
-                    <div>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star "></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
+                <a asp-controller="Review" asp-action="Index" asp-route-movieid="@movie.Id">
+                    <div class="w-52 bg-[#BA3B46] p-7 rounded-xl text-center">
+                        <h1>@movie.Title</h1>
                     </div>
-                </div>
+                </a>
             }
         </div>
     </div>

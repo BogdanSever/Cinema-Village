@@ -15,6 +15,8 @@ using CinemaVillage.Services.MoviesAppService;
 using CinemaVillage.Services.MoviesAppService.Interface;
 using CinemaVillage.Services.MovieXrefTheatreAppService;
 using CinemaVillage.Services.MovieXrefTheatreAppService.Interface;
+using CinemaVillage.Services.ReviewAppService;
+using CinemaVillage.Services.ReviewAppService.Interface;
 using CinemaVillage.Services.TheatreAppService;
 using CinemaVillage.Services.TheatreAppService.Interface;
 using CinemaVillage.Services.UserAppService;
@@ -29,6 +31,8 @@ using CinemaVillage.ViewModels.Movie.MovieBuilder.MovieFactory;
 using CinemaVillage.ViewModels.Movie.MovieBuilder.MovieFactory.Interface;
 using CinemaVillage.ViewModels.Program.ProgramBuilder.ProgramFactory;
 using CinemaVillage.ViewModels.Program.ProgramBuilder.ProgramFactory.Interface;
+using CinemaVillage.ViewModels.Review.ReviewBuilder.ReviewFactory;
+using CinemaVillage.ViewModels.Review.ReviewBuilder.ReviewFactory.Interface;
 using CinemaVillage.ViewModels.SeatSelection.SeatSelectionBuilder.SeatSelectionFactory;
 using CinemaVillage.ViewModels.SeatSelection.SeatSelectionBuilder.SeatSelectionFactory.Interface;
 using CinemaVillage.ViewModels.User.UserBuilder.UserFactory;
@@ -73,6 +77,8 @@ namespace CinemaVillage
             services.AddTransient<IActorAppService, ActorAppService>();
             services.AddTransient<IActorXrefMovieAppService, ActorXrefMovieAppService>();
             services.AddTransient<IImdbApiService, ImdbApiService>();
+            services.AddTransient<IReviewFactory, ReviewFactory>();
+            services.AddTransient<IReviewAppService, ReviewAppService>();
             services.AddControllersWithViews().AddNewtonsoftJson();
             services.AddDbContext<CinemaDbContext>(options => options.UseSqlServer(_configRoot.GetConnectionString("DbContext")));
         }
