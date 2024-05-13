@@ -14,8 +14,13 @@ let overlay = document.getElementById("overlay")
 
 let k = 0;
 
-join.addEventListener("click", SignLogPop)
-cls.addEventListener("click", SignLogPop)
+if (join) {
+    join.addEventListener("click", SignLogPop)
+}
+
+if (cls) {
+    cls.addEventListener("click", SignLogPop)
+}
 
 nextBtn.addEventListener("click", changeNext);
 prevBtn.addEventListener("click", changePrev);

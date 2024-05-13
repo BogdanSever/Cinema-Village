@@ -16,7 +16,6 @@ namespace CinemaVillage.ViewModels.Program.ProgramBuilder
             _movieXrefTheatreAppService = movieXrefTheatreAppService;
         }
 
-        //see what happens and why when there is no available hour!
         public ProgramViewModel Build(string date)
         {
             var moviesIds = _moviesAppService.GetAllMoviesIds();

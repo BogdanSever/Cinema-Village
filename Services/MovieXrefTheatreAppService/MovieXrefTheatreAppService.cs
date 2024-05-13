@@ -88,13 +88,16 @@ namespace CinemaVillage.Services.MovieXrefTheatreAppService
                                 }
                             }
                         }
-                        if (!dictDatesAndHours.ContainsKey(id))
+                        if (hours.Any())
                         {
-                            dictDatesAndHours.Add(id, hours);
-                        }
-                        else
-                        {
-                            dictDatesAndHours[id].AddRange(hours);
+                            if (!dictDatesAndHours.ContainsKey(id))
+                            {
+                                dictDatesAndHours.Add(id, hours);
+                            }
+                            else
+                            {
+                                dictDatesAndHours[id].AddRange(hours);
+                            }
                         }
                     }
                 }
