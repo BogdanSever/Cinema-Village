@@ -4,6 +4,7 @@ using CinemaVillage.Models;
 using CinemaVillage.Services.MovieXrefTheatreAppService.Interface;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace CinemaVillage.Services.MovieXrefTheatreAppService
 {
@@ -47,14 +48,14 @@ namespace CinemaVillage.Services.MovieXrefTheatreAppService
                 var model = JsonConvert.DeserializeObject<List<MovieAddJsonAppModel>>(availability);
                 foreach (var entry in model)
                 {
-                    if (DateOnly.Parse(entry.Date) == DateOnly.Parse(date))
+                    if (DateOnly.Parse(entry.Date, CultureInfo.CurrentCulture) == DateOnly.Parse(date, CultureInfo.CurrentCulture))
                     {
                         var hours = new List<string>();
                         foreach (var hourRunning in entry.HoursRunning)
                         {
-                            if (DateOnly.Parse(date) == DateOnly.FromDateTime(DateTime.Now))
+                            if (DateOnly.Parse(date, CultureInfo.CurrentCulture) == DateOnly.FromDateTime(DateTime.Now))
                             {
-                                if (!(TimeOnly.Parse(hourRunning.Hour) < TimeOnly.FromDateTime(DateTime.Now)))
+                                if (!(TimeOnly.Parse(hourRunning.Hour, CultureInfo.CurrentCulture) < TimeOnly.FromDateTime(DateTime.Now)))
                                 {
                                     bool available = false;
                                     foreach (var seat in hourRunning.Seats)
