@@ -68,16 +68,21 @@
     <div class="bg-red-50 pb-10 px-10 w-screen">
         <h1 class="text-4xl text-red-400 mb-4 font-BarlowSemiCondensed">Reviewed:</h1>
 
-        @foreach (var movie in Model.ReviewedMovies)
-        {
-            <div>
-                <img class="h-auto w-36 m-7 md:w-56" src="data:image/jpeg;base64, @movie.Image" />
-                <p>@movie.Title</p>
-                <p>@movie.NoOfStars</p>
-                <p>@movie.Review</p>
-            </div>
-        }
-
+        <div class="grid grid-cols-4">
+            @foreach (var movie in Model.ReviewedMovies)
+            {
+                <div class="flex flex-col justify-center items-center">
+                    <img class="h-auto w-36 m-7 md:w-56" src="data:image/jpeg;base64, @movie.Image" />
+                    <h2 class="text-2xl text-center font-BarlowSemiCondensed font-bold text-slate-700">
+                        <a asp-controller="Movie" asp-action="Index" asp-route-movieid="@movie.IdMovie">
+                            @movie.Title
+                        </a>
+                    </h2>
+                    <h3 class="text-xl text-center font-BarlowSemiCondensed font-bold text-slate-700">@movie.NoOfStars</h3>
+                    <h3 class="text-xl text-center font-BarlowSemiCondensed font-bold text-slate-700">@movie.Review</h3>
+                </div>
+            }
+        </div>
 
     </div>
 

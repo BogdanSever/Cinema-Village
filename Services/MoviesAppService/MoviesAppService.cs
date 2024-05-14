@@ -4,6 +4,7 @@ using CinemaVillage.AppModel.Reviews;
 using CinemaVillage.DatabaseContext;
 using CinemaVillage.Models;
 using CinemaVillage.Services.MoviesAppService.Interface;
+using Newtonsoft.Json;
 using System.Drawing;
 
 namespace CinemaVillage.Services.MoviesAppService
@@ -37,6 +38,36 @@ namespace CinemaVillage.Services.MoviesAppService
             return Convert.ToBase64String(image);
         }
 
+        public List<MovieAppModel> GetAllMoviesInNext30Days()
+        {
+            List<MovieAppModel> movieAppModels = new List<MovieAppModel>();
+
+            var moviesIds = GetAllMoviesIds();
+            var movieXrefTheatresModel = _context.MovieXrefTheatres;
+
+            foreach (var movieId in moviesIds)
+            {
+                var availability = movieXrefTheatresModel.Where(mxt => mxt.IdMovie == movieId).Select(mxt => mxt.Availability).FirstOrDefault();
+                var model = JsonConvert.DeserializeObject<List<MovieAddJsonAppModel>>(availability);
+
+                bool inNext30Days = false;
+                foreach (var entry in model)
+                {
+                    if (DateOnly.Parse(entry.Date) >= DateOnly.FromDateTime(DateTime.Now))
+                    {
+                        inNext30Days = true;
+                    }
+                }
+
+                if (inNext30Days)
+                {
+                    movieAppModels.Add(GetMovieById(movieId));
+                }
+            }
+
+            return movieAppModels;
+        }
+
         public MovieAppModel GetMovieById(int id)
         {
             var movieModel = _context.Movies;
@@ -48,6 +79,7 @@ namespace CinemaVillage.Services.MoviesAppService
         {
             return new MovieAppModel
             {
+                IdMovie = model.IdMovie,
                 Title = model.Title,
                 Genre = model.Genre,
                 Duration = model.Duration,

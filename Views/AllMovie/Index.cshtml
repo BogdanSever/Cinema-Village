@@ -1,0 +1,58 @@
+﻿@model CinemaVillage.ViewModels.AllMovie.AllMovieViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <title>Cinema Village</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/output.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
+          rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+          rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js" integrity="sha512-aNMyYYxdIxIaot0Y1/PLuEu3eipGCmsEUBrUq+7aVyPGMFH8z0eTP0tkqAvv34fzN6z+201d3T8HPb1svWSKHQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://kit.fontawesome.com/7d75bced7a.js" crossorigin="anonymous"></script>
+
+</head>
+<body class="bg-zinc-50">
+    <div>
+        <div class=" p-4 flex flex-col justify-center items-center gap-6">
+            <h1 class=" font-Fraunces text-4xl md:text-6xl text-slate-700 ">Movies running in the next 30 days</h1>
+        </div>
+    </div>
+
+    @if (Model.MovieAppModels.Any())
+    {
+        <div class="grid grid-cols-4">
+            @foreach (var movie in Model.MovieAppModels)
+            {
+                <div class="flex flex-col justify-center items-center">
+                    <img class="h-auto w-36 m-7 md:w-56" src="data:image/jpeg;base64, @movie.Image" />
+                    <h2 class="text-2xl text-center font-BarlowSemiCondensed font-bold text-slate-700">
+                        <a asp-controller="Movie" asp-action="Index" asp-route-movieid="@movie.IdMovie">
+                            @movie.Title
+                        </a>
+                    </h2>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-center text-3xl font-BarlowSemiCondensed font-bold mt-12 text-slate-700">
+            No movies to show!
+        </div>
+    }
+
+</body>
+</html>

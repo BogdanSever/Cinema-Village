@@ -1022,6 +1022,10 @@ video {
   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
 }
 
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+
 .grid-rows-2 {
   grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
 }

@@ -8,6 +8,7 @@ namespace CinemaVillage.Services.MoviesAppService.Interface
     public interface IMoviesAppService
     {
         List<MovieAppModel> GetAllMovies();
+        List<MovieAppModel> GetAllMoviesInNext30Days();
         MovieAppModel GetMovieById(int id);
         List<MovieProgramPageAppModel> GetMoviesByIds(Dictionary<int, List<string>> runningHours);
         List<int> GetAllMoviesIds();

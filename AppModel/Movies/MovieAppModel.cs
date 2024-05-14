@@ -4,6 +4,7 @@ namespace CinemaVillage.AppModel.Movies
 {
     public class MovieAppModel
     {
+        public int IdMovie { get; set; }
         public string Title { get; set; }
 
         public string Genre { get; set; }
