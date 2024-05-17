@@ -3,19 +3,26 @@ using CinemaVillage.AppModel.Movies;
 using CinemaVillage.AppModel.Reviews;
 using CinemaVillage.DatabaseContext;
 using CinemaVillage.Models;
+using CinemaVillage.Services.HelperService;
+using CinemaVillage.Services.HelperService.Interface;
 using CinemaVillage.Services.MoviesAppService.Interface;
+using Microsoft.AspNetCore.JsonPatch.Internal;
 using Newtonsoft.Json;
 using System.Drawing;
+using System.Globalization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CinemaVillage.Services.MoviesAppService
 {
     public class MoviesAppService : IMoviesAppService
     {
         private readonly CinemaDbContext _context;
+        private readonly IFormatDateTimeService _formatDateTimeService;
 
-        public MoviesAppService(CinemaDbContext context)
+        public MoviesAppService(CinemaDbContext context, IFormatDateTimeService formatDateTimeService)
         {
             _context = context;
+            _formatDateTimeService = formatDateTimeService;
         }
 
         public List<MovieAppModel> GetAllMovies()
@@ -38,9 +45,13 @@ namespace CinemaVillage.Services.MoviesAppService
             return Convert.ToBase64String(image);
         }
 
+
+        //TODO: maybe compare strings?
         public List<MovieAppModel> GetAllMoviesInNext30Days()
         {
             List<MovieAppModel> movieAppModels = new List<MovieAppModel>();
+
+            string currentDate = _formatDateTimeService.GetFormattedDate(DateTime.Now.ToString("d"));
 
             var moviesIds = GetAllMoviesIds();
             var movieXrefTheatresModel = _context.MovieXrefTheatres;
@@ -53,7 +64,9 @@ namespace CinemaVillage.Services.MoviesAppService
                 bool inNext30Days = false;
                 foreach (var entry in model)
                 {
-                    if (DateOnly.Parse(entry.Date) >= DateOnly.FromDateTime(DateTime.Now))
+                    string jsonDate = _formatDateTimeService.GetFormattedDate(entry.Date);
+                    
+                    if (DateTime.Compare(DateTime.ParseExact(jsonDate, "dd/MM/yyyy", CultureInfo.InvariantCulture), DateTime.ParseExact(currentDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)) >= 0)
                     {
                         inNext30Days = true;
                     }

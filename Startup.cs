@@ -82,6 +82,7 @@ namespace CinemaVillage
             services.AddTransient<IReviewFactory, ReviewFactory>();
             services.AddTransient<IReviewAppService, ReviewAppService>();
             services.AddTransient<IAllMovieFactory, AllMovieFactory>();
+            services.AddTransient<IFormatDateTimeService, FormatDateTimeService>();
             services.AddControllersWithViews().AddNewtonsoftJson();
             services.AddDbContext<CinemaDbContext>(options => options.UseSqlServer(_configRoot.GetConnectionString("DbContext")));
         }

@@ -1,6 +1,7 @@
 ﻿using CinemaVillage.AppModel.Movies;
 using CinemaVillage.DatabaseContext;
 using CinemaVillage.Models;
+using CinemaVillage.Services.HelperService.Interface;
 using CinemaVillage.Services.MovieXrefTheatreAppService.Interface;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -11,10 +12,12 @@ namespace CinemaVillage.Services.MovieXrefTheatreAppService
     public class MovieXrefTheatreAppService : IMovieXrefTheatreAppService
     {
         private readonly CinemaDbContext _context;
+        private readonly IFormatDateTimeService _formatDateTimeService;
 
-        public MovieXrefTheatreAppService(CinemaDbContext context)
+        public MovieXrefTheatreAppService(CinemaDbContext context, IFormatDateTimeService formatDateTimeService)
         {
             _context = context;
+            _formatDateTimeService = formatDateTimeService;
         }
 
         public void AddMovieXrefTheatre(MovieXrefTheatre movieXrefTheatreModel)
@@ -40,6 +43,8 @@ namespace CinemaVillage.Services.MovieXrefTheatreAppService
         //TODO: REFACTOR
         public Dictionary<int, List<string>> GetRunningDatesByIdsAndDate(List<int> moviesIds, string date)
         {
+            string dateQueryParam = _formatDateTimeService.GetFormattedDate(date);
+
             Dictionary<int, List<string>> dictDatesAndHours = new();
 
             foreach (int id in moviesIds)
@@ -48,14 +53,21 @@ namespace CinemaVillage.Services.MovieXrefTheatreAppService
                 var model = JsonConvert.DeserializeObject<List<MovieAddJsonAppModel>>(availability);
                 foreach (var entry in model)
                 {
-                    if (DateOnly.Parse(entry.Date, CultureInfo.CurrentCulture) == DateOnly.Parse(date, CultureInfo.CurrentCulture))
+                    string jsonDate = _formatDateTimeService.GetFormattedDate(entry.Date);
+
+                    if (DateTime.Compare(DateTime.ParseExact(dateQueryParam, "dd/MM/yyyy", CultureInfo.InvariantCulture), DateTime.ParseExact(jsonDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)) == 0)
                     {
                         var hours = new List<string>();
                         foreach (var hourRunning in entry.HoursRunning)
                         {
-                            if (DateOnly.Parse(date, CultureInfo.CurrentCulture) == DateOnly.FromDateTime(DateTime.Now))
+                            string currentDate = _formatDateTimeService.GetFormattedDate(DateTime.Now.ToString("d"));
+
+                            if (DateTime.Compare(DateTime.ParseExact(dateQueryParam, "dd/MM/yyyy", CultureInfo.InvariantCulture), DateTime.ParseExact(currentDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)) == 0)
                             {
-                                if (!(TimeOnly.Parse(hourRunning.Hour, CultureInfo.CurrentCulture) < TimeOnly.FromDateTime(DateTime.Now)))
+                                string currentHour = _formatDateTimeService.GetFormattedHour(DateTime.Now.ToString("HH:mm:ss"));
+                                string jsonHour = _formatDateTimeService.GetFormattedHour(hourRunning.Hour);
+
+                                if (DateTime.Compare(DateTime.ParseExact(currentHour, "HH:mm:ss", CultureInfo.InvariantCulture), DateTime.ParseExact(jsonHour, "HH:mm:ss", CultureInfo.InvariantCulture)) <= 0)
                                 {
                                     bool available = false;
                                     foreach (var seat in hourRunning.Seats)
@@ -110,16 +122,22 @@ namespace CinemaVillage.Services.MovieXrefTheatreAppService
         public int GetNoOfSeatsAvailable(string date, string hour, int movieID, int theatreID)
         {
             int noOfSeatsAvailable = 0;
+            string dateQueryParam = _formatDateTimeService.GetFormattedDate(date);
+            string hourQueryParam = _formatDateTimeService.GetFormattedHour(hour);
 
             var availability = _context.MovieXrefTheatres.Where(mxt => mxt.IdMovie == movieID && mxt.IdTheatre == theatreID).Select(mxt => mxt.Availability).FirstOrDefault();
             var model = JsonConvert.DeserializeObject<List<MovieAddJsonAppModel>>(availability);
             foreach (var entry in model)
             {
-                if (DateOnly.Parse(date) == DateOnly.Parse(entry.Date))
+                string jsonDate = _formatDateTimeService.GetFormattedDate(entry.Date);
+
+                if (DateTime.Compare(DateTime.ParseExact(dateQueryParam, "dd/MM/yyyy", CultureInfo.InvariantCulture), DateTime.ParseExact(jsonDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)) == 0)
                 {
                     foreach (var hourRunning in entry.HoursRunning)
                     {
-                        if (TimeOnly.Parse(hourRunning.Hour) == TimeOnly.Parse(hour))
+                        string jsonHour = _formatDateTimeService.GetFormattedHour(hourRunning.Hour);
+                        
+                        if (DateTime.Compare(DateTime.ParseExact(hourQueryParam, "HH:mm:ss", CultureInfo.InvariantCulture), DateTime.ParseExact(jsonHour, "HH:mm:ss", CultureInfo.InvariantCulture)) == 0)
                         {
                             foreach (var seat in hourRunning.Seats)
                             {
@@ -138,15 +156,22 @@ namespace CinemaVillage.Services.MovieXrefTheatreAppService
 
         public List<Seats> GetSeatsAvailability(string date, string hour, int movieId, int theatreId)
         {
+            string dateQueryParam = _formatDateTimeService.GetFormattedDate(date);
+            string hourQueryParam = _formatDateTimeService.GetFormattedHour(hour);
+
             var availability = _context.MovieXrefTheatres.Where(mxt => mxt.IdMovie == movieId && mxt.IdTheatre == theatreId).Select(mxt => mxt.Availability).FirstOrDefault();
             var model = JsonConvert.DeserializeObject<List<MovieAddJsonAppModel>>(availability);
             foreach (var entry in model)
             {
-                if (DateOnly.Parse(date) == DateOnly.Parse(entry.Date))
+                string jsonDate = _formatDateTimeService.GetFormattedDate(entry.Date);
+
+                if (DateTime.Compare(DateTime.ParseExact(dateQueryParam, "dd/MM/yyyy", CultureInfo.InvariantCulture), DateTime.ParseExact(jsonDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)) == 0)
                 {
                     foreach (var hourRunning in entry.HoursRunning)
                     {
-                        if (TimeOnly.Parse(hourRunning.Hour) == TimeOnly.Parse(hour))
+                        string jsonHour = _formatDateTimeService.GetFormattedHour(hourRunning.Hour);
+
+                        if (DateTime.Compare(DateTime.ParseExact(hourQueryParam, "HH:mm:ss", CultureInfo.InvariantCulture), DateTime.ParseExact(jsonHour, "HH:mm:ss", CultureInfo.InvariantCulture)) == 0)
                         {
                             return hourRunning.Seats;
                         }
@@ -159,15 +184,22 @@ namespace CinemaVillage.Services.MovieXrefTheatreAppService
 
         public int UpdateAvailability(string date, string hour, int movieId, int theatreId, List<Seats> seats)
         {
+            string dateQueryParam = _formatDateTimeService.GetFormattedDate(date);
+            string hourQueryParam = _formatDateTimeService.GetFormattedHour(hour);
+
             var availability = _context.MovieXrefTheatres.Where(mxt => mxt.IdMovie == movieId && mxt.IdTheatre == theatreId).Select(mxt => mxt.Availability).FirstOrDefault();
             var model = JsonConvert.DeserializeObject<List<MovieAddJsonAppModel>>(availability);
             foreach (var entry in model)
             {
-                if (DateOnly.Parse(date) == DateOnly.Parse(entry.Date))
+                string jsonDate = _formatDateTimeService.GetFormattedDate(entry.Date);
+
+                if (DateTime.Compare(DateTime.ParseExact(dateQueryParam, "dd/MM/yyyy", CultureInfo.InvariantCulture), DateTime.ParseExact(jsonDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)) == 0)
                 {
                     foreach (var hourRunning in entry.HoursRunning)
                     {
-                        if (TimeOnly.Parse(hourRunning.Hour) == TimeOnly.Parse(hour))
+                        string jsonHour = _formatDateTimeService.GetFormattedHour(hourRunning.Hour);
+
+                        if (DateTime.Compare(DateTime.ParseExact(hourQueryParam, "HH:mm:ss", CultureInfo.InvariantCulture), DateTime.ParseExact(jsonHour, "HH:mm:ss", CultureInfo.InvariantCulture)) == 0)
                         {
                             hourRunning.Seats = seats;
                         }

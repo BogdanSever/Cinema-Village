@@ -64,10 +64,12 @@ var btnToCheckOutElements = document.getElementsByClassName("btnToCheckOut");
 for (const btnToCheckOut of btnToCheckOutElements) {
     btnToCheckOut.addEventListener("click", () => {
 
-        var searchDate = getFormattedDate(datePicker.value);
+        var searchDate = datePicker.value;
         var hour = btnToCheckOut.innerText + ":00";
         var movieId = btnToCheckOut.id.split("_")[1];
         var theatreId = document.getElementById("theatreID").innerText.split(" ").pop();
+
+        console.log(searchDate);
 ;
         $.ajax({
             type: "GET",
@@ -81,11 +83,6 @@ for (const btnToCheckOut of btnToCheckOutElements) {
             }
         });
     })
-}
-
-function getFormattedDate(date) {
-    var splittedDate = date.split("-");
-    return splittedDate[2] + "/" + splittedDate[1] + "/" + splittedDate[0];
 }
 
 /*function OpenCheckOut() {
