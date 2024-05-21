@@ -58,6 +58,67 @@ public class AdminController : Controller
         }
     }
 
+    [HttpGet("MyAdminDashBoard/UserAdd")]
+    public IActionResult UserAdd() 
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidOperationException("Invalid model state");
+            }
+
+            var builder = _adminFactory.CreateBuilder();
+            var model = builder.BuildAddUser();
+
+            return View(model);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message, ex);
+            return RedirectToAction("Error");
+        }
+    }
+
+    [HttpPost]
+    public IActionResult SubmitFormUserAdd([Bind(Prefix = "UpdatedUser")] UpdateUserAppModel model)
+    {
+        if (model != null)
+        {
+
+            var userModel = new User
+            {
+                FamilyName = model.LastName,
+                GivenName = model.FirstName,
+                Email = model.Email,
+                Password = model.Password,
+                Role = model.Role
+            };
+
+            try
+            {
+                _userAppService.AddUser(userModel);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new InvalidOperationException(ex.Message, ex);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return RedirectToAction("Error");
+            }
+
+            return RedirectToAction("Index", "Admin");
+
+        }
+        else
+        {
+            throw new InvalidOperationException("User is null");
+        }
+    }
+
     [HttpGet("MyAdminDashBoard/UserUpdate")]
     public IActionResult UserUpdate(string userId)
     {

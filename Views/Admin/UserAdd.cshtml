@@ -1,0 +1,64 @@
+﻿@model CinemaVillage.ViewModels.Admin.AdminDahboardUserViewModel;
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Cinema Village</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="~/css/output.css">
+    <link rel="icon" href="~/img/IuliaLogo.png">
+    <link rel="stylesheet" href="~/css/admin.css" />
+
+    <script src="~/js/admin.js" defer></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js" integrity="sha512-xq+Vm8jC94ynOikewaQXMEkJIOBp7iArs3IhFWSWdRT3Pq8wFz46p+ZDFAR7kHnSFf+zUv52B3prRYnbDRdgog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+</head>
+
+<body>
+    <div>
+        <form asp-controller="Admin" asp-action="SubmitFormUserAdd" method="post" id="formUpdateUser" class="flex flex-col gap-3 justify-start items-center font-BarlowSemiCondensed text-xl text-zinc-50">
+
+            <label id="FirstName" class="text-slate-700">First Name</label>
+            <input asp-for="@Model.UpdatedUser.FirstName" id="firstNameInput" class="rounded-full text-slate-700" />
+            <span asp-validation-for="@Model.UpdatedUser.FirstName" class="text-slate-700"></span>
+
+            <label id="LastName" class="text-slate-700">Last Name</label>
+            <input asp-for="@Model.UpdatedUser.LastName" id="lastNameInput" class="rounded-full text-slate-700" />
+            <span asp-validation-for="@Model.UpdatedUser.LastName" class="text-slate-700"></span>
+
+            <label class="text-slate-700">Email address</label>
+            <input asp-for="@Model.UpdatedUser.Email" id="emailInput" class="rounded-full text-slate-700" type="email" />
+            <span asp-validation-for="@Model.UpdatedUser.Email" class="text-slate-700"></span>
+
+            <label class="text-slate-700">Password</label>
+            <input asp-for="@Model.UpdatedUser.Password" id="passwordInput" class="rounded-full text-slate-700" />
+            <span asp-validation-for="@Model.UpdatedUser.Password" class="text-slate-700"></span>
+
+            <label id="confirmPassword" class="text-slate-700">Repeat password</label>
+            <input asp-for="@Model.UpdatedUser.ConfirmPassword" id="confirmPasswordInput" class="rounded-full text-slate-700" />
+            <span asp-validation-for="@Model.UpdatedUser.ConfirmPassword" class="text-slate-700"></span>
+
+            <label id="role" class="text-slate-700">Role</label>
+            <input asp-for="@Model.UpdatedUser.Role" id="roleInput" class="rounded-full text-slate-700" />
+            <span asp-validation-for="@Model.UpdatedUser.Role" class="text-slate-700"></span>
+
+            <button id="btnSubmitFormUpdateUser" class="rounded-full bg-slate-700 shadow-xl border-r-4 w-36 border-b-4 mt-4 border-slate-800 active:translate-y-[2px] active:border-b-2 active:border-r-2" type="submit">
+                Add User
+            </button>
+        </form>
+    </div>
+
+</body>
+
+</html>

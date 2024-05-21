@@ -18,6 +18,11 @@ namespace CinemaVillage.ViewModels.Admin.AdminBuilder
             _theatreAppService = theatreAppService;
         }
 
+        public AdminDahboardUserViewModel BuildAddUser()
+        {
+            return new AdminDahboardUserViewModel() { };
+        }
+
         public AdminDahboardUserViewModel BuildUpdateUser()
         {
             var userAppModel = _userAppService.GetAllUsers();
