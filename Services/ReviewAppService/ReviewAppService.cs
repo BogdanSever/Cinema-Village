@@ -1,4 +1,5 @@
-﻿using CinemaVillage.DatabaseContext;
+﻿using CinemaVillage.AppModel.Reviews;
+using CinemaVillage.DatabaseContext;
 using CinemaVillage.Models;
 using CinemaVillage.Services.ReviewAppService.Interface;
 
@@ -28,6 +29,25 @@ namespace CinemaVillage.Services.ReviewAppService
 
                 _context.SaveChanges();
             }
+        }
+
+        public List<ReviewsMoviePageAppModel> GetAllReviewsByMovieId(int movieId)
+        {
+            List<ReviewsMoviePageAppModel> reviewsMoviePageAppModels = new List<ReviewsMoviePageAppModel>();
+
+            var reviews = _context.Reviews.Where(r => r.IdMovie == movieId).ToList();
+            foreach(var review in reviews)
+            {
+                var userName = _context.Users.Where(u => u.IdUser == review.IdUser).Select(u => u.FamilyName + " " + u.GivenName).FirstOrDefault();
+                reviewsMoviePageAppModels.Add(new ReviewsMoviePageAppModel
+                {
+                    UserName = userName,
+                    Review = review.Description,
+                    NoOfStars = review.NoOfStars
+                });
+            }
+            
+            return reviewsMoviePageAppModels;
         }
     }
 }

@@ -66,8 +66,8 @@ reserverBtn.addEventListener("click", () => {
         url: "/SeatSelection/UpdateSeatsState",
         data: { date: window.dateOfMovie, hour: window.hourOfMovie, seats: data, movieId: window.movieId, theatreId: window.theatreId, seatsBooked: selectedSeatsList },
         success: function (response) {
-            console.log(response);
-            window.location.replace("/Program");
+            alert("Seat(s) reserved succesfully!");
+            window.location.replace("/");
         },
         error: function (response) {
             console.log("Error: " + response.Status + " |  " + response.Message);

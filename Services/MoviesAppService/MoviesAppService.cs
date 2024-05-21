@@ -45,8 +45,6 @@ namespace CinemaVillage.Services.MoviesAppService
             return Convert.ToBase64String(image);
         }
 
-
-        //TODO: maybe compare strings?
         public List<MovieAppModel> GetAllMoviesInNext30Days()
         {
             List<MovieAppModel> movieAppModels = new List<MovieAppModel>();

@@ -12,5 +12,6 @@ namespace CinemaVillage.Services.MovieXrefTheatreAppService.Interface
         int GetNoOfSeatsAvailable(string date, string hour, int movieID, int theatreID);
         List<Seats> GetSeatsAvailability(string date, string hour, int movieId, int theatreId);
         int UpdateAvailability(string date, string hour, int movieId,  int theatreId, List<Seats> seats);
+        List<MovieScheduleAppModel> GetScheduleByMovieId(int movieID);
     }
 }

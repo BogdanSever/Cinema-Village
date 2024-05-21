@@ -224,5 +224,48 @@ namespace CinemaVillage.Services.MovieXrefTheatreAppService
 
             return _context.MovieXrefTheatres.Where(mxt => mxt.IdMovie == movieId && mxt.IdTheatre == theatreId).Select(mxt => mxt.IdScreenXrefMovie).FirstOrDefault();
         }
+
+        public List<MovieScheduleAppModel> GetScheduleByMovieId(int movieId)
+        {
+            List<MovieScheduleAppModel> movieScheduleAppModels = new List<MovieScheduleAppModel>();
+
+            var items = _context.MovieXrefTheatres.Where(mxt => mxt.IdMovie == movieId).Select(mxt => new { Availability = mxt.Availability, TheatreId = mxt.IdTheatre }).ToList();
+
+            foreach (var item in items)
+            {
+                var model = JsonConvert.DeserializeObject<List<MovieAddJsonAppModel>>(item.Availability);
+                foreach (var entry in model)
+                {
+                    var date = entry.Date;
+                    List<string> hours = new List<string>();
+                    var dictionaryHours = GetRunningDatesByIdsAndDate(new List<int> { movieId }, date);
+                    if (dictionaryHours.Values.Any())
+                    {
+                        foreach (var hoursRunning in dictionaryHours.Values)
+                        {
+                            foreach (var hour in hoursRunning)
+                            {
+                                if(GetNoOfSeatsAvailable(date, hour, movieId, item.TheatreId) != 0)
+                                {
+                                    hours.Add(hour);
+                                }
+                            }
+                        }
+                    }
+
+                    if (hours.Any())
+                    {
+                        movieScheduleAppModels.Add(new MovieScheduleAppModel
+                        {
+                            Date = date,
+                            TheatreName = item.TheatreId,
+                            Hours = hours,
+                        });
+                    }
+                }
+            }
+
+            return movieScheduleAppModels;
+        }
     }
 }
