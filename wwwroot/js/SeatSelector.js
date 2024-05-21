@@ -59,8 +59,6 @@ reserverBtn.addEventListener("click", () => {
     console.log(window.movieId);
     console.log(window.theatreId);
 
-    debugger;
-
     $.ajax({
         type: "POST",
         url: "/SeatSelection/UpdateSeatsState",

@@ -16,6 +16,11 @@ for (const btnToCheckOut of btnToCheckOutElements) {
             success: function (response) {
                 window.location.replace("/CheckOut?date=" + date + "&hour=" + hour + "&movieID=" + movieId + "&theatreID=" + theatreId);
             },
+            statusCode: {
+                401: function (response) {
+                    alert("Must be logged in to acces the check out!");
+                }
+            },
             error: function (response) {
                 console.log("Error: " + response.Status + " |  " + response.Message + " " + response.url);
             }
