@@ -60,5 +60,15 @@ namespace CinemaVillage.ViewModels.Admin.AdminBuilder
             };
         }
 
+        public AdminDashboardMovieViewModel BuildDeleteTheatre()
+        {
+            var theatreAppModel = _theatreAppService.GetAllTheatres();
+
+            return new AdminDashboardMovieViewModel
+            {
+                Theatres = theatreAppModel
+            };
+        }
+
     }
 }

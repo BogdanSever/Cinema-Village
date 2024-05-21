@@ -7,6 +7,7 @@ using CinemaVillage.Services.HelperService.Interface;
 using CinemaVillage.Services.MoviesAppService.Interface;
 using CinemaVillage.Services.MovieXrefTheatreAppService.Interface;
 using CinemaVillage.Services.ReviewAppService.Interface;
+using CinemaVillage.Services.TheatreAppService.Interface;
 using CinemaVillage.Services.UserAppService.Interface;
 using CinemaVillage.ViewModels.Admin.AdminBuilder.AdminFactory.Interface;
 using Microsoft.AspNetCore.Authorization;
@@ -30,10 +31,12 @@ public class AdminController : Controller
     private readonly IJsonCreatorService _jsonCreatorService;
     private readonly IReviewAppService _reviewAppService;
     private readonly IActorXrefMovieAppService _actorXrefMovieAppService;
+    private readonly ITheatreAppService _theatreAppService;
 
-    public AdminController(ILogger<AdminController> logger, IAdminFactory adminFactory, IUserAppService userAppService, 
-                           IDirectorAppService directorAppService, IMoviesAppService moviesAppService, IMovieXrefTheatreAppService movieXrefTheatreAppService, 
-                           IJsonCreatorService jsonCreatorService, IReviewAppService reviewAppService, IActorXrefMovieAppService actorXrefMovieAppService)
+    public AdminController(ILogger<AdminController> logger, IAdminFactory adminFactory, IUserAppService userAppService,
+                           IDirectorAppService directorAppService, IMoviesAppService moviesAppService, IMovieXrefTheatreAppService movieXrefTheatreAppService,
+                           IJsonCreatorService jsonCreatorService, IReviewAppService reviewAppService, IActorXrefMovieAppService actorXrefMovieAppService,
+                           ITheatreAppService theatreAppService)
     {
         _logger = logger;
         _adminFactory = adminFactory;
@@ -44,6 +47,7 @@ public class AdminController : Controller
         _jsonCreatorService = jsonCreatorService;
         _reviewAppService = reviewAppService;
         _actorXrefMovieAppService = actorXrefMovieAppService;
+        _theatreAppService = theatreAppService;
     }
 
     [HttpGet("MyAdminDashBoard")]
@@ -296,7 +300,7 @@ public class AdminController : Controller
     }
     #endregion
 
-
+    #region Movies
     [HttpGet("MyAdminDashBoard/MovieAdd")]
     public IActionResult MovieAdd()
     {
@@ -401,13 +405,13 @@ public class AdminController : Controller
             var theatre_id = Int32.Parse(theatreID);
             var availabilties = _movieXrefTheatreAppService.GetAvailabilty(theatre_id);
 
-            foreach(var availabilty in availabilties)
+            foreach (var availabilty in availabilties)
             {
                 var model = JsonConvert.DeserializeObject<List<MovieAddJsonAppModel>>(availabilty);
-                foreach(var entry in model)
+                foreach (var entry in model)
                 {
                     var hours = new List<string>();
-                    foreach(var hourRunning in entry.HoursRunning)
+                    foreach (var hourRunning in entry.HoursRunning)
                     {
                         hours.Add(hourRunning.Hour);
                     }
@@ -650,4 +654,104 @@ public class AdminController : Controller
             return RedirectToAction("Error");
         }
     }
+    #endregion
+
+    #region Theatres
+    [HttpGet]
+    public IActionResult TheatreAdd()
+    {
+        var theatreModel = new Theatre
+        {
+            Capacity = 40,
+            NoOfRows = 6
+        };
+
+        try
+        {
+            _theatreAppService.AddTheatre(theatreModel);
+        }
+        catch (InvalidOperationException ex)
+        {
+            _logger.LogError(ex.Message, ex);
+            throw new InvalidOperationException(ex.Message, ex);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message, ex);
+            return RedirectToAction("Error");
+        }
+
+        return RedirectToAction("Index", "Admin");
+    }
+
+    [HttpGet("MyAdminDashBoard/TheatreDelete")]
+    public IActionResult TheatreDelete(string theatreId)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidOperationException("Invalid model state");
+            }
+
+            var builder = _adminFactory.CreateBuilder();
+            var model = builder.BuildDeleteTheatre();
+
+            if (!string.IsNullOrEmpty(theatreId))
+            {
+                ViewBag.SelectedItem = theatreId;
+            }
+
+            return View(model);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message, ex);
+            return RedirectToAction("Error");
+        }
+    }
+
+    [HttpPost]
+    public IActionResult SubmitSearchDeleteTheatre(string selectedItem)
+    {
+        return RedirectToAction("TheatreDelete", new { theatreId = selectedItem });
+    }
+
+    [HttpPost]
+    public IActionResult SubmitFormDeleteTheatre([Bind(Prefix = "Item1")] MovieAddAppModel model)
+    {
+        if (model != null)
+        {
+
+            var theatreModel = new Theatre
+            {
+                IdTheatre = Int32.Parse(model.TheatreName),
+            };
+
+            try
+            {
+                _movieXrefTheatreAppService.DeleteMovieXrefTheatreByTheatreId(theatreModel.IdTheatre);
+                _theatreAppService.DeleteTheatre(theatreModel.IdTheatre);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new InvalidOperationException(ex.Message, ex);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return RedirectToAction("Error");
+            }
+
+            return RedirectToAction("Index", "Admin");
+
+        }
+        else
+        {
+            throw new InvalidOperationException("User is null");
+        }
+    }
+
+    #endregion
 }

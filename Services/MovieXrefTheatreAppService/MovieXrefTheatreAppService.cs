@@ -283,5 +283,16 @@ namespace CinemaVillage.Services.MovieXrefTheatreAppService
                 _context.MovieXrefTheatres.Where(mxt => mxt.IdScreenXrefMovie == movieXrefTheatre.IdScreenXrefMovie).ExecuteDelete();
             }
         }
+
+        public void DeleteMovieXrefTheatreByTheatreId(int theatreId)
+        {
+            var moviesXrefTheatres = _context.MovieXrefTheatres.Where(mxt => mxt.IdTheatre == theatreId).ToList();
+
+            foreach (var movieXrefTheatre in moviesXrefTheatres)
+            {
+                _context.Bookings.Where(b => b.IdMovieXrefTheatre == movieXrefTheatre.IdScreenXrefMovie).ExecuteDelete();
+                _context.MovieXrefTheatres.Where(mxt => mxt.IdScreenXrefMovie == movieXrefTheatre.IdScreenXrefMovie).ExecuteDelete();
+            }
+        }
     }
 }

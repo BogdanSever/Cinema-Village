@@ -1,0 +1,13 @@
+﻿@model (CinemaVillage.AppModel.Movies.MovieAddAppModel, List<CinemaVillage.AppModel.Movies.MovieAppModel>, dynamic)
+
+<form asp-controller="Admin" asp-action="SubmitFormDeleteTheatre" method="post" id="formDeleteTheatre" class="flex flex-col gap-3 justify-start items-center font-BarlowSemiCondensed text-xl text-zinc-50">
+
+    <label id="TheatreName">Theatre Name</label>
+    <input asp-for="@Model.Item1.TheatreName" value="@Model.Item3" class="rounded-full text-slate-700" type="text" readonly />
+    <span asp-validation-for="@Model.Item1.TheatreName" class="text-danger"></span>
+
+    <button id="btnSubmitFormUpdateUser" class="rounded-full bg-slate-700 shadow-xl border-r-4 w-36 border-b-4 mt-4 border-slate-800 active:translate-y-[2px] active:border-b-2 active:border-r-2">
+        Delete Theatre
+    </button>
+
+</form>

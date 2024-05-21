@@ -1,6 +1,8 @@
 ﻿using CinemaVillage.AppModel.Theatres;
 using CinemaVillage.DatabaseContext;
+using CinemaVillage.Models;
 using CinemaVillage.Services.TheatreAppService.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace CinemaVillage.Services.TheatreAppService
 {
@@ -30,6 +32,25 @@ namespace CinemaVillage.Services.TheatreAppService
             }
 
             return theatreAppModel;
+        }
+
+        public void AddTheatre(Theatre theatreModel)
+        {
+            try
+            {
+                _context.Theatres.Add(theatreModel);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+
+            _context.SaveChanges();
+        }
+
+        public void DeleteTheatre(int theatreId)
+        {
+            _context.Theatres.Where(t => t.IdTheatre == theatreId).ExecuteDelete();
         }
     }
 }
