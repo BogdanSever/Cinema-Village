@@ -119,6 +119,79 @@ public class AdminController : Controller
         }
     }
 
+    [HttpGet("MyAdminDashBoard/UserDelete")]
+    public IActionResult UserDelete(string userId)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidOperationException("Invalid model state");
+            }
+
+            var builder = _adminFactory.CreateBuilder();
+            var model = builder.BuildDeleteUser();
+
+            if (!string.IsNullOrEmpty(userId))
+            {
+                ViewBag.SelectedItem = userId;
+            }
+
+            return View(model);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message, ex);
+            return RedirectToAction("Error");
+        }
+    }
+
+    [HttpPost]
+    public IActionResult SubmitSearchDeleteUser(string selectedItem)
+    {
+        return RedirectToAction("UserDelete", new { userId = selectedItem });
+    }
+
+    [HttpPost]
+    public IActionResult SubmitFormDeleteUser([Bind(Prefix = "Item1")] UpdateUserAppModel model)
+    {
+        if (model != null)
+        {
+
+            var userModel = new User
+            {
+                IdUser = model.Id,
+                FamilyName = model.LastName,
+                GivenName = model.FirstName,
+                Email = model.Email,
+                Password = model.Password,
+                Role = model.Role
+            };
+
+            try
+            {
+                _userAppService.DeleteUser(userModel.Email);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new InvalidOperationException(ex.Message, ex);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return RedirectToAction("Error");
+            }
+
+            return RedirectToAction("Index", "Admin");
+
+        }
+        else
+        {
+            throw new InvalidOperationException("User is null");
+        }
+    }
+
     [HttpGet("MyAdminDashBoard/UserUpdate")]
     public IActionResult UserUpdate(string userId)
     {
