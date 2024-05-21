@@ -6,6 +6,7 @@ using CinemaVillage.Services.MovieXrefTheatreAppService.Interface;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Globalization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CinemaVillage.Services.MovieXrefTheatreAppService
 {
@@ -236,36 +237,51 @@ namespace CinemaVillage.Services.MovieXrefTheatreAppService
                 var model = JsonConvert.DeserializeObject<List<MovieAddJsonAppModel>>(item.Availability);
                 foreach (var entry in model)
                 {
-                    var date = entry.Date;
-                    List<string> hours = new List<string>();
-                    var dictionaryHours = GetRunningDatesByIdsAndDate(new List<int> { movieId }, date);
-                    if (dictionaryHours.Values.Any())
+                    string date = _formatDateTimeService.GetFormattedDate(entry.Date);
+                    string currentDate = _formatDateTimeService.GetFormattedDate(DateTime.Now.ToString("d"));
+                    if (DateTime.Compare(DateTime.ParseExact(date, "dd/MM/yyyy", CultureInfo.InvariantCulture), DateTime.ParseExact(currentDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)) >= 0)
                     {
-                        foreach (var hoursRunning in dictionaryHours.Values)
+                        List<string> hours = new List<string>();
+                        var dictionaryHours = GetRunningDatesByIdsAndDate(new List<int> { movieId }, date);
+                        if (dictionaryHours.Values.Any())
                         {
-                            foreach (var hour in hoursRunning)
+                            foreach (var hoursRunning in dictionaryHours.Values)
                             {
-                                if(GetNoOfSeatsAvailable(date, hour, movieId, item.TheatreId) != 0)
+                                foreach (var hour in hoursRunning)
                                 {
-                                    hours.Add(hour);
+                                    if (GetNoOfSeatsAvailable(date, hour, movieId, item.TheatreId) != 0)
+                                    {
+                                        hours.Add(hour);
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    if (hours.Any())
-                    {
-                        movieScheduleAppModels.Add(new MovieScheduleAppModel
+                        if (hours.Any())
                         {
-                            Date = date,
-                            TheatreName = item.TheatreId,
-                            Hours = hours,
-                        });
+                            movieScheduleAppModels.Add(new MovieScheduleAppModel
+                            {
+                                Date = date,
+                                TheatreName = item.TheatreId,
+                                Hours = hours,
+                            });
+                        }
                     }
                 }
             }
 
             return movieScheduleAppModels;
+        }
+
+        public void DeleteMovieXrefTheatreByMovieId(int movieId)
+        {
+            var moviesXrefTheatres = _context.MovieXrefTheatres.Where(mxt => mxt.IdMovie == movieId).ToList();
+
+            foreach (var movieXrefTheatre in moviesXrefTheatres)
+            {
+                _context.Bookings.Where(b => b.IdMovieXrefTheatre == movieXrefTheatre.IdScreenXrefMovie).ExecuteDelete();
+                _context.MovieXrefTheatres.Where(mxt => mxt.IdScreenXrefMovie == movieXrefTheatre.IdScreenXrefMovie).ExecuteDelete();
+            }
         }
     }
 }

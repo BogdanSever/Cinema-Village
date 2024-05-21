@@ -6,6 +6,8 @@ namespace CinemaVillage.ViewModels.Admin
 {
     public class AdminDashboardMovieViewModel
     {
+        public List<MovieAppModel> Movies { get; set; }
+
         public MovieAddAppModel Movie {  get; set; }
 
         public List<DirectorsAppModel> Directors { get; set; }

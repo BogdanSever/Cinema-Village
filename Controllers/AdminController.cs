@@ -1,15 +1,18 @@
 ﻿using CinemaVillage.AppModel.Movies;
 using CinemaVillage.AppModel.Users;
 using CinemaVillage.Models;
+using CinemaVillage.Services.ActorXrefMovieAppService.Interface;
 using CinemaVillage.Services.DirectorsAppService.Interface;
 using CinemaVillage.Services.HelperService.Interface;
 using CinemaVillage.Services.MoviesAppService.Interface;
 using CinemaVillage.Services.MovieXrefTheatreAppService.Interface;
+using CinemaVillage.Services.ReviewAppService.Interface;
 using CinemaVillage.Services.UserAppService.Interface;
 using CinemaVillage.ViewModels.Admin.AdminBuilder.AdminFactory.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
 namespace CinemaVillage.Controllers;
@@ -25,10 +28,12 @@ public class AdminController : Controller
     private readonly IMoviesAppService _moviesAppService;
     private readonly IMovieXrefTheatreAppService _movieXrefTheatreAppService;
     private readonly IJsonCreatorService _jsonCreatorService;
+    private readonly IReviewAppService _reviewAppService;
+    private readonly IActorXrefMovieAppService _actorXrefMovieAppService;
 
     public AdminController(ILogger<AdminController> logger, IAdminFactory adminFactory, IUserAppService userAppService, 
                            IDirectorAppService directorAppService, IMoviesAppService moviesAppService, IMovieXrefTheatreAppService movieXrefTheatreAppService, 
-                           IJsonCreatorService jsonCreatorService)
+                           IJsonCreatorService jsonCreatorService, IReviewAppService reviewAppService, IActorXrefMovieAppService actorXrefMovieAppService)
     {
         _logger = logger;
         _adminFactory = adminFactory;
@@ -37,6 +42,8 @@ public class AdminController : Controller
         _moviesAppService = moviesAppService;
         _movieXrefTheatreAppService = movieXrefTheatreAppService;
         _jsonCreatorService = jsonCreatorService;
+        _reviewAppService = reviewAppService;
+        _actorXrefMovieAppService = actorXrefMovieAppService;
     }
 
     [HttpGet("MyAdminDashBoard")]
@@ -58,8 +65,9 @@ public class AdminController : Controller
         }
     }
 
+    #region User
     [HttpGet("MyAdminDashBoard/UserAdd")]
-    public IActionResult UserAdd() 
+    public IActionResult UserAdd()
     {
         try
         {
@@ -286,6 +294,8 @@ public class AdminController : Controller
             return RedirectToAction("Error");
         }
     }
+    #endregion
+
 
     [HttpGet("MyAdminDashBoard/MovieAdd")]
     public IActionResult MovieAdd()
@@ -468,6 +478,176 @@ public class AdminController : Controller
         else
         {
             return "Error";
+        }
+    }
+
+    [HttpGet("MyAdminDashBoard/MovieDelete")]
+    public IActionResult MovieDelete(string movieId)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidOperationException("Invalid model state");
+            }
+
+            var builder = _adminFactory.CreateBuilder();
+            var model = builder.BuildForMovie();
+
+            if (!string.IsNullOrEmpty(movieId))
+            {
+                ViewBag.SelectedItem = movieId;
+            }
+
+            return View(model);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message, ex);
+            return RedirectToAction("Error");
+        }
+    }
+
+    [HttpPost]
+    public IActionResult SubmitSearchDeleteMovie(string selectedItem)
+    {
+        return RedirectToAction("MovieDelete", new { movieId = selectedItem });
+    }
+
+    [HttpPost]
+    public IActionResult SubmitFormDeleteMovie([Bind(Prefix = "Item1")] MovieAddAppModel model)
+    {
+        if (model != null)
+        {
+
+            var movieModel = new Movie
+            {
+                IdMovie = model.Id,
+                Genre = model.Genre,
+                Duration = model.Duration,
+                ReleaseDate = model.ReleaseDate,
+                Discription = model.Description
+            };
+
+            try
+            {
+                _reviewAppService.DeleteReviewsByMovieId(movieModel.IdMovie);
+                _actorXrefMovieAppService.DeleteActorsXrefMovieByMovieId(movieModel.IdMovie);
+                _movieXrefTheatreAppService.DeleteMovieXrefTheatreByMovieId(movieModel.IdMovie);
+                _moviesAppService.DeleteMovieByMovieId(movieModel.IdMovie);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new InvalidOperationException(ex.Message, ex);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return RedirectToAction("Error");
+            }
+
+            return RedirectToAction("Index", "Admin");
+
+        }
+        else
+        {
+            throw new InvalidOperationException("User is null");
+        }
+    }
+
+    [HttpGet("MyAdminDashBoard/MovieUpdate")]
+    public IActionResult MovieUpdate(string movieId)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidOperationException("Invalid model state");
+            }
+
+            var builder = _adminFactory.CreateBuilder();
+            var model = builder.BuildForMovie();
+
+            if (!string.IsNullOrEmpty(movieId))
+            {
+                ViewBag.SelectedItem = movieId;
+            }
+
+            return View(model);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message, ex);
+            return RedirectToAction("Error");
+        }
+    }
+
+    [HttpPost]
+    public IActionResult SubmitSearchUpdateMovie(string selectedItem)
+    {
+        return RedirectToAction("MovieUpdate", new { movieId = selectedItem });
+    }
+
+    [HttpPost]
+    public IActionResult SubmitFormUpdateMovie([Bind(Prefix = "Item1")] MovieAddAppModel model)
+    {
+        if (model != null)
+        {
+
+            var movieModel = new Movie
+            {
+                IdMovie = model.Id,
+                Title = model.Title,
+                Genre = model.Genre,
+                Duration = model.Duration,
+                ReleaseDate = model.ReleaseDate,
+                Discription = model.Description
+            };
+
+            try
+            {
+                _moviesAppService.UpdateMovie(movieModel);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new InvalidOperationException(ex.Message, ex);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return RedirectToAction("Error");
+            }
+
+            return RedirectToAction("Index", "Admin");
+
+        }
+        else
+        {
+            throw new InvalidOperationException("User is null");
+        }
+    }
+
+    [HttpGet("MyAdminDashBoard/MovieListAll")]
+    public IActionResult MovieListAll()
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidOperationException("Invalid model state");
+            }
+
+            var builder = _adminFactory.CreateBuilder();
+            var model = builder.BuildForMovie();
+
+            return View(model);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message, ex);
+            return RedirectToAction("Error");
         }
     }
 }

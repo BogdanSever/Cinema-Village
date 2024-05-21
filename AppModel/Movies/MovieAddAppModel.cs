@@ -4,6 +4,8 @@ namespace CinemaVillage.AppModel.Movies
 {
     public class MovieAddAppModel
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "Please enter the title")]
         public string Title { get; set; }
 

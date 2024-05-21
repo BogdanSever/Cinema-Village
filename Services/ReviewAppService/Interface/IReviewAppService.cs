@@ -7,5 +7,6 @@ namespace CinemaVillage.Services.ReviewAppService.Interface
     {
         void AddReview(Review reviewModel);
         List<ReviewsMoviePageAppModel> GetAllReviewsByMovieId(int movieId);
+        void DeleteReviewsByMovieId(int movieId);
     }
 }

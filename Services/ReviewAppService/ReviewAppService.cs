@@ -2,6 +2,7 @@
 using CinemaVillage.DatabaseContext;
 using CinemaVillage.Models;
 using CinemaVillage.Services.ReviewAppService.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace CinemaVillage.Services.ReviewAppService
 {
@@ -48,6 +49,16 @@ namespace CinemaVillage.Services.ReviewAppService
             }
             
             return reviewsMoviePageAppModels;
+        }
+
+        public void DeleteReviewsByMovieId(int movieId)
+        {
+            var reviewsToDelete = _context.Reviews.Where(r => r.IdMovie == movieId).ToList();
+
+            foreach (var review in reviewsToDelete)
+            {
+                _context.Reviews.Where(r => r.IdReview == review.IdReview).ExecuteDelete();
+            }
         }
     }
 }

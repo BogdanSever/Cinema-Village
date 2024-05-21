@@ -14,5 +14,7 @@ namespace CinemaVillage.Services.MoviesAppService.Interface
         List<int> GetAllMoviesIds();
         (List<MovieUserPageAppModel> futureMovies, List<MovieUserPageAppModel> pastMovies, List<ReviewedMovieUserPageAppModel> reviewedMovies) GetMovies(List<BookingAppModel> bookingAppModel);
         int AddMovie(Movie movie);
+        void DeleteMovieByMovieId(int movieId);
+        void UpdateMovie(Movie movie);
     }
 }

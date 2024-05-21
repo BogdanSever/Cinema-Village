@@ -7,6 +7,7 @@ using CinemaVillage.Services.HelperService;
 using CinemaVillage.Services.HelperService.Interface;
 using CinemaVillage.Services.MoviesAppService.Interface;
 using Microsoft.AspNetCore.JsonPatch.Internal;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Drawing;
 using System.Globalization;
@@ -31,6 +32,7 @@ namespace CinemaVillage.Services.MoviesAppService
 
             return movieModel.Select(m => new MovieAppModel
             {
+                IdMovie = m.IdMovie,
                 Title = m.Title,
                 Genre = m.Genre,
                 Duration = m.Duration,
@@ -243,6 +245,38 @@ namespace CinemaVillage.Services.MoviesAppService
             }
 
             return moviesProgramPageAppModel;
+        }
+
+        public void DeleteMovieByMovieId(int movieId)
+        {
+            _context.Movies.Where(m => m.IdMovie == movieId).ExecuteDelete();
+        }
+
+        public void UpdateMovie(Movie movie)
+        {
+            if (CheckForExistanceMovie(movie.Title))
+            {
+                try
+                {
+                    _context.Movies
+                        .Where(m => m.IdMovie == movie.IdMovie)
+                        .ExecuteUpdate(up => up
+                            .SetProperty(m => m.Title, movie.Title)
+                            .SetProperty(m => m.Genre, movie.Genre)
+                            .SetProperty(m => m.Duration, movie.Duration)
+                            .SetProperty(m => m.ReleaseDate, movie.ReleaseDate)
+                            .SetProperty(m => m.Discription, movie.Discription)
+                        );
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message, ex);
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("No user found in DB!");
+            }
         }
     }
 }

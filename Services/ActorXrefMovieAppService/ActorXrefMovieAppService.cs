@@ -1,5 +1,6 @@
 ﻿using CinemaVillage.DatabaseContext;
 using CinemaVillage.Services.ActorXrefMovieAppService.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace CinemaVillage.Services.ActorXrefMovieAppService
 {
@@ -15,6 +16,16 @@ namespace CinemaVillage.Services.ActorXrefMovieAppService
         public List<int> GetAllActorsByMovieId(int movieId)
         {
             return _context.ActorsXrefMovies.Where(axm => axm.IdMovie == movieId).Select(axm => axm.IdActor).ToList();
+        }
+
+        public void DeleteActorsXrefMovieByMovieId(int movieId)
+        {
+            var actorsXrefMovies = _context.ActorsXrefMovies.Where(axm => axm.IdMovie == movieId).ToList();
+
+            foreach (var actorXrefMovie in actorsXrefMovies)
+            {
+                _context.ActorsXrefMovies.Where(axm => axm.IdMovie == actorXrefMovie.IdMovie).ExecuteDelete();
+            }
         }
     }
 }

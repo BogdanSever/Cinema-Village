@@ -1,0 +1,61 @@
+﻿@model CinemaVillage.ViewModels.Admin.AdminDashboardMovieViewModel;
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Cinema Village</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="~/css/output.css">
+    <link rel="stylesheet" href="~/css/userListAll.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js" integrity="sha512-xq+Vm8jC94ynOikewaQXMEkJIOBp7iArs3IhFWSWdRT3Pq8wFz46p+ZDFAR7kHnSFf+zUv52B3prRYnbDRdgog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+</head>
+
+<body>
+    @if (Model.Movies.Any())
+    {
+        <h1 class="title_table">Movies</h1>
+
+        <table class="table_users">
+            <tr class="row_users">
+                <th class="head_users">Id Movie</th>
+                <th class="head_users">Title</th>
+                <th class="head_users">Genre</th>
+                <th class="head_users">Release Date</th>
+                <th class="head_users">Description</th>
+                <th class="head_users">Duration</th>
+            </tr>
+
+            @foreach (var movie in Model.Movies)
+            {
+                <tr class="row_users">
+                    <td class="head_users">@movie.IdMovie</td>
+                    <td class="head_users">@movie.Title</td>
+                    <td class="head_users">@movie.Genre</td>
+                    <td class="head_users">@movie.ReleaseDate</td>
+                    <td class="head_users">@movie.Description</td>
+                    <td class="head_users">@movie.Duration h</td>
+                </tr>
+            }
+
+        </table>
+    }
+    else
+    {
+        <h2>No users in DB!</h2>
+    }
+
+</body>
+
+</html>
