@@ -190,7 +190,7 @@ namespace CinemaVillage.Services.MoviesAppService
 
         public int AddMovie(Movie movieModel)
         {
-            if (!CheckForExistanceMovie(movieModel.Title))
+            if (!CheckForExistanceMovie(movieModel.IdMovie))
             {
                 try
                 {
@@ -211,11 +211,11 @@ namespace CinemaVillage.Services.MoviesAppService
             }
         }
 
-        private bool CheckForExistanceMovie(string title)
+        private bool CheckForExistanceMovie(int id)
         {
             foreach (var movie in _context.Movies)
             {
-                if (movie.Title.Equals(title))
+                if (movie.IdMovie.Equals(id))
                 {
                     return true;
                 }
@@ -254,7 +254,7 @@ namespace CinemaVillage.Services.MoviesAppService
 
         public void UpdateMovie(Movie movie)
         {
-            if (CheckForExistanceMovie(movie.Title))
+            if (CheckForExistanceMovie(movie.IdMovie))
             {
                 try
                 {

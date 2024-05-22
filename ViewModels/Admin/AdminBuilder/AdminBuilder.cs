@@ -70,5 +70,15 @@ namespace CinemaVillage.ViewModels.Admin.AdminBuilder
             };
         }
 
+        public AdminDashboardDirectorViewModel BuildAddDirector()
+        {
+            var directorsAppModel = _directorAppService.GetAllDirectors();
+
+            return new AdminDashboardDirectorViewModel()
+            {
+                Directors = directorsAppModel,
+            };
+        }
+
     }
 }

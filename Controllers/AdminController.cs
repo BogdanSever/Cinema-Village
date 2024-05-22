@@ -1,4 +1,5 @@
-﻿using CinemaVillage.AppModel.Movies;
+﻿using CinemaVillage.AppModel.Directors;
+using CinemaVillage.AppModel.Movies;
 using CinemaVillage.AppModel.Users;
 using CinemaVillage.Models;
 using CinemaVillage.Services.ActorXrefMovieAppService.Interface;
@@ -750,6 +751,229 @@ public class AdminController : Controller
         else
         {
             throw new InvalidOperationException("User is null");
+        }
+    }
+
+    #endregion
+
+    #region Directors
+
+    [HttpGet("MyAdminDashBoard/DirectorAdd")]
+    public IActionResult DirectorAdd()
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidOperationException("Invalid model state");
+            }
+
+            var builder = _adminFactory.CreateBuilder();
+            var model = builder.BuildAddDirector();
+
+            return View(model);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message, ex);
+            return RedirectToAction("Error");
+        }
+    }
+
+    [HttpPost]
+    public IActionResult SubmitFormDirectorAdd([Bind(Prefix = "DirectorAddAppModel")] DirectorAddAppModel model)
+    {
+        if (model != null)
+        {
+
+            var directorModel = new Director
+            {
+                GivenName = model.FirstName,
+                FamilyName = model.LastName,
+            };
+
+            try
+            {
+                _directorAppService.AddDirector(directorModel);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new InvalidOperationException(ex.Message, ex);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return RedirectToAction("Error");
+            }
+
+            return RedirectToAction("Index", "Admin");
+
+        }
+        else
+        {
+            throw new InvalidOperationException("User is null");
+        }
+    }
+
+    [HttpGet("MyAdminDashBoard/DirectorDelete")]
+    public IActionResult DirectorDelete(string directorId)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidOperationException("Invalid model state");
+            }
+
+            var builder = _adminFactory.CreateBuilder();
+            var model = builder.BuildAddDirector();
+
+            if (!string.IsNullOrEmpty(directorId))
+            {
+                ViewBag.SelectedItem = directorId;
+            }
+
+            return View(model);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message, ex);
+            return RedirectToAction("Error");
+        }
+    }
+
+    [HttpPost]
+    public IActionResult SubmitSearchDeleteDirector(string selectedItem)
+    {
+        return RedirectToAction("DirectorDelete", new { directorId = selectedItem });
+    }
+
+    [HttpPost]
+    public IActionResult SubmitFormDeleteDirector([Bind(Prefix = "Item1")] DirectorAddAppModel model)
+    {
+        if (model != null)
+        {
+            var directorModel = new Director
+            {
+                IdDirector = model.Id,
+                FamilyName = model.LastName,
+                GivenName = model.FirstName
+            };
+
+            try
+            {
+                _directorAppService.DeleteDirector(directorModel);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new InvalidOperationException(ex.Message, ex);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return RedirectToAction("Error");
+            }
+
+            return RedirectToAction("Index", "Admin");
+
+        }
+        else
+        {
+            throw new InvalidOperationException("Director is null");
+        }
+    }
+
+    [HttpGet("MyAdminDashBoard/DirectorUpdate")]
+    public IActionResult DirectorUpdate(string directorId)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidOperationException("Invalid model state");
+            }
+
+            var builder = _adminFactory.CreateBuilder();
+            var model = builder.BuildAddDirector();
+
+            if (!string.IsNullOrEmpty(directorId))
+            {
+                ViewBag.SelectedItem = directorId;
+            }
+
+            return View(model);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message, ex);
+            return RedirectToAction("Error");
+        }
+    }
+
+    [HttpPost]
+    public IActionResult SubmitSearchUpdateDirector(string selectedItem)
+    {
+        return RedirectToAction("DirectorUpdate", new { directorId = selectedItem });
+    }
+
+    [HttpPost]
+    public IActionResult SubmitFormUpdateDirector([Bind(Prefix = "Item1")] DirectorAddAppModel model)
+    {
+        if (model != null)
+        {
+
+            var directorModel = new Director
+            {
+                IdDirector = model.Id,
+                FamilyName = model.LastName,
+                GivenName = model.FirstName,
+            };
+
+            try
+            {
+                _directorAppService.UpdateDirector(directorModel);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                throw new InvalidOperationException(ex.Message, ex);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return RedirectToAction("Error");
+            }
+
+            return RedirectToAction("Index", "Admin");
+
+        }
+        else
+        {
+            throw new InvalidOperationException("User is null");
+        }
+    }
+
+    [HttpGet("MyAdminDashBoard/DirectorListAll")]
+    public IActionResult DirectorListAll()
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidOperationException("Invalid model state");
+            }
+
+            var builder = _adminFactory.CreateBuilder();
+            var model = builder.BuildAddDirector();
+
+            return View(model);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message, ex);
+            return RedirectToAction("Error");
         }
     }
 

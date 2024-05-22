@@ -31,12 +31,12 @@
 
 <body>
     <div>
-        <form method="post" asp-controller="Admin" asp-action="SubmitSearchUpdateDirector" id="formDirectorUpdate">
+        <form method="post" asp-controller="Admin" asp-action="SubmitSearchDeleteDirector" id="formDirectorDelete">
             <select name="selectedItem">
                 <option value="@(!string.IsNullOrEmpty(selectedItem) ? selectedItem : "")" selected disabled>
                     @(!string.IsNullOrEmpty(selectedItem) ?
                         Model.Directors.Where(u => u.Id.ToString() == selectedItem).FirstOrDefault().FirstName + " " + Model.Directors.Where(u => u.Id.ToString() == selectedItem).FirstOrDefault().LastName
-                        : "Select a movie"
+                        : "Select a director"
                         )
                 </option>
                 @if (Model.Directors.Any())
@@ -53,10 +53,9 @@
 
     @if (!string.IsNullOrEmpty(selectedItem))
     {
-        <partial name="/Views/Shared/Forms/FormUpdateDirector.cshtml" model="@(Model.DirectorAddAppModel, Model.Directors, selectedItem)" />
+        <partial name="/Views/Shared/Forms/FormDeleteDirector.cshtml" model="@(Model.DirectorAddAppModel, Model.Directors, selectedItem)" />
     }
 
 </body>
 
 </html>
-

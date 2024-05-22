@@ -36,7 +36,7 @@
                 <option value="@(!string.IsNullOrEmpty(selectedItem) ? selectedItem : "")" selected disabled>
                     @(!string.IsNullOrEmpty(selectedItem) ?
                         Model.Directors.Where(u => u.Id.ToString() == selectedItem).FirstOrDefault().FirstName + " " + Model.Directors.Where(u => u.Id.ToString() == selectedItem).FirstOrDefault().LastName
-                        : "Select a movie"
+                        : "Select a director"
                         )
                 </option>
                 @if (Model.Directors.Any())
@@ -59,4 +59,5 @@
 </body>
 
 </html>
+
 
