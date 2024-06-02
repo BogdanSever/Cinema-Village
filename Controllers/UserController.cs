@@ -39,7 +39,7 @@ public class UserController : Controller
         catch (Exception ex)
         {
             _logger.LogError(ex.Message, ex);
-            return RedirectToAction("Error");
+            return RedirectToAction("Error", "Home", new { errorMessage = ex.Message });
         }
     }
 
@@ -54,7 +54,7 @@ public class UserController : Controller
             }
             else
             {
-                throw new InvalidOperationException("User is null!");
+                return RedirectToAction("Error", "Home", new { errorMessage = "User is null" });
             }
 
             return RedirectToAction("LogOut", "Access");
@@ -62,7 +62,7 @@ public class UserController : Controller
         catch (Exception ex)
         {
             _logger.LogError(ex.Message);
-            return RedirectToAction("Error", "Home");
+            return RedirectToAction("Error", "Home", new { errorMessage = ex.Message });
         }
     }
 }

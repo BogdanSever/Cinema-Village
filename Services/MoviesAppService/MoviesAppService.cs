@@ -59,22 +59,25 @@ namespace CinemaVillage.Services.MoviesAppService
             foreach (var movieId in moviesIds)
             {
                 var availability = movieXrefTheatresModel.Where(mxt => mxt.IdMovie == movieId).Select(mxt => mxt.Availability).FirstOrDefault();
-                var model = JsonConvert.DeserializeObject<List<MovieAddJsonAppModel>>(availability);
-
-                bool inNext30Days = false;
-                foreach (var entry in model)
+                if(availability != null)
                 {
-                    string jsonDate = _formatDateTimeService.GetFormattedDate(entry.Date);
-                    
-                    if (DateTime.Compare(DateTime.ParseExact(jsonDate, "dd/MM/yyyy", CultureInfo.InvariantCulture), DateTime.ParseExact(currentDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)) >= 0)
+                    var model = JsonConvert.DeserializeObject<List<MovieAddJsonAppModel>>(availability);
+
+                    bool inNext30Days = false;
+                    foreach (var entry in model)
                     {
-                        inNext30Days = true;
-                    }
-                }
+                        string jsonDate = _formatDateTimeService.GetFormattedDate(entry.Date);
 
-                if (inNext30Days)
-                {
-                    movieAppModels.Add(GetMovieById(movieId));
+                        if (DateTime.Compare(DateTime.ParseExact(jsonDate, "dd/MM/yyyy", CultureInfo.InvariantCulture), DateTime.ParseExact(currentDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)) >= 0)
+                        {
+                            inNext30Days = true;
+                        }
+                    }
+
+                    if (inNext30Days)
+                    {
+                        movieAppModels.Add(GetMovieById(movieId));
+                    }
                 }
             }
 

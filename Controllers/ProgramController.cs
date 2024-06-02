@@ -42,7 +42,7 @@ namespace CinemaVillage.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
-                return RedirectToAction("Error");
+                return RedirectToAction("Error", "Home", new { errorMessage = ex.Message });
             }
         }
     }

@@ -2,7 +2,7 @@
     var selectedItem = ViewBag.SelectedItem;
 }
 
-@model CinemaVillage.ViewModels.Admin.AdminDashboardDirectorViewModel
+@model CinemaVillage.ViewModels.Admin.AdminDashboardMovieViewModel
 
 <!DOCTYPE html>
 
@@ -31,29 +31,29 @@
 
 <body>
     <div>
-        <form method="post" asp-controller="Admin" asp-action="SubmitSearchUpdateDirector" id="formDirectorUpdate">
+        <form method="post" asp-controller="Admin" asp-action="SubmitSearchUpdateMovie" id="formUpdateMovie">
             <select name="selectedItem">
                 <option value="@(!string.IsNullOrEmpty(selectedItem) ? selectedItem : "")" selected disabled>
                     @(!string.IsNullOrEmpty(selectedItem) ?
-                        Model.Directors.Where(u => u.Id.ToString() == selectedItem).FirstOrDefault().FirstName + " " + Model.Directors.Where(u => u.Id.ToString() == selectedItem).FirstOrDefault().LastName
+                        Model.Movies.Where(u => u.IdMovie.ToString() == selectedItem).FirstOrDefault().Title
                         : "Select a movie"
                         )
                 </option>
-                @if (Model.Directors.Any())
+                @if (Model.Movies.Any())
                 {
-                    foreach (var director in Model.Directors)
+                    foreach (var movie in Model.Movies)
                     {
-                        <option value="@director.Id">@(director.FirstName + " " + director.LastName)</option>
+                        <option value="@movie.IdMovie">@(movie.Title)</option>
                     }
                 }
             </select>
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Show director data</button>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Show movie data</button>
         </form>
     </div>
 
     @if (!string.IsNullOrEmpty(selectedItem))
     {
-        <partial name="/Views/Shared/Forms/FormUpdateDirector.cshtml" model="@(Model.DirectorAddAppModel, Model.Directors, selectedItem)" />
+        <partial name="/Views/Shared/Forms/FormUpdateMovie.cshtml" model="@(Model.Movie, Model.Movies, selectedItem)" />
     }
 
 </body>

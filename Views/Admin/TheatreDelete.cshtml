@@ -41,13 +41,13 @@
                 </option>
                 @if (Model.Theatres.Any())
                 {
-                    foreach (var movie in Model.Theatres)
+                    foreach (var theatre in Model.Theatres)
                     {
-                        <option value="@movie.Id">@(movie.Id)</option>
+                        <option value="@theatre.Id">@(theatre.Id)</option>
                     }
                 }
             </select>
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Show movie data</button>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Show theatre data</button>
         </form>
     </div>
 

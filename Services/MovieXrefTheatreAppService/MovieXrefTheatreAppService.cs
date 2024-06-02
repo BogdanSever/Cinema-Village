@@ -51,24 +51,43 @@ namespace CinemaVillage.Services.MovieXrefTheatreAppService
             foreach (int id in moviesIds)
             {
                 var availability = _context.MovieXrefTheatres.Where(mxt => mxt.IdMovie == id).Select(mxt => mxt.Availability).FirstOrDefault();
-                var model = JsonConvert.DeserializeObject<List<MovieAddJsonAppModel>>(availability);
-                foreach (var entry in model)
+                if (availability != null)
                 {
-                    string jsonDate = _formatDateTimeService.GetFormattedDate(entry.Date);
-
-                    if (DateTime.Compare(DateTime.ParseExact(dateQueryParam, "dd/MM/yyyy", CultureInfo.InvariantCulture), DateTime.ParseExact(jsonDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)) == 0)
+                    var model = JsonConvert.DeserializeObject<List<MovieAddJsonAppModel>>(availability);
+                    foreach (var entry in model)
                     {
-                        var hours = new List<string>();
-                        foreach (var hourRunning in entry.HoursRunning)
+                        string jsonDate = _formatDateTimeService.GetFormattedDate(entry.Date);
+
+                        if (DateTime.Compare(DateTime.ParseExact(dateQueryParam, "dd/MM/yyyy", CultureInfo.InvariantCulture), DateTime.ParseExact(jsonDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)) == 0)
                         {
-                            string currentDate = _formatDateTimeService.GetFormattedDate(DateTime.Now.ToString("d"));
-
-                            if (DateTime.Compare(DateTime.ParseExact(dateQueryParam, "dd/MM/yyyy", CultureInfo.InvariantCulture), DateTime.ParseExact(currentDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)) == 0)
+                            var hours = new List<string>();
+                            foreach (var hourRunning in entry.HoursRunning)
                             {
-                                string currentHour = _formatDateTimeService.GetFormattedHour(DateTime.Now.ToString("HH:mm:ss"));
-                                string jsonHour = _formatDateTimeService.GetFormattedHour(hourRunning.Hour);
+                                string currentDate = _formatDateTimeService.GetFormattedDate(DateTime.Now.ToString("d"));
 
-                                if (DateTime.Compare(DateTime.ParseExact(currentHour, "HH:mm:ss", CultureInfo.InvariantCulture), DateTime.ParseExact(jsonHour, "HH:mm:ss", CultureInfo.InvariantCulture)) <= 0)
+                                if (DateTime.Compare(DateTime.ParseExact(dateQueryParam, "dd/MM/yyyy", CultureInfo.InvariantCulture), DateTime.ParseExact(currentDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)) == 0)
+                                {
+                                    string currentHour = _formatDateTimeService.GetFormattedHour(DateTime.Now.ToString("HH:mm:ss"));
+                                    string jsonHour = _formatDateTimeService.GetFormattedHour(hourRunning.Hour);
+
+                                    if (DateTime.Compare(DateTime.ParseExact(currentHour, "HH:mm:ss", CultureInfo.InvariantCulture), DateTime.ParseExact(jsonHour, "HH:mm:ss", CultureInfo.InvariantCulture)) <= 0)
+                                    {
+                                        bool available = false;
+                                        foreach (var seat in hourRunning.Seats)
+                                        {
+                                            if (seat.Available == true)
+                                            {
+                                                available = true;
+                                            }
+                                        }
+
+                                        if (available == true)
+                                        {
+                                            hours.Add(hourRunning.Hour);
+                                        }
+                                    }
+                                }
+                                else
                                 {
                                     bool available = false;
                                     foreach (var seat in hourRunning.Seats)
@@ -85,32 +104,16 @@ namespace CinemaVillage.Services.MovieXrefTheatreAppService
                                     }
                                 }
                             }
-                            else
+                            if (hours.Any())
                             {
-                                bool available = false;
-                                foreach (var seat in hourRunning.Seats)
+                                if (!dictDatesAndHours.ContainsKey(id))
                                 {
-                                    if (seat.Available == true)
-                                    {
-                                        available = true;
-                                    }
+                                    dictDatesAndHours.Add(id, hours);
                                 }
-
-                                if (available == true)
+                                else
                                 {
-                                    hours.Add(hourRunning.Hour);
+                                    dictDatesAndHours[id].AddRange(hours);
                                 }
-                            }
-                        }
-                        if (hours.Any())
-                        {
-                            if (!dictDatesAndHours.ContainsKey(id))
-                            {
-                                dictDatesAndHours.Add(id, hours);
-                            }
-                            else
-                            {
-                                dictDatesAndHours[id].AddRange(hours);
                             }
                         }
                     }
@@ -137,7 +140,7 @@ namespace CinemaVillage.Services.MovieXrefTheatreAppService
                     foreach (var hourRunning in entry.HoursRunning)
                     {
                         string jsonHour = _formatDateTimeService.GetFormattedHour(hourRunning.Hour);
-                        
+
                         if (DateTime.Compare(DateTime.ParseExact(hourQueryParam, "HH:mm:ss", CultureInfo.InvariantCulture), DateTime.ParseExact(jsonHour, "HH:mm:ss", CultureInfo.InvariantCulture)) == 0)
                         {
                             foreach (var seat in hourRunning.Seats)

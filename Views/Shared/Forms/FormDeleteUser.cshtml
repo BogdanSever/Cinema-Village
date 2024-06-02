@@ -6,27 +6,27 @@
 
     <label id="FirstName">First Name</label>
     <input asp-for="@Model.Item1.FirstName" id="firstNameInput" value="@Model.Item2.Where(u => u.Id.ToString() == Model.Item3).FirstOrDefault().FirstName" class="rounded-full text-slate-700" type="text" readonly="readonly" />
-    <span asp-validation-for="@Model.Item1.FirstName" class="text-danger"></span>
+    <span asp-validation-for="@Model.Item1.FirstName" class="text-black text-danger"></span>
 
     <label id="LastName">Last Name</label>
     <input asp-for="@Model.Item1.LastName" id="lastNameInput" value="@Model.Item2.Where(u => u.Id.ToString() == Model.Item3).FirstOrDefault().LastName" class="rounded-full text-slate-700" type="text" readonly="readonly" />
-    <span asp-validation-for="@Model.Item1.LastName" class="text-danger"></span>
+    <span asp-validation-for="@Model.Item1.LastName" class="text-black text-danger"></span>
 
     <label>Email address</label>
     <input asp-for="@Model.Item1.Email" id="emailInput" value="@Model.Item2.Where(u => u.Id.ToString() == Model.Item3).FirstOrDefault().Email" class="rounded-full text-slate-700" type="text" readonly="readonly" />
-    <span asp-validation-for="@Model.Item1.Email" class="text-danger"></span>
+    <span asp-validation-for="@Model.Item1.Email" class="text-black text-danger"></span>
 
     <label>Password</label>
     <input asp-for="@Model.Item1.Password" id="passwordInput" value="@Model.Item2.Where(u => u.Id.ToString() == Model.Item3).FirstOrDefault().Password" class="rounded-full text-slate-700" type="text" readonly="readonly" />
-    <span asp-validation-for="@Model.Item1.Password" class="text-danger"></span>
+    <span asp-validation-for="@Model.Item1.Password" class="text-black text-danger"></span>
 
     <label id="confirmPassword">Repeat password</label>
     <input asp-for="@Model.Item1.ConfirmPassword" id="confirmPasswordInput" value="@Model.Item2.Where(u => u.Id.ToString() == Model.Item3).FirstOrDefault().Password" class="rounded-full text-slate-700" type="text" readonly="readonly" />
-    <span asp-validation-for="@Model.Item1.ConfirmPassword" class="text-danger"></span>
+    <span asp-validation-for="@Model.Item1.ConfirmPassword" class="text-black text-danger"></span>
 
     <label id="role">Role</label>
     <input asp-for="@Model.Item1.Role" id="roleInput" value="@Model.Item2.Where(u => u.Id.ToString() == Model.Item3).FirstOrDefault().Role" class="rounded-full text-slate-700" type="text" readonly="readonly" />
-    <span asp-validation-for="@Model.Item1.Role" class="text-danger"></span>
+    <span asp-validation-for="@Model.Item1.Role" class="text-black text-danger"></span>
 
     <button id="btnSubmitFormUpdateUser" class="rounded-full bg-slate-700 shadow-xl border-r-4 w-36 border-b-4 mt-4 border-slate-800 active:translate-y-[2px] active:border-b-2 active:border-r-2" type="submit">
         Delete User

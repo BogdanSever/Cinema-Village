@@ -10,16 +10,6 @@ namespace CinemaVillage.Controllers;
 [OutputCache(NoStore = true, Duration = 0)]
 public class AccessController : Controller
 {
-    /*public IActionResult Login()
-    {
-        ClaimsPrincipal claimUser = HttpContext.User;
-
-        if (claimUser.Identity.IsAuthenticated)
-        {
-            return RedirectToAction("Index", "Home");
-        }
-    }*/
-
     public async Task<IActionResult> Login(User model)
     {
         List<Claim> claims = new List<Claim>() {

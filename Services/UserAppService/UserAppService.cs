@@ -97,6 +97,12 @@ namespace CinemaVillage.Services.UserAppService
         {
             if (CheckForUserExistance(email))
             {
+
+                int userId = _context.Users.Where(u => u.Email.Equals(email)).Select(u => u.IdUser).FirstOrDefault();
+
+                _context.Bookings.Where(b => b.IdUser == userId).ExecuteDelete();
+                _context.Reviews.Where(r => r.IdUser == userId).ExecuteDelete();
+
                 int noOfRowsDeleted = _context.Users.Where(u => u.Email.Equals(email)).ExecuteDelete();
                 
                 if (noOfRowsDeleted == 0) 

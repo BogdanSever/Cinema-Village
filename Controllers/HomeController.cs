@@ -42,7 +42,7 @@ public class HomeController : Controller
         catch (Exception ex)
         {
             _logger.LogError(ex.Message, ex);
-            return RedirectToAction("Error");
+            return RedirectToAction("Error", new { errorMessage = ex.Message });
         }
     }
 
@@ -68,12 +68,12 @@ public class HomeController : Controller
             catch (InvalidOperationException ex)
             {
                 _logger.LogError(ex.Message, ex);
-                throw new InvalidOperationException(ex.Message, ex);
+                return RedirectToAction("Error", new { errorMessage = ex.Message });
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
-                return RedirectToAction("Error");
+                return RedirectToAction("Error", new { errorMessage = ex.Message });
             }
 
             return RedirectToAction("Login", "Access", userModel);
@@ -81,7 +81,7 @@ public class HomeController : Controller
         }
         else
         {
-            throw new InvalidOperationException("User is null");
+            return RedirectToAction("Error", new { errorMessage = "User is null! 500 error" });
         }
     }
 
@@ -105,19 +105,19 @@ public class HomeController : Controller
             catch (InvalidOperationException ex)
             {
                 _logger.LogError(ex.Message, ex);
-                throw new InvalidOperationException(ex.Message, ex);
+                return RedirectToAction("Error", new { errorMessage = ex.Message });
             }
             catch (Exception ex)
             {
                 _logger.LogError($"{ex.Message}", ex);
-                return RedirectToAction("Error");
+                return RedirectToAction("Error", new { errorMessage = ex.Message });
             }
 
             return RedirectToAction("Login", "Access", userToLogIn);
         }
         else
         {
-            throw new InvalidOperationException("User is null");
+            return RedirectToAction("Error", new { errorMessage = "Error! 500 code" });
         }
     }
 
@@ -127,8 +127,9 @@ public class HomeController : Controller
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
+    [HttpGet("Error")]
+    public IActionResult Error(string errorMessage)
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, ErrorMessage = errorMessage });
     }
 }
