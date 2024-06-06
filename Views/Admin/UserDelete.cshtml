@@ -20,6 +20,12 @@
     <link rel="icon" href="~/img/IuliaLogo.png">
     <link rel="stylesheet" href="~/css/admin.css" />
 
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Gothic+A1&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+
     <script src="~/js/admin.js" defer></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -31,8 +37,19 @@
 
 <body>
     <div>
-        <form method="post" asp-controller="Admin" asp-action="SubmitSearchDeleteUser" id="formUserDelete">
-            <select name="selectedItem">
+        <nav class="flex items-center justify-between p-5 text-night font-semibold font-Montserrat">
+            <a href="/" class="text-5xl font-Bebas-Neue font-bold text-mustard-200">Cinema Village</a>
+            <ul id="navItems" class="hidden items-center sm:flex md:flex-row md:gap-6 md:mr-3 md:text-2xl md:visible">
+
+                <li class="hover:text-mustard-200"> <a href="./">About</a></li>
+                <li class="hover:text-mustard-200"> <a href="./ProgramFilme.html">Program</a></li>
+                <li class="hover:text-mustard-200"> <a href="./">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="h-screen flex items-center justify-center bg-night gap-4">
+        <form method="post" asp-controller="Admin" asp-action="SubmitSearchDeleteUser" id="formUserDelete" class="flex flex-col items-center">
+            <select name="selectedItem" class="p-4 h-20 w-auto rounded-md text-xl">
                 <option value="@(!string.IsNullOrEmpty(selectedItem) ? selectedItem : "")" selected disabled>
                     @(!string.IsNullOrEmpty(selectedItem) ?
                         Model.Users.Where(u => u.Id.ToString() == selectedItem).FirstOrDefault().FirstName + " " + Model.Users.Where(u => u.Id.ToString() == selectedItem).FirstOrDefault().LastName
@@ -47,14 +64,17 @@
                     }
                 }
             </select>
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Show user data</button>
+            <button type="submit" class="m-5 inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-night bg-lavender-bush border border-night rounded-md shadow-sm">Show user data</button>
         </form>
+        <div>
+            @if (!string.IsNullOrEmpty(selectedItem))
+            {
+                <partial name="/Views/Shared/Forms/FormDeleteUser.cshtml" model="@(Model.UpdatedUser, Model.Users, selectedItem)" />
+            }
+        </div>
     </div>
 
-    @if (!string.IsNullOrEmpty(selectedItem))
-    {
-        <partial name="/Views/Shared/Forms/FormDeleteUser.cshtml" model="@(Model.UpdatedUser, Model.Users, selectedItem)" />
-    }
+    
 
 </body>
 

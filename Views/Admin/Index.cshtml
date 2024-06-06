@@ -12,10 +12,12 @@
 
     <link rel="stylesheet" href="~/css/output.css">
     <link rel="icon" href="~/img/IuliaLogo.png">
-    <link rel="stylesheet" href="~/css/admin.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Gothic+A1&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 
     <script src="~/js/admin.js" defer></script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js" integrity="sha512-xq+Vm8jC94ynOikewaQXMEkJIOBp7iArs3IhFWSWdRT3Pq8wFz46p+ZDFAR7kHnSFf+zUv52B3prRYnbDRdgog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -24,73 +26,83 @@
 </head>
 
 <body>
-    <div class="h-32">
-        <a href="/" class="text-4xl font-Fraunces">Cinema Village</a>
+    <div>
+        <nav class="flex items-center justify-between p-5 text-night font-semibold font-Montserrat">
+            <a href="/" class="text-5xl font-Bebas-Neue text-mustard-200">Cinema Village</a>
+            <ul id="navItems" class="hidden items-center sm:flex md:flex-row md:gap-6 md:mr-3 md:text-2xl md:visible">
+                <li class="hover:text-mustard-200"> <a href="./">About</a></li>
+                <li class="hover:text-mustard-200"> <a href="./ProgramFilme.html">Program</a></li>
+                <li class="hover:text-mustard-200"> <a href="./">Contact</a></li>
+            </ul>
+        </nav>
     </div>
-    <div class="table_update">
-        <div class="column_update">
-            <h2 class="text-4xl font-extrabold">Users</h2>
 
-            <a asp-controller="Admin" asp-action="UserAdd" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+    <h1 class="text-center text-6xl text-lavender-bush bg-night">Dashboard</h1>
+    <div class="flex justify-center items-baseline h-screen gap-4 font-Hanken-Grotesk bg-night">
+        <div class="flex flex-col items-center shadow-sm my-10 bg-zeus-100 p-20">
+            <h2 class="text-4xl font-bold">Users</h2>
+
+            <a asp-controller="Admin" asp-action="UserAdd" class="m-5 inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-night bg-lavender-bush border border-night rounded-md shadow-sm">
                 Add User
             </a>
-            <a asp-controller="Admin" asp-action="UserDelete" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+            <a asp-controller="Admin" asp-action="UserDelete" class="m-5 inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-night bg-lavender-bush border border-night rounded-md shadow-sm">
                 Delete User
             </a>
-            <a asp-controller="Admin" asp-action="UserUpdate" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+            <a asp-controller="Admin" asp-action="UserUpdate" class="m-5 inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-night bg-lavender-bush border border-night rounded-md shadow-sm">
                 User Update
             </a>
-            <a asp-controller="Admin" asp-action="UserListAll" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+            <a asp-controller="Admin" asp-action="UserListAll" class="m-5 inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-night bg-lavender-bush border border-night rounded-md shadow-sm">
                 See all Users
             </a>
         </div>
-        <div class="line_divider column_update"></div>
-        <div class="column_update">
-            <h2 class="text-4xl font-extrabold">Movies</h2>
 
-            <a asp-controller="Admin" asp-action="MovieAdd" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+
+        <div class="flex flex-col items-center shadow-sm my-10 bg-zeus-100 p-20">
+            <h2 class="text-4xl font-bold">Movies</h2>
+
+            <a asp-controller="Admin" asp-action="MovieAdd" class="m-5 inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-night bg-lavender-bush border border-night rounded-md shadow-sm">
                 Add Movie
             </a>
-            <a asp-controller="Admin" asp-action="MovieDelete" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+            <a asp-controller="Admin" asp-action="MovieDelete" class="m-5 inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-night bg-lavender-bush border border-night rounded-md shadow-sm">
                 Delete Movie
             </a>
-            <a asp-controller="Admin" asp-action="MovieUpdate" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+            <a asp-controller="Admin" asp-action="MovieUpdate" class="m-5 inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-night bg-lavender-bush border border-night rounded-md shadow-sm">
                 Update Movie
             </a>
-            <a asp-controller="Admin" asp-action="MovieListAll" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+            <a asp-controller="Admin" asp-action="MovieListAll" class="m-5 inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-night bg-lavender-bush border border-night rounded-md shadow-sm">
                 See all Movies
             </a>
         </div>
-        <div class="line_divider column_update"></div>
-        <div class="column_update">
-            <h2 class="text-4xl font-extrabold">Theatres</h2>
 
-            <a asp-controller="Admin" asp-action="TheatreAdd" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+        <div class="flex flex-col items-center shadow-sm my-10 bg-zeus-100 p-20">
+            <h2 class="text-4xl font-bold">Theatres</h2>
+
+            <a asp-controller="Admin" asp-action="TheatreAdd" class="m-5 inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-night bg-lavender-bush border border-night rounded-md shadow-sm">
                 Add Theatre
             </a>
 
-            <a asp-controller="Admin" asp-action="TheatreDelete" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+            <a asp-controller="Admin" asp-action="TheatreDelete" class="m-5 inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-night bg-lavender-bush border border-night rounded-md shadow-sm">
                 Delete Theatre
             </a>
 
         </div>
-        <div class="line_divider column_update"></div>
-        <div class="column_update">
-            <h2 class="text-4xl font-extrabold">Theatres</h2>
 
-            <a asp-controller="Admin" asp-action="DirectorAdd" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+        <div class="flex flex-col items-center shadow-sm my-10 bg-zeus-100 p-20">
+            <h2 class="text-4xl font-bold">Directors</h2>
+
+            <a asp-controller="Admin" asp-action="DirectorAdd" class="m-5 inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-night bg-lavender-bush border border-night rounded-md shadow-sm">
                 Add Director
             </a>
 
-            <a asp-controller="Admin" asp-action="DirectorDelete" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+            <a asp-controller="Admin" asp-action="DirectorDelete" class="m-5 inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-night bg-lavender-bush border border-night rounded-md shadow-sm">
                 Delete Director
             </a>
-            
-            <a asp-controller="Admin" asp-action="DirectorUpdate" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+
+            <a asp-controller="Admin" asp-action="DirectorUpdate" class="m-5 inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-night bg-lavender-bush border border-night rounded-md shadow-sm">
                 Update Director
             </a>
 
-            <a asp-controller="Admin" asp-action="DirectorListAll" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full buttons_update">
+            <a asp-controller="Admin" asp-action="DirectorListAll" class="m-5 inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-night bg-lavender-bush border border-night rounded-md shadow-sm">
                 See all Director
             </a>
 

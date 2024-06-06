@@ -24,10 +24,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js" integrity="sha512-xq+Vm8jC94ynOikewaQXMEkJIOBp7iArs3IhFWSWdRT3Pq8wFz46p+ZDFAR7kHnSFf+zUv52B3prRYnbDRdgog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-
 </head>
 
 <body class="bg-night">
+    <div>
+        <nav class="flex items-center justify-between bg-lavender-bush p-5 text-slate-700 font-BarlowSemiCondensed">
+            <a href="/" class="text-4xl font-Bebas-Neue font-bold text-mustard-200">Cinema Village</a>
+            <ul id="navItems" class="hidden items-center sm:flex md:flex-row md:gap-6 md:mr-3 md:text-2xl md:visible">
+
+                <li class="hover:text-mustard-200"> <a asp-controller="About" asp-action="Index">About</a></li>
+                <li class="hover:text-mustard-200"> <a asp-controller="AllMovie" asp-action="Index">All Movies</a></li>
+                <li class="hover:text-mustard-200"> <a asp-controller="Program" asp-action="Index">Program</a></li>
+                <li class="hover:text-mustard-200"> <a asp-controller="Contact" asp-action="Index">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
     <div class="grid grid-cols-3 grid-rows-2 justify-items-center">
         <div class="w-full col-span-3 col-start-1 col-end-5 row-start-1 row-end-2  h-56 bg-center overflow-hidden">
             <div class="w-full flex justify-center items-center">
@@ -41,7 +52,8 @@
             <img class="m-10 z-20 relative" width="300" src="data:image/jpeg;base64, @Model.Image">
         </div>
     </div>
-    <div class="grid grid-cols-2">
+
+    <div class="grid grid-cols-3 grid-rows-2 justify-items-center">
         <div class="rounded-lg w-1/2 bg-lavender-bush text-xl font-Montserrat p-4 text-center col-start-1 col-end-2">
             <h1>Director: @Model.DirectorName</h1>
             <h2>
@@ -50,8 +62,9 @@
             <h3>Rating: @Model.Ratings.Rating/10</h3>
             <h5>Vote count: @Model.Ratings.VoteCount <p class="italic">*According to ImdB</p></h5>
         </div>
-        <div class="col-span-2 col-start-1 col-end-3 w-1/2 self-center">
-            <p class="font-Montserrat text-lavender-bush ">
+        <div class="col-span-3 col-start-1 col-end-4 row-start-2 row-end-3 flex flex-col justify-center items-center">
+            <h1 class="font-Montserrat text-xl font-bold text-lavender-bush m-6">Description</h1>
+            <p class="font-Montserrat text-lavender-bush w-1/2">
                 @Model.Description
             </p>
         </div>
@@ -72,11 +85,12 @@
     }
     @if (Model.MovieSchedule.Any())
     {
+        <div class="flex justify-evenly align-center items-center">
         @foreach (var movie in Model.MovieSchedule)
         {
-            <div class="flex items-center">
-                <ul id="movieDetails">
-                    <li id="date" class="text-3xl font-BarlowSemiCondensed font-bold mb-4 text-slate-700">
+            
+                <ul class="bg-lavender-bush rounded-md p-2" id="movieDetails">
+                    <li id="date" class="text-3xl font-Montserrat font-bold mb-4 text-night">
                         @movie.Date
                     </li>
 
@@ -84,23 +98,24 @@
                         var idTheatre = "theatreID_" + movie.Date;
                     }
 
-                    <li id="@idTheatre" class="text-2xl font-BarlowSemiCondensed font-bold mb-4 text-slate-700">
+                    <li id="@idTheatre" class="text-2xl font-Montserrat font-bold mb-4 text-night">
                         Playing In: Theatre @movie.TheatreName
                     </li>
                     <li>
-                        <div class="flex gap-3">
+                        <div class="flex flex-row gap-3">
                             @foreach (var hour in movie.Hours)
                             {
                                 var btnId = "movie_" + Model.Id + "_" + movie.Date;
-                                <button id="@btnId" class="btnToCheckOutMovie bg-red-400 border-2 border-slate-700 p-2 border-opacity-70 font-BarlowSemiCondensed font-bold flex-wrap hover:scale-110 hover:ease-in duration-200">
+                                <button id="@btnId" class="btnToCheckOutMovie bg-mustard-200 border-2 border-slate-700 p-2 border-opacity-70 font-BarlowSemiCondensed font-bold flex-wrap hover:scale-110 hover:ease-in duration-200">
                                     @hour.Split(':')[0]:@hour.Split(':')[1]
                                 </button>
                             }
                         </div>
                     </li>
                 </ul>
-            </div>
+            
         }
+        </div>
     }
 </body>
 

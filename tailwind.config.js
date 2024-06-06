@@ -11,10 +11,6 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                'BarlowSemiCondensed': ['Barlow Semi Condensed', 'sans-serif'],
-                'Fraunces': ['Fraunces', 'serif'],
-                'BarlowSemiCondensed': ['Barlow Semi Condensed', 'sans-serif'],
-                'Fraunces': ['Fraunces', 'serif'],
                 'Bebas-Neue': ["Bebas Neue", 'serif'],
                 'Lato': ["Lato", 'serif'],
                 'Playfair-Display': ["Playfair Display", 'serif'],

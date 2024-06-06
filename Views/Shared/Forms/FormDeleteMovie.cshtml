@@ -1,30 +1,30 @@
 ﻿@model (CinemaVillage.AppModel.Movies.MovieAddAppModel, List<CinemaVillage.AppModel.Movies.MovieAppModel>, dynamic)
 
-<form asp-controller="Admin" asp-action="SubmitFormDeleteMovie" method="post" id="formDeleteMovie" class="flex flex-col gap-3 justify-start items-center font-BarlowSemiCondensed text-xl text-zinc-50">
+<form asp-controller="Admin" asp-action="SubmitFormDeleteMovie" method="post" id="formDeleteMovie" class="flex flex-col gap-3 justify-start items-center font-Montserrat text-xl text-night bg-lavender-bush text-center p-4 rounded-md">
 
     <input asp-for="@Model.Item1.Id" value="@Model.Item2.Where(u => u.IdMovie.ToString() == Model.Item3).FirstOrDefault().IdMovie" hidden />
 
     <label id="Title">Title</label>
-    <input asp-for="@Model.Item1.Title" id="titleInput" value="@Model.Item2.Where(u => u.IdMovie.ToString() == Model.Item3).FirstOrDefault().Title" class="rounded-full text-slate-700" type="text" readonly />
+    <input asp-for="@Model.Item1.Title" id="titleInput" value="@Model.Item2.Where(u => u.IdMovie.ToString() == Model.Item3).FirstOrDefault().Title" class="rounded-full text-slate-700 p-2" type="text" readonly />
     <span asp-validation-for="@Model.Item1.Title" class="text-black text-danger"></span>
 
     <label id="Genre">Genre</label>
-    <input asp-for="@Model.Item1.Genre" id="genreInput" value="@Model.Item2.Where(u => u.IdMovie.ToString() == Model.Item3).FirstOrDefault().Genre" class="rounded-full text-slate-700" type="text" readonly />
+    <input asp-for="@Model.Item1.Genre" id="genreInput" value="@Model.Item2.Where(u => u.IdMovie.ToString() == Model.Item3).FirstOrDefault().Genre" class="rounded-full text-slate-700 p-2" type="text" readonly />
     <span asp-validation-for="@Model.Item1.Genre" class="text-black text-danger"></span>
 
     <label id="Duration">Duration</label>
-    <input asp-for="@Model.Item1.Duration" id="durationInput" value="@Model.Item2.Where(u => u.IdMovie.ToString() == Model.Item3).FirstOrDefault().Duration" class="rounded-full text-slate-700" type="text" readonly />
+    <input asp-for="@Model.Item1.Duration" id="durationInput" value="@Model.Item2.Where(u => u.IdMovie.ToString() == Model.Item3).FirstOrDefault().Duration" class="rounded-full text-slate-700 p-2" type="text" readonly />
     <span asp-validation-for="@Model.Item1.Duration" class="text-black text-danger"></span>
 
     <label id="ReleaseDate">Release date</label>
-    <input asp-for="@Model.Item1.ReleaseDate" id="releaseDateInput" value="@Model.Item2.Where(u => u.IdMovie.ToString() == Model.Item3).FirstOrDefault().ReleaseDate" class="rounded-full text-slate-700" type="text" readonly />
+    <input asp-for="@Model.Item1.ReleaseDate" id="releaseDateInput" value="@Model.Item2.Where(u => u.IdMovie.ToString() == Model.Item3).FirstOrDefault().ReleaseDate" class="rounded-full text-slate-700 p-2" type="text" readonly />
     <span asp-validation-for="@Model.Item1.ReleaseDate" class="text-black text-danger"></span>
 
     <label id="Description">Description</label>
-    <input asp-for="@Model.Item1.Description" id="descriptionInput" value="@Model.Item2.Where(u => u.IdMovie.ToString() == Model.Item3).FirstOrDefault().Description" class="rounded-full text-slate-700" type="text" readonly />
+    <input asp-for="@Model.Item1.Description" id="descriptionInput" value="@Model.Item2.Where(u => u.IdMovie.ToString() == Model.Item3).FirstOrDefault().Description" class="rounded-full text-slate-700 p-2" type="text" readonly />
     <span asp-validation-for="@Model.Item1.Description" class="text-black text-danger"></span>
 
-    <button id="btnSubmitFormUpdateUser" class="rounded-full bg-slate-700 shadow-xl border-r-4 w-36 border-b-4 mt-4 border-slate-800 active:translate-y-[2px] active:border-b-2 active:border-r-2">
+    <button id="btnSubmitFormUpdateUser" class="text-lavender-bush rounded-full bg-slate-700 shadow-xl border-r-4 w-36 border-b-4 mt-4 border-slate-800 active:translate-y-[2px] active:border-b-2 active:border-r-2">
         Delete movie
     </button>
 

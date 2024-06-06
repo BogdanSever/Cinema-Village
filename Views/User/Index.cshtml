@@ -11,38 +11,36 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="~/css/output.css">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
-          rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Gothic+A1&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js" integrity="sha512-aNMyYYxdIxIaot0Y1/PLuEu3eipGCmsEUBrUq+7aVyPGMFH8z0eTP0tkqAvv34fzN6z+201d3T8HPb1svWSKHQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://kit.fontawesome.com/7d75bced7a.js" crossorigin="anonymous"></script>
     <link rel="icon" href="~/img/IuliaLogo.png">
 
 </head>
 
-<body class="bg-zinc-50">
+<body class="">
 
     <div>
-        <nav class="flex items-center justify-between bg-zinc-50 p-5 text-slate-700 font-BarlowSemiCondensed">
-            <a asp-action="Index" asp-controller="Home" class="text-4xl font-Fraunces">Cinema Village</a>
+        <nav class="flex items-center justify-between p-5 font-BarlowSemiCondensed">
+            <a href="/" class="text-4xl font-Bebas-Neue text-mustard-200">Cinema Village</a>
             <ul class="flex items-center gap-5">
                 <li class="text-slate-700 text-xl">@Model.FirstName @Model.LastName</li>
-                <li><i class="fa-regular fa-user fa-xl" style="color: #ff7575;"></i></li>
+                <li><i class="fa-regular fa-user fa-xl" style="color:#FFDB58;"></i></li>
             </ul>
         </nav>
 
     </div>
     <div>
-        <h1 class="text-slate-700 w-screen text-8xl mb-9 font-Fraunces text-center">Profile</h1>
+        <h1 class="text-night w-screen text-6xl mb-9 font-Montserrat text-center">Profile</h1>
     </div>
 
-    <div id="OutgoingReservation" class="bg-red-50 pb-10 px-10 w-screen">
-        <h1 class="text-4xl text-red-400 mb-4 font-BarlowSemiCondensed">Outgoing Reservations:</h1>
+    <div id="OutgoingReservation" class="bg-mustard-200 pb-10 px-10 w-screen">
+        <h1 class="text-4xl text-mustard-400 mb-4 font-Montserrat">Outgoing Reservations:</h1>
         <ul class="text-xl">
             @foreach (var movie in Model.OnGoingMovies)
             {
@@ -51,8 +49,8 @@
         </ul>
     </div>
 
-    <div class="bg-red-50 pb-10 px-10 w-screen">
-        <h1 class="text-4xl text-red-400 mb-4 font-BarlowSemiCondensed">Up for Review:</h1>
+    <div class="pb-10 px-10 w-screen">
+        <h1 class="text-4xl text-mustard-200 mb-4 font-Montserrat">Up for Review:</h1>
         <div class="flex gap-4 m-4">
             @foreach (var movie in Model.PastMovies)
             {
@@ -65,8 +63,8 @@
         </div>
     </div>
 
-    <div class="bg-red-50 pb-10 px-10 w-screen">
-        <h1 class="text-4xl text-red-400 mb-4 font-BarlowSemiCondensed">Reviewed:</h1>
+    <div class="pb-10 px-10 w-screen">
+        <h1 class="text-4xl text-mustard-200 mb-4 font-Montserrat">Reviewed:</h1>
 
         <div class="grid grid-cols-4">
             @foreach (var movie in Model.ReviewedMovies)
@@ -86,8 +84,9 @@
 
     </div>
 
-    <a asp-controller="User" asp-action="DeleteUser" type="submit">Delete User</a>
-
+    <div class="flex justify-end">
+      <a asp-controller="User" class="m-20 px-4 py-6 text-xl rounded-md bg-[#D22B2B] text-night" asp-action="DeleteUser" type="submit">Delete User</a>
+    </div>
 </body>
 
 </html>

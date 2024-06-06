@@ -1,28 +1,28 @@
 ﻿@model CinemaVillage.AppModel.Users.SignUpAppModel
 
-<form asp-controller="Home" asp-action="SubmitFormSignUp" method="post" id="formSignUp" class="flex flex-col gap-3 justify-start items-center font-BarlowSemiCondensed text-xl text-zinc-50">
+<form asp-controller="Home" asp-action="SubmitFormSignUp" method="post" id="formSignUp" class="flex flex-col gap-3 justify-start items-center">
 
     <label id="FirstName">First Name</label>
-    <input asp-for="FirstName" id="firstNameInput" class="rounded-full text-slate-700" />
+    <input asp-for="FirstName" id="firstNameInput" class="rounded-full text-night px-2" />
     <span asp-validation-for="FirstName" class="text-danger"></span>
 
     <label id="LastName">Last Name</label>
-    <input asp-for="LastName" id="lastNameInput" class="rounded-full text-slate-700" />
+    <input asp-for="LastName" id="lastNameInput" class="rounded-full text-night px-2" />
     <span asp-validation-for="LastName" class="text-danger"></span>
 
     <label>Email address</label>
-    <input asp-for="Email" id="emailInput" class="rounded-full text-slate-700" type="email" />
+    <input asp-for="Email" id="emailInput" class="rounded-full text-night px-2" type="email" />
     <span asp-validation-for="Email" class="text-danger"></span>
 
     <label>Password</label>
-    <input asp-for="Password" id="passwordInput" class="rounded-full text-slate-700" type="password" />
+    <input asp-for="Password" id="passwordInput" class="rounded-full text-night px-2" type="password" />
     <span asp-validation-for="Password" class="text-danger"></span>
 
     <label id="repeatPasswordTitle"> Repeat password</label>
-    <input asp-for="RepeatPassword" id="repeatPasswordInput" class="rounded-full text-slate-700" type="password" />
+    <input asp-for="RepeatPassword" id="repeatPasswordInput" class="rounded-full text-night px-2" type="password" />
     <span asp-validation-for="RepeatPassword" class="text-danger"></span>
 
-    <button id="btnSubmitFormSignUp" class="rounded-full bg-slate-700 shadow-xl border-r-4 w-36 border-b-4 mt-4 border-slate-800 active:translate-y-[2px] active:border-b-2 active:border-r-2" onclick="getFormSignUpData()">
+    <button id="btnSubmitFormSignUp" class="rounded-full bg-lavender-bush shadow-xl border-r-4 w-36 border-night border-b-4 mt-4 text-night active:translate-y-[2px] active:border-b-2 active:border-r-2">
         Sign Up
     </button>
 

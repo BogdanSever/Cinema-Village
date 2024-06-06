@@ -23,12 +23,9 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
-          rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Gothic+A1&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js" integrity="sha512-aNMyYYxdIxIaot0Y1/PLuEu3eipGCmsEUBrUq+7aVyPGMFH8z0eTP0tkqAvv34fzN6z+201d3T8HPb1svWSKHQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://kit.fontawesome.com/7d75bced7a.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -44,31 +41,32 @@
             <div class="flex flex-row-reverse mr-8 mt-6 opacity-100 ">
                 <button id="close" class="opacity-100">
 
-                    <span class="absolute block w-10  h-1 rounded-full rotate-45 bg-slate-900 opacity-100"></span>
-                    <span class="block w-10  h-1 rounded-full -rotate-45 bg-slate-900 opacity-100"></span>
+                    <span class="absolute block w-10  h-1 rounded-full rotate-45 bg-night opacity-100"></span>
+                    <span class="block w-10  h-1 rounded-full -rotate-45 bg-night opacity-100"></span>
 
                 </button>
             </div>
 
             <div class="flex items-center justify-center">
-                <div id="transition" class="z-20 flex flex-col items-center content-center justify-evenly rounded-l-full bg-zinc-50">
+                <div id="transition" class="z-20 flex flex-col items-center content-center justify-evenly rounded-l-full bg-lavender-bush">
 
-                    <img class="w-36 h-auto " src="~/img/IuliaLogo.png">
+                    <img class="w-36 h-auto" src="~/img/IuliaLogo.png">
                     <button id="logIn" class="mb-4 ml-10 text-lg font-BarlowSemiCondensed text-neutral-400">Log In -></button>
 
                 </div>
                 <div>
-                    <div id="SignUp" class="z-30 text-center h-auto gap-5 w-44 mt-5 p-28 pt-4 bg-red-400 rounded-xl flex flex-col justify-start items-center md:px-44 shadow-2xl">
+                    <div id="SignUp" class="z-30 text-center h-auto gap-5 w-44 mt-5 p-28 pt-4 bg-mustard-100 rounded-xl flex flex-col justify-start items-center md:px-44 shadow-2xl">
 
-                        <h1 id="FormTitle" class=" w-48 text-zinc-50 font-Fraunces text-4xl p-0 m-0 mb-2 ">Sign Up</h1>
+                        <h1 id="FormTitle" class=" w-48 text-lavender-bush font-Fraunces text-4xl p-0 m-0 mb-2 ">Sign Up</h1>
 
                         <partial name="/Views/Shared/Forms/FormSignUp.cshtml" model="@Model.SignUpAppModel" />
 
                     </div>
 
-                    <div id="LogIn" class="hidden z-30 text-center h-auto gap-5 w-44 mt-5 p-28 pt-4 bg-red-400 rounded-xl flex flex-col justify-start items-center md:px-44 shadow-2xl">
+                    <div id="LogIn" class="hidden z-30 text-center h-auto gap-5 w-44 mt-5 p-28 pt-4 bg-mustard-100 rounded-xl flex flex-col justify-start items-center md:px-44 shadow-2xl">
+                        
 
-                        <h1 id="FormTitle" class=" w-48 text-zinc-50 font-Fraunces text-4xl p-0 m-0 mb-2 ">Log In</h1>
+                        <h1 id="FormTitle" class=" w-48 text-lavender-bush font-Fraunces text-4xl p-0 m-0 mb-2 ">Log In</h1>
 
                         <partial name="/Views/Shared/Forms/FormLogIn.cshtml" model="@Model.LogInAppModel" />
 
@@ -82,28 +80,28 @@
 
     <div>
         <nav class="flex items-center justify-between bg-zinc-50 p-5 text-slate-700 font-BarlowSemiCondensed">
-            <a href="/" class="text-4xl font-Fraunces">Cinema Village</a>
+            <a href="/" class="text-4xl font-Bebas-Neue text-mustard-200">Cinema Village</a>
             <ul id="navItems" class="hidden items-center sm:flex md:flex-row md:gap-6 md:mr-3 md:text-2xl md:visible">
 
-                <li class="hover:text-red-400"> <a href="./">About</a></li>
-                <li class="hover:text-red-400"> <a asp-controller="AllMovie" asp-action="Index">All Movies</a></li>
-                <li class="hover:text-red-400"> <a asp-controller="Program" asp-action="Index">Program</a></li>
-                <li class="hover:text-red-400"> <a href="./">Contact</a></li>
+                <li class="hover:text-mustard-200"> <a asp-controller="About" asp-action="Index">About</a></li>
+                <li class="hover:text-mustard-200"> <a asp-controller="AllMovie" asp-action="Index">All Movies</a></li>
+                <li class="hover:text-mustard-200"> <a asp-controller="Program" asp-action="Index">Program</a></li>
+                <li class="hover:text-mustard-200"> <a asp-controller="Contact" asp-action="Index">Contact</a></li>
 
                 @if (Model.LoggedInUserAppModel.IsLoggedIn)
                 {
                     if (Model.LoggedInUserAppModel.Role.Equals("admin"))
                     {
-                        <li class="hover:text-red-400">
+                        <li class="hover:text-mustard-200">
                             <a asp-controller="Admin" asp-action="Index">Admin Dashboard</a>
                         </li>
                     }
 
-                    <li class="hover:text-red-400">
+                    <li class="hover:text-mustard-200">
                         <a asp-controller="User" asp-action="Index">My Profile</a>
                     </li>
 
-                    <li class="hover:text-red-400">
+                    <li class="hover:text-mustard-200">
                         <a asp-controller="Access" asp-action="LogOut">Log Out</a>
                     </li>
                 }
@@ -111,12 +109,12 @@
                 @if (!Model.LoggedInUserAppModel.IsLoggedIn)
                 {
                     <button id="join" class="relative inline-flex items-center justify-start px-5 py-3 overflow-hidden font-BarlowSemiCondensed rounded-full group">
-                        <span class="w-32 h-32 rotate-45 translate-x-12 -translate-y-2 absolute left-0 top-0 bg-rose-400 opacity-[3%]"></span>
-                        <span class="absolute top-0 left-0 w-48 h-48 -mt-1 transition-all duration-500 ease-in-out rotate-45 -translate-x-56 -translate-y-24 bg-red-400 opacity-100 group-hover:-translate-x-8"></span>
+                        <span class="w-32 h-32 rotate-45 translate-x-12 -translate-y-2 absolute left-0 top-0 bg-mustard-200 opacity-[3%]"></span>
+                        <span class="absolute top-0 left-0 w-48 h-48 -mt-1 transition-all duration-500 ease-in-out rotate-45 -translate-x-56 -translate-y-24 bg-mustard-100 opacity-100 group-hover:-translate-x-8"></span>
                         <span class="relative w-full text-left text-slate-800 transition-colors duration-200 ease-in-out group-hover:text-white">
-                            Sign Up Or Login
+                            Sign In
                         </span>
-                        <span class="absolute inset-0 border-2 border-slate-800 rounded-full hover:border-red-400"></span>
+                        <span class="absolute inset-0 border-2 border-slate-800 rounded-full hover:border-night"></span>
 
                     </button>
                 }
@@ -125,33 +123,50 @@
     </div>
 
     <div class="h-screen bg-zinc-50">
-        <div class="hidden gap-40 md:flex md:items-center md:h-screen md:justify-between md:mx-8 md:flex-row">
+        <div class=" gap-0 flex items-center justify-center flex-col bg-night">
 
-            <div class="w-1/4 text-center">
-                <h1 class="invisible sm:text-6xl sm:visible md:text-8xl ">Cinema<br>Village</h1>
+            <div class="text-center ">
+                <h1 class="w-full text-8xl z-20 m-5 font-Bebas-Neue font-bold text-mustard-200">Cinema Village</h1>
             </div>
-
-            <div class="flex flex-grow overscroll-none flex-col items-center h-auto w-full relative overflow-y-hidden sm:w-28 md:w-1/2 md:h-[574px] md:overflow-y-hidden md:min-w-1/2">
-
-                <div class="relative m-0 max-w-56 z-20 rounded-md hover:ease-in hover:duration-200 hover:scale-110 sm:max-w-96 md:max-w-96 md:h-auto md:shadow-lg top-5">
-                    <img id="img1" src="https://i.pinimg.com/564x/09/12/ec/0912ec51fe6f3d35180fee06c06954bc.jpg">
-
+            <div class="grid grid-cols-3 grid-rows-1 ">
+                <div class="col-start-1 col-span-1 row-start-1 relative md:bottom-1/4  2xl:bottom-[10%] opacity-50">
+                    <img class="invert" src="~/img/HeroImage.png">
                 </div>
+                <div id="mainBackground" class="col-span-3 col-start-1 row-start-1 flex flex-grow overscroll-none items-center justify-center h-screen w-full relative bg-no-repeat bg-center bg-auto">
 
-                <div class=" relative m-0 mr-5 max-w-56 bottom-[50%] left-10 scale-75 sm:max-w-96 md:max-w-96 md:h-auto md:bottom-[100%] md:left-40 md:rounded-md md:opacity-70 md:shadow-md grayscale">
-                    <button id="next">
-                        <img id="img2" src="https://i.pinimg.com/564x/c4/a1/66/c4a1662eec2aeb848ed172b3677eb02b.jpg">
-                    </button>
-                </div>
+                    <div class="relative m-0 left-20 scale-75 grayscale max-w-96 h-auto rounded-lg opacity-70 shadow-md">
+                        <button id="prev">
+                            <img id="img3" src="https://i.pinimg.com/564x/5a/6c/d5/5a6cd5209511b24562fc58f6d86dac2a.jpg">
+                        </button>
+                    </div>
 
-                <div class="relative m-0 max-w-56 bottom-[90%] right-10 scale-75 grayscale sm:max-w-96 md:max-w-96 md:h-auto md:bottom-[200%] md:right-40 md:rounded-lg md:opacity-70 md:shadow-md">
-                    <button id="prev">
-                        <img id="img3" src="https://i.pinimg.com/564x/5a/6c/d5/5a6cd5209511b24562fc58f6d86dac2a.jpg">
-                    </button>
+                    <div class="relative m-0 max-w-96 z-20 rounded-md hover:ease-in hover:duration-200 hover:scale-110
+                            sm:max-w-96
+                            md:max-w-96 md:h-auto md:shadow-lg ">
+                        <img id="img1" class="" src="~/img/Dune.jpg">
+
+                    </div>
+                    <div class=" relative right-20 m-0 max-w-96 scale-75
+                            sm:max-w-96
+                            md:max-w-96 md:h-auto  md:rounded-md md:opacity-70 md:shadow-md grayscale">
+                        <button id="next">
+                            <img id="img2" src="https://i.pinimg.com/564x/c4/a1/66/c4a1662eec2aeb848ed172b3677eb02b.jpg">
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </div>
+        <div class="bg-mustard-200 h-screen flex items-center justify-center">
+            <h1 class="text-[14rem] font-Bebas-Neue text-night font-bold">Open Air Cinema</h1>
+            <p class="text-2xl text-zinc-800 font-Montserrat font-bold">
+                Cinema Village is an open-air movie theater offering a magical summer experience under the stars. <br>
+                Ditch the stuffy cinemas and settle into comfy <br>seats for a unique night with friends,
+                loved ones, or simply your adventurous spirit.
+            </p>
+        </div>
     </div>
+    
 </body>
 
 </html>

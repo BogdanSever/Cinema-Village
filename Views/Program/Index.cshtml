@@ -11,15 +11,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/output.css">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Gothic+A1&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
-          rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-          rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js" integrity="sha512-aNMyYYxdIxIaot0Y1/PLuEu3eipGCmsEUBrUq+7aVyPGMFH8z0eTP0tkqAvv34fzN6z+201d3T8HPb1svWSKHQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="/js/TimeSelect.js" defer></script>
@@ -28,6 +25,21 @@
 </head>
 
 <body class="bg-zinc-50">
+
+
+    <div>
+        <nav class="flex items-center justify-between bg-zinc-50 p-5 text-slate-700 font-Montserrat">
+            <a href="/" class="text-4xl font-Bebas-Neue text-mustard-200">Cinema Village</a>
+            <ul id="navItems" class="hidden items-center sm:flex md:flex-row md:gap-6 md:mr-3 md:text-2xl md:visible">
+
+                <li class="hover:text-mustard-200"> <a asp-controller="About" asp-action="Index">About</a></li>
+                <li class="hover:text-mustard-200"> <a asp-controller="AllMovie" asp-action="Index">All Movies</a></li>
+                <li class="hover:text-mustard-200"> <a asp-controller="Program" asp-action="Index">Program</a></li>
+                <li class="hover:text-mustard-200"> <a asp-controller="Contact" asp-action="Index">Contact</a></li>
+
+            </ul>
+        </nav>
+    </div>
     <div>
         <div class=" p-4 flex flex-col justify-center items-center gap-6">
             <h1 class=" font-Fraunces text-4xl md:text-6xl text-slate-700 ">Program</h1>
@@ -59,7 +71,7 @@
                             @foreach (var hour in movie.RunningHours)
                             {
                                 var btnId = "movie_" + movie.Id;
-                                <button id="@btnId" class="btnToCheckOut bg-red-400 border-2 border-slate-700 p-2 border-opacity-70 font-BarlowSemiCondensed font-bold flex-wrap hover:scale-110 hover:ease-in duration-200">
+                                <button id="@btnId" class="btnToCheckOut bg-mustard-200 border-2 border-night p-2 border-opacity-70 font-BarlowSemiCondensed font-bold flex-wrap hover:scale-110 hover:ease-in duration-200">
                                     @hour.Split(':')[0]:@hour.Split(':')[1]
                                 </button>
                             }

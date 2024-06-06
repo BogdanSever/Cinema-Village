@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="#">
+    <title>Cinema Village</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="~/css//output.css">
+    <script src="./HomeMoviesAnimation.js" defer></script>
+    <script src="./LoginSingUpAnimation.js" defer></script>
+    <script src="serverConnection/singup.js" defer></script>
+    <script src="serverConnection/login.js" defer></script>
+    <script src="./LoggedInIndex.js" defer></script>
+    <link rel="icon" href="./img/IuliaLogo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Gothic+A1&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+          rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"
+            integrity="sha512-aNMyYYxdIxIaot0Y1/PLuEu3eipGCmsEUBrUq+7aVyPGMFH8z0eTP0tkqAvv34fzN6z+201d3T8HPb1svWSKHQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://kit.fontawesome.com/7d75bced7a.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"
+            integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js"
+            integrity="sha512-xq+Vm8jC94ynOikewaQXMEkJIOBp7iArs3IhFWSWdRT3Pq8wFz46p+ZDFAR7kHnSFf+zUv52B3prRYnbDRdgog=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</head>
+<body>
+   
+    <div>
+        <nav id="navBar" class="flex items-center justify-between bg-zinc-50 p-5 text-slate-700">
+            <a href="/" class="text-4xl font-Bebas-Neue text-mustard-200">Cinema Village</a>
+            <ul id="navItems" class="hidden items-center sm:flex md:flex-row md:gap-6 md:mr-3 md:text-2xl md:visible">
+
+                
+                <li class="hover:text-mustard-200"> <a asp-controller="AllMovie" asp-action="Index">All Movies</a></li>
+                <li class="hover:text-mustard-200"> <a asp-controller="Program" asp-action="Index">Program</a></li>
+                <li class="hover:text-mustard-200"> <a asp-controller="Contact" asp-action="Index">Contact</a></li>
+
+               
+            </ul>
+        </nav>
+    </div>
+
+    <div class="flex flex-col bg-night">
+        <div class="h-screen m-24 flex flex-col justify-center">
+            <h1 class="text-6xl font-Bebas-Neue m-10 text-lavender-bush">About</h1>
+            <p class="m-10 w-1/2 font-Montserrat text-2xl text-lavender-bush">
+                Welcome to Cinema Village, your one-stop destination for unforgettable open-air cinema experiences!
+                We're passionate about creating a unique atmosphere where you can reconnect with the wonder
+                of watching a movie on the big screen, all under the magical canopy of stars.
+            </p>
+        </div>
+        <div class="p-10 m-24 bg-mustard-200 flex flex-col justify-center text-night">
+            <h1 class="text-6xl font-Bebas-Neue m-10">More Than Just a Movie</h1>
+            <p class="m-10 w-1/2 font-Montserrat text-2xl">
+
+                We believe that movie nights are more than just watching a film.
+                They're about spending quality time with loved ones, creating lasting memories, and enjoying the camaraderie
+                of a shared experience.
+                That's why we go beyond just showing movies. We strive to curate a special ambiance:
+            </p>
+            <ul class="w-3/4 font-Montserrat text-xl ">
+                <li class="mx-24">
+                    <h1 class="font-bold">Stunning Settings</h1>
+                    <p>
+                        We select unique and picturesque locations that enhance the open-air cinema experience.
+                        Imagine cozying up under a blanket with the city skyline twinkling in the distance,
+                        or feeling the gentle breeze as you watch a classic comedy on a balmy summer night.
+                    </p>
+                </li>
+                <li class="mx-24 my-4">
+                    <h1 class="font-bold">Community Vibe</h1>
+                    <p>
+                        Our open-air cinemas foster a sense of community.
+                        Whether you're coming with your date, family, or a group of friends, you'll be surrounded by
+                        fellow movie enthusiasts who share your love for the big screen.
+                    </p>
+                </li>
+                <li class="mx-24 my-4">
+                    <h1 class="font-bold">Memorable Nights</h1>
+                    <p>
+                        We offer a variety of concessions and refreshments to complete your movie night experience.
+                        Relax, unwind, and savor the moment under the stars.
+                    </p>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</body>
+</html>

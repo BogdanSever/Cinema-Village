@@ -1,0 +1,63 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="#">
+    <title>Cinema Village</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="~/css/output.css">
+    <script src="./HomeMoviesAnimation.js" defer></script>
+    <script src="./LoginSingUpAnimation.js" defer></script>
+    <script src="serverConnection/singup.js" defer></script>
+    <script src="serverConnection/login.js" defer></script>
+    <script src="./LoggedInIndex.js" defer></script>
+    <link rel="icon" href="./img/IuliaLogo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Gothic+A1&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+          rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"
+            integrity="sha512-aNMyYYxdIxIaot0Y1/PLuEu3eipGCmsEUBrUq+7aVyPGMFH8z0eTP0tkqAvv34fzN6z+201d3T8HPb1svWSKHQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://kit.fontawesome.com/7d75bced7a.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"
+            integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js"
+            integrity="sha512-xq+Vm8jC94ynOikewaQXMEkJIOBp7iArs3IhFWSWdRT3Pq8wFz46p+ZDFAR7kHnSFf+zUv52B3prRYnbDRdgog=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</head>
+<body>
+             
+    <div>
+        <nav id="navBar" class="flex items-center justify-between bg-zinc-50 p-5 text-slate-700">
+            <a href="./index.html" class="text-4xl font-Bebas-Neue text-mustard-200">Cinema Village</a>
+            <ul id="navItems" class="hidden items-center sm:flex md:flex-row md:gap-6 md:mr-3 md:text-2xl md:visible">
+
+                <li class="hover:text-mustard-200"> <a asp-controller="About" asp-action="Index">About</a></li>
+                <li class="hover:text-mustard-200"> <a asp-controller="AllMovie" asp-action="Index">All Movies</a></li>
+                <li class="hover:text-mustard-200"> <a asp-controller="Program" asp-action="Index">Program</a></li>
+               
+            </ul>
+        </nav>
+    </div>
+
+    <div class="flex flex-col items-center justify-center h-screen bg-night">
+        <h1 class="text-6xl font-Bebas-Neue text-lavender-bush">The Team that made this possible</h1>
+        <div class="text-2xl font-Montserrat text-mustard-200 flex gap-4 m-5 font-bold">
+            <p>Orga Felix Cosmin</p>
+            <p>Rus Bogdan Alexandru</p>
+            <p>Bogdan Sever Cristian</p>
+            <p>Abrudan Iulia</p>
+        </div>
+    </div>
+</body>
+</html>

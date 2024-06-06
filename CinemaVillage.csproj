@@ -35,7 +35,6 @@
 	<ItemGroup>
 		<Folder Include="wwwroot\img\" />
 	</ItemGroup>
-
 	<Target Name="CopyCustomScripts" BeforeTargets="Build">
 		<ItemGroup>
 			<CustomScriptFiles Include="./FrontEnd/JS/**/*.js" />

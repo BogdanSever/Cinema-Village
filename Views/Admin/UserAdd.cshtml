@@ -16,6 +16,11 @@
     <link rel="icon" href="~/img/IuliaLogo.png">
     <link rel="stylesheet" href="~/css/admin.css" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Gothic+A1&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+
     <script src="~/js/admin.js" defer></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -27,36 +32,51 @@
 
 <body>
     <div>
-        <form asp-controller="Admin" asp-action="SubmitFormUserAdd" method="post" id="formUpdateUser" class="flex flex-col gap-3 justify-start items-center font-BarlowSemiCondensed text-xl text-zinc-50">
+        <nav class="flex items-center justify-between p-5 text-night font-semibold font-Montserrat">
+            <a href="/" class="text-5xl font-Bebas-Neue font-bold text-mustard-200">Cinema Village</a>
+            <ul id="navItems" class="hidden items-center sm:flex md:flex-row md:gap-6 md:mr-3 md:text-2xl md:visible">
 
-            <label id="FirstName" class="text-slate-700">First Name</label>
-            <input asp-for="@Model.UpdatedUser.FirstName" id="firstNameInput" class="rounded-full text-slate-700" />
-            <span asp-validation-for="@Model.UpdatedUser.FirstName" class="text-slate-700"></span>
+                <li class="hover:text-mustard-200"> <a href="./">About</a></li>
+                <li class="hover:text-mustard-200"> <a href="./ProgramFilme.html">Program</a></li>
+                <li class="hover:text-mustard-200"> <a href="./">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+    <h1 class="text-center text-lavender-bush text-6xl font-Hanken-Grotesk bg-night">Add a User</h1>
+    <div class="flex justify-center items-center h-screen  bg-night">
+       
+        <div class="bg-lavender-bush p-4 rounded-md">
+            <form asp-controller="Admin" asp-action="SubmitFormUserAdd" method="post" id="formUpdateUser" class="flex flex-col gap-3 justify-start items-center font-BarlowSemiCondensed text-xl text-zinc-50">
 
-            <label id="LastName" class="text-slate-700">Last Name</label>
-            <input asp-for="@Model.UpdatedUser.LastName" id="lastNameInput" class="rounded-full text-slate-700" />
-            <span asp-validation-for="@Model.UpdatedUser.LastName" class="text-slate-700"></span>
+                <label id="FirstName" class="text-slate-700">First Name</label>
+                <input asp-for="@Model.UpdatedUser.FirstName" id="firstNameInput" class="rounded-full text-slate-700" />
+                <span asp-validation-for="@Model.UpdatedUser.FirstName" class="text-slate-700"></span>
 
-            <label class="text-slate-700">Email address</label>
-            <input asp-for="@Model.UpdatedUser.Email" id="emailInput" class="rounded-full text-slate-700" type="email" />
-            <span asp-validation-for="@Model.UpdatedUser.Email" class="text-slate-700"></span>
+                <label id="LastName" class="text-slate-700">Last Name</label>
+                <input asp-for="@Model.UpdatedUser.LastName" id="lastNameInput" class="rounded-full text-slate-700" />
+                <span asp-validation-for="@Model.UpdatedUser.LastName" class="text-slate-700"></span>
 
-            <label class="text-slate-700">Password</label>
-            <input asp-for="@Model.UpdatedUser.Password" id="passwordInput" class="rounded-full text-slate-700" />
-            <span asp-validation-for="@Model.UpdatedUser.Password" class="text-slate-700"></span>
+                <label class="text-slate-700">Email address</label>
+                <input asp-for="@Model.UpdatedUser.Email" id="emailInput" class="rounded-full text-slate-700" type="email" />
+                <span asp-validation-for="@Model.UpdatedUser.Email" class="text-slate-700"></span>
 
-            <label id="confirmPassword" class="text-slate-700">Repeat password</label>
-            <input asp-for="@Model.UpdatedUser.ConfirmPassword" id="confirmPasswordInput" class="rounded-full text-slate-700" />
-            <span asp-validation-for="@Model.UpdatedUser.ConfirmPassword" class="text-slate-700"></span>
+                <label class="text-slate-700">Password</label>
+                <input asp-for="@Model.UpdatedUser.Password" id="passwordInput" class="rounded-full text-slate-700" />
+                <span asp-validation-for="@Model.UpdatedUser.Password" class="text-slate-700"></span>
 
-            <label id="role" class="text-slate-700">Role</label>
-            <input asp-for="@Model.UpdatedUser.Role" id="roleInput" class="rounded-full text-slate-700" />
-            <span asp-validation-for="@Model.UpdatedUser.Role" class="text-slate-700"></span>
+                <label id="confirmPassword" class="text-slate-700">Repeat password</label>
+                <input asp-for="@Model.UpdatedUser.ConfirmPassword" id="confirmPasswordInput" class="rounded-full text-slate-700" />
+                <span asp-validation-for="@Model.UpdatedUser.ConfirmPassword" class="text-slate-700"></span>
 
-            <button id="btnSubmitFormUpdateUser" class="rounded-full bg-slate-700 shadow-xl border-r-4 w-36 border-b-4 mt-4 border-slate-800 active:translate-y-[2px] active:border-b-2 active:border-r-2" type="submit">
-                Add User
-            </button>
-        </form>
+                <label id="role" class="text-slate-700">Role</label>
+                <input asp-for="@Model.UpdatedUser.Role" id="roleInput" class="rounded-full text-slate-700" />
+                <span asp-validation-for="@Model.UpdatedUser.Role" class="text-slate-700"></span>
+
+                <button id="btnSubmitFormUpdateUser" class="m-5 inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-night bg-lavender-bush border border-night rounded-md shadow-sm" type="submit">
+                    Add User
+                </button>
+            </form>
+        </div>
     </div>
 
 </body>

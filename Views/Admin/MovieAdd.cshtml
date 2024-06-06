@@ -18,6 +18,12 @@
     <link rel="icon" href="~/img/IuliaLogo.png">
     <link rel="stylesheet" href="~/css/admin.css" />
 
+    <link rel="stylesheet" href="/css/output.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Gothic+A1&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+
     <script src="~/js/admin.js" defer></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -26,54 +32,68 @@
 
 
 </head>
-
-<body>
-
+<body class="bg-night">
     <div>
-        <form method="post" asp-controller="Admin" asp-action="SubmitFormMovieAdd" id="formMovieAdd" enctype="multipart/form-data" style=" display: inline-grid">
-            <input asp-for="@Model.Movie.Id" hidden />
+        <nav class="flex items-center justify-between bg-lavender-bush p-5 text-night font-Montserrat">
+            <a href="/" class="text-4xl font-Bebas-Neue text-mustard-200">Cinema Village</a>
+            <ul id="navItems" class="hidden items-center sm:flex md:flex-row md:gap-6 md:mr-3 md:text-2xl md:visible">
 
-            <label id="movieTitleLabel">Title</label>
-            <input asp-for="@Model.Movie.Title" type="text" id="movieTitleInput" />
-            <span asp-validation-for="@Model.Movie.Title" class="text-danger"></span>
+                <li class="hover:text-mustard-200"> <a href="./">About</a></li>
+                <li class="hover:text-mustard-200"> <a asp-controller="AllMovie" asp-action="Index">All Movies</a></li>
+                <li class="hover:text-mustard-200"> <a asp-controller="Program" asp-action="Index">Program</a></li>
+                <li class="hover:text-mustard-200"> <a href="./">Contact</a></li>
 
-            <label id="movieGenreLabel">Genre</label>
-            <input asp-for="@Model.Movie.Genre" type="text" id="movieGenreInput" />
-            <span asp-validation-for="@Model.Movie.Genre" class="text-danger"></span>
+            </ul>
+        </nav>
+    </div>
 
-            <label id="movieDurationLabel">Duration</label>
-            <input asp-for="@Model.Movie.Duration" type="text" id="movieDurationInput" />
-            <span asp-validation-for="@Model.Movie.Duration" class="text-danger"></span>
+    <div class="flex justify-center items-center h-screen">
+        <div class="bg-lavender-bush p-4 rounded-md">
+            <form method="post" asp-controller="Admin" asp-action="SubmitFormMovieAdd" id="formMovieAdd" enctype="multipart/form-data" style=" display: inline-grid">
+                <input asp-for="@Model.Movie.Id" hidden />
 
-            <label id="movieReleaseDateLabel">Release Date</label>
-            <input asp-for="@Model.Movie.ReleaseDate" type="date" id="movieReleaseDateInput" />
-            <span asp-validation-for="@Model.Movie.ReleaseDate" class="text-danger"></span>
+                <label class="text-xl" id="movieTitleLabel">Title</label>
+                <input asp-for="@Model.Movie.Title" type="text" id="movieTitleInput" />
+                <span asp-validation-for="@Model.Movie.Title" class="text-danger"></span>
 
-            <label id="movieDescriptionLabel">Description</label>
-            <input asp-for="@Model.Movie.Description" type="text" id="movieDescriptionInput" />
-            <span asp-validation-for="@Model.Movie.Description" class="text-danger"></span>
+                <label id="movieGenreLabel">Genre</label>
+                <input asp-for="@Model.Movie.Genre" type="text" id="movieGenreInput" />
+                <span asp-validation-for="@Model.Movie.Genre" class="text-danger"></span>
 
-            <label id="movieImageLabel">Image</label>
-            <input name="imageMovie" type="file" accept="image/*" id="movieImageInput" />
-            <span class="text-danger"></span>
+                <label id="movieDurationLabel">Duration</label>
+                <input asp-for="@Model.Movie.Duration" type="text" id="movieDurationInput" />
+                <span asp-validation-for="@Model.Movie.Duration" class="text-danger"></span>
 
-            <label id="movieDirectorLabel">Director</label>
-            <select asp-for="@Model.Movie.DirectorName" asp-items="@(new SelectList(Model.Directors, nameof(DirectorsAppModel.FirstName), nameof(DirectorsAppModel.FirstName)))" id="movieDirectorDropdown">
-                <option>Select one director</option>
-            </select>
-            <span asp-validation-for="@Model.Movie.DirectorName" class="text-danger"></span>
+                <label id="movieReleaseDateLabel">Release Date</label>
+                <input asp-for="@Model.Movie.ReleaseDate" type="date" id="movieReleaseDateInput" />
+                <span asp-validation-for="@Model.Movie.ReleaseDate" class="text-danger"></span>
 
-            <label id="movieTheatreLabel">Theatre</label>
-            <select asp-for="@Model.Movie.TheatreName" asp-items="@(new SelectList(Model.Theatres, nameof(TheatreAppModel.Id), nameof(TheatreAppModel.Id)))" id="movieTheatreDropdown">
-                <option>Select a theatre</option>
-            </select>
-            <span asp-validation-for="@Model.Movie.TheatreName" class="text-danger"></span>
+                <label id="movieDescriptionLabel">Description</label>
+                <input asp-for="@Model.Movie.Description" type="text" id="movieDescriptionInput" />
+                <span asp-validation-for="@Model.Movie.Description" class="text-danger"></span>
 
-            <button id="btnSubmitAddMovie" type="submit">
-                Add Movie
-            </button>
+                <label id="movieImageLabel">Image</label>
+                <input name="imageMovie" type="file" accept="image/*" id="movieImageInput" />
+                <span class="text-danger"></span>
 
-        </form>
+                <label id="movieDirectorLabel">Director</label>
+                <select asp-for="@Model.Movie.DirectorName" asp-items="@(new SelectList(Model.Directors, nameof(DirectorsAppModel.FirstName), nameof(DirectorsAppModel.FirstName)))" id="movieDirectorDropdown">
+                    <option>Select one director</option>
+                </select>
+                <span asp-validation-for="@Model.Movie.DirectorName" class="text-danger"></span>
+
+                <label id="movieTheatreLabel">Theatre</label>
+                <select asp-for="@Model.Movie.TheatreName" asp-items="@(new SelectList(Model.Theatres, nameof(TheatreAppModel.Id), nameof(TheatreAppModel.Id)))" id="movieTheatreDropdown">
+                    <option>Select a theatre</option>
+                </select>
+                <span asp-validation-for="@Model.Movie.TheatreName" class="text-danger"></span>
+
+                <button id="btnSubmitAddMovie" type="submit" class="m-5 inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-night bg-lavender-bush border border-night rounded-md shadow-sm">
+                    Add Movie
+                </button>
+
+            </form>
+        </div>
     </div>
 </body>
 

@@ -18,6 +18,12 @@
 
     <script src="~/js/admin.js" defer></script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Gothic+A1&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js" integrity="sha512-xq+Vm8jC94ynOikewaQXMEkJIOBp7iArs3IhFWSWdRT3Pq8wFz46p+ZDFAR7kHnSFf+zUv52B3prRYnbDRdgog==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -27,20 +33,36 @@
 
 <body>
     <div>
-        <form asp-controller="Admin" asp-action="SubmitFormDirectorAdd" method="post" id="formAddDirector" class="flex flex-col gap-3 justify-start items-center font-BarlowSemiCondensed text-xl text-zinc-50">
+        <nav class="flex items-center justify-between p-5 text-night font-semibold font-Montserrat">
+            <a href="/" class="text-5xl font-Bebas-Neue font-bold text-mustard-200">Cinema Village</a>
+            <ul id="navItems" class="hidden items-center sm:flex md:flex-row md:gap-6 md:mr-3 md:text-2xl md:visible">
 
-            <label id="FirstName" class="text-slate-700">First Name</label>
-            <input asp-for="@Model.DirectorAddAppModel.FirstName" id="firstNameInput" class="rounded-full text-slate-700" />
-            <span asp-validation-for="@Model.DirectorAddAppModel.FirstName" class="text-slate-700"></span>
+                <li class="hover:text-mustard-200"> <a href="./">About</a></li>
+                <li class="hover:text-mustard-200"> <a href="./ProgramFilme.html">Program</a></li>
+                <li class="hover:text-mustard-200"> <a href="./">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="h-screen flex items-center justify-center bg-night">
+        <div>
+            <h1 class="text-4xl mb-10 text-center text-lavender-bush font-Hanken-Grotesk ">Director Details</h1>
+        </div>
+        <div>
+            <form asp-controller="Admin" asp-action="SubmitFormDirectorAdd" method="post" id="formAddDirector" class="flex flex-col gap-3 justify-start items-center font-BarlowSemiCondensed text-xl text-zinc-50">
 
-            <label id="LastName" class="text-slate-700">Last Name</label>
-            <input asp-for="@Model.DirectorAddAppModel.LastName" id="lastNameInput" class="rounded-full text-slate-700" />
-            <span asp-validation-for="@Model.DirectorAddAppModel.LastName" class="text-slate-700"></span>
+                <label id="FirstName" class="text-lavender-bush">First Name</label>
+                <input asp-for="@Model.DirectorAddAppModel.FirstName" id="firstNameInput" class="rounded-full text-slate-700 p-2" />
+                <span asp-validation-for="@Model.DirectorAddAppModel.FirstName" class="text-slate-700"></span>
 
-            <button id="btnSubmitFormUpdateUser" class="rounded-full bg-slate-700 shadow-xl border-r-4 w-36 border-b-4 mt-4 border-slate-800 active:translate-y-[2px] active:border-b-2 active:border-r-2" type="submit">
-                Add Director
-            </button>
-        </form>
+                <label id="LastName" class="text-lavender-bush">Last Name</label>
+                <input asp-for="@Model.DirectorAddAppModel.LastName" id="lastNameInput" class="rounded-full text-slate-700 p-2" />
+                <span asp-validation-for="@Model.DirectorAddAppModel.LastName" class="text-slate-700"></span>
+
+                <button id="btnSubmitFormUpdateUser" class="text-lavender-bush rounded-full bg-slate-700 shadow-xl border-r-4 w-36 border-b-4 mt-4 border-slate-800 active:translate-y-[2px] active:border-b-2 active:border-r-2" type="submit">
+                 Add Director
+                </button>
+            </form>
+        </div>
     </div>
 
 </body>

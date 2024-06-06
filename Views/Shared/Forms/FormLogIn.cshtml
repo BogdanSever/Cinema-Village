@@ -1,18 +1,19 @@
 ﻿@model CinemaVillage.AppModel.Users.LogInAppModel
 
-<form asp-controller="Home" asp-action="SubmitFormLogIn" method="post" id="formLogin" class="flex flex-col gap-3 justify-start items-center font-BarlowSemiCondensed text-xl text-zinc-50">
+<form asp-controller="Home" asp-action="SubmitFormLogIn" method="post" id="formLogin" class="flex flex-col gap-3 justify-start items-center">
 
     <label>Email address</label>
-    <input asp-for="Email" id="emailInput" class="rounded-full text-slate-700" type="email" />
+    <input asp-for="Email" id="emailInput" class="rounded-full text-night px-2" type="email" />
     <span asp-validation-for="Email" class="text-danger"></span>
 
     <label>Password</label>
-    <input asp-for="Password" id="passwordInput" class="rounded-full text-slate-700" type="password" />
+    <input asp-for="Password" id="passwordInput" class="rounded-full text-night px-2" type="password" />
     <span asp-validation-for="Password" class="text-danger"></span>
 
-    <button id="btnSubmitFormLogIn" class="rounded-full bg-slate-700 shadow-xl border-r-4 w-36 border-b-4 mt-4 border-slate-800 active:translate-y-[2px] active:border-b-2 active:border-r-2">
-        Log In
+    <button id="btnSubmitFormSignUp" class="rounded-full bg-lavender-bush shadow-xl border-r-4 w-36 border-night border-b-4 mt-4 text-night active:translate-y-[2px] active:border-b-2 active:border-r-2">
+        Log in
     </button>
+    
 
 </form>
 
